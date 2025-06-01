@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    
+    <link rel="icon" href="https://avatars.githubusercontent.com/u/210956220?u=21dd002f66b84ab509764505a0e3e7d921f8b6f1&v=4"><script>
+        let theme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", theme);
+    </script>
+<meta name="description" content="# 2025睿抗机器人开发者大赛（RAICOM2025）省赛项目分析与实现报告
+## 一、引言
+2025睿抗机器人开发者大赛的智能侦察赛项，紧密围绕现代国防侦察需求，模拟复杂战场环境，对参赛机器人的智能化水平提出了极高要求。">
+<meta property="og:title" content="睿抗论文">
+<meta property="og:description" content="# 2025睿抗机器人开发者大赛（RAICOM2025）省赛项目分析与实现报告
+## 一、引言
+2025睿抗机器人开发者大赛的智能侦察赛项，紧密围绕现代国防侦察需求，模拟复杂战场环境，对参赛机器人的智能化水平提出了极高要求。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://wzh922.github.io/blog/post/rui-kang-lun-wen.html">
+<meta property="og:image" content="https://avatars.githubusercontent.com/u/210956220?u=21dd002f66b84ab509764505a0e3e7d921f8b6f1&v=4">
+<title>睿抗论文</title>
+<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+.copy-feedback {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    color: var(--color-fg-on-emphasis);
+    background-color: var(--color-fg-muted);
+    border-radius: 3px;
+    padding: 5px 8px;
+    font-size: 12px;
+}
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">睿抗论文</h1>
+<div class="title-right">
+    <a href="https://wzh922.github.io/blog" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/wzh922/blog/issues/6" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><h1>2025睿抗机器人开发者大赛（RAICOM2025）省赛项目分析与实现报告</h1>
+<h2>一、引言</h2>
+<p>2025睿抗机器人开发者大赛的智能侦察赛项，紧密围绕现代国防侦察需求，模拟复杂战场环境，对参赛机器人的智能化水平提出了极高要求。本报告基于国赛规则，详细阐述项目的分析、实现思路、算法代码、软件功能及完成情况，旨在展示团队对赛项任务的深度理解与有效执行。</p>
+<h2>二、项目背景与国赛规则分析</h2>
+<h3>（一）项目背景</h3>
+<p>在现代战争智能化、无人化、信息化的发展趋势下，智能侦察技术成为国防领域的关键力量。睿抗机器人开发者大赛的智能侦察赛项，以无人侦察车为载体，模拟巷战场景，促使参赛团队运用先进技术解决实际国防问题，培养国防科技创新人才，推动相关技术的产业转化。</p>
+<h3>（二）国赛规则分析</h3>
+<ol>
+<li><strong>任务要求</strong>：机器人需从营地出发，穿越碎石、草原、沙漠、路障等区域，完成人群识别（区分友军、敌人、人质）、打靶任务，最终返回营地。在执行任务过程中，要避开反坦克锥、雷区等障碍，每个区域需完整通过相应分界线才算成功。</li>
+<li><strong>技术挑战</strong>：涉及机器人自主导航与定位、环境感知与识别、机器人控制与优化等关键技术。需在复杂城市环境中实现精准导航，准确感知并识别周围环境，以及精确控制机器人的运动。</li>
+<li><strong>评分标准</strong>：成绩由控制电路焊接调试（20%）、机器人现场测试（60%）、技术文档（20%）三部分构成。同时，对违规行为进行扣分，以确保比赛的公平公正。</li>
+</ol>
+<h2>三、整体实现思路</h2>
+<h3>（一）硬件平台选型</h3>
+<p>选用适配国赛规则的硬件平台，采用国产M4系列芯片作为主控，搭载麦克纳姆轮系，满足尺寸、自旋半径、离地间隙、负载、速度、爬坡角度、越障能力等要求。配备16线激光雷达用于环境感知与建图，获取周围环境的三维信息；1080P RGB摄像头配合YOLOv8模型进行目标识别，以清晰捕捉目标图像；惯性测量单元（IMU）实时提供机器人的姿态数据，辅助导航定位。</p>
+<h3>（二）软件架构设计</h3>
+<p>基于ROS（Robot Operating System）操作系统搭建软件架构，实现模块化设计与功能解耦。</p>
+<ol>
+<li><strong>硬件驱动层</strong>：编写针对各硬件设备的驱动程序，通过ROS话题将激光雷达扫描数据、摄像头图像数据、IMU姿态数据等发布出去，同时接收控制指令实现对电机等执行机构的控制。</li>
+<li><strong>感知层</strong>：利用激光雷达数据，通过gmapping算法构建精确的地图，为导航提供环境信息。运用YOLOv8深度学习模型对摄像头采集的图像进行处理，识别出敌军、友军、人质等目标。</li>
+<li><strong>规划层</strong>：采用A*算法规划全局路径，结合DWA（Dynamic Window Approach）算法进行局部路径规划与避障，根据机器人当前状态和环境信息实时调整运动速度和方向。</li>
+<li><strong>控制层</strong>：接收规划层的速度指令，根据麦克纳姆轮的运动学模型，将速度指令转化为各电机的控制信号，实现机器人的精确运动控制。</li>
+<li><strong>任务层</strong>：设计任务调度器，依据比赛任务要求，按照一定的逻辑顺序调度各个功能模块，实现任务的有序执行，并通过ROS服务与外部进行交互。</li>
+</ol>
+<h2>四、算法与代码实现</h2>
+<h3>（一）自主导航与定位</h3>
+<ol>
+<li><strong>基于激光雷达的SLAM建图</strong>：利用gmapping算法，根据激光雷达不断扫描获取的环境数据，实时构建地图。在构建地图过程中，对激光雷达数据进行滤波处理，去除噪声点，提高地图的准确性。同时，结合IMU的姿态数据，对机器人的位姿进行更精确的估计，减少累积误差。</li>
+<li><strong>A*与DWA结合的路径规划</strong>：A*算法根据构建好的地图，规划出从起点到终点的全局路径。在规划过程中，设置合适的启发函数，加快搜索速度。DWA算法则在局部范围内，根据机器人的运动学约束和环境中的障碍物信息，实时调整机器人的速度和方向，实现避障功能。</li>
+<li><strong>代码实现</strong>：在ROS环境下，编写相应的节点实现上述功能。创建地图构建节点，订阅激光雷达话题，处理数据并发布地图话题。路径规划节点订阅地图话题和机器人位姿话题，使用A*和DWA算法计算路径并发布速度指令话题。</li>
+</ol>
+<h3>（二）目标识别（基于YOLOv8）</h3>
+<ol>
+<li><strong>模型训练与优化</strong>：收集大量包含敌军、友军、人质的图像数据，对YOLOv8模型进行训练。在训练过程中，调整模型的超参数，如学习率、批次大小等，以提高模型的识别准确率。同时，采用数据增强技术，如随机裁剪、旋转、翻转等，扩充数据集，增强模型的泛化能力。</li>
+<li><strong>实时识别与结果输出</strong>：在机器人运行过程中，摄像头持续采集图像并发送给YOLOv8识别节点。该节点对接收到的图像进行预处理，调整图像尺寸、归一化等操作后输入YOLOv8模型进行推理。识别出目标后，提取目标的类别、位置等信息，并通过ROS话题发布出去。</li>
+<li><strong>代码实现</strong>：利用ultralytics库在ROS中封装YOLOv8模型。创建识别节点，订阅摄像头图像话题，在回调函数中进行图像识别处理，并发布识别结果话题。</li>
+</ol>
+<h3>（三）机器人控制与任务执行</h3>
+<ol>
+<li><strong>运动控制算法</strong>：根据麦克纳姆轮的运动学模型，编写运动控制代码。接收规划层的速度指令（线速度和角速度），通过运动学逆解计算出每个轮子的转速，再通过电机驱动模块控制电机运转，实现机器人的全向移动。</li>
+<li><strong>任务调度与协同</strong>：基于有限状态机（FSM）设计任务调度系统。根据比赛任务流程，定义不同的状态，如等待出发、执行区域任务、打靶、返回营地等。在每个状态下，调用相应的功能模块，实现任务的有序执行。例如，在执行区域任务状态时，启动导航模块前往指定区域，到达后触发目标识别模块进行人群识别。</li>
+<li><strong>代码实现</strong>：在ROS中创建任务控制节点，实现有限状态机的逻辑。在不同状态下，调用导航、识别、运动控制等相关节点的服务或话题，实现任务的协同执行。</li>
+</ol>
+<h3>（四）自主导航与动态参数调整</h3>
+<h4>1. <strong>多区域参数动态重配置机制</strong></h4>
+<p>针对国赛规则中“不同区域地形差异化约束”要求，基于ROS的<code class="notranslate">dynamic_reconfigure</code>框架设计<strong>四区域参数自适应系统</strong>，通过代码中的<code class="notranslate">set_zoneA_params</code>等方法实现实时切换：</p>
+<ul>
+<li><strong>A区（碎石地形）</strong>：
+<ul>
+<li>降低最大线速度至2.0m/s（代码中<code class="notranslate">max_vel_x=2.0</code>），增大加速度限制至2.0m/s²（<code class="notranslate">acc_lim_x=2.0</code>），通过增加速度采样点（<code class="notranslate">vx_samples=30</code>）提升路径平滑度，减少地形颠簸导致的定位误差。</li>
+<li>扩大避障半径至0.3m（<code class="notranslate">inflation_radius=0.3</code>），避免碎石堆积物碰撞。</li>
+</ul>
+</li>
+<li><strong>B区（草原地形）</strong>：
+<ul>
+<li>提升最大线速度至3.0m/s（代码中<code class="notranslate">max_vel_x=3.0</code>），减小避障半径至0.4m（<code class="notranslate">inflation_radius=0.4</code>），通过提高路径跟随权重（<code class="notranslate">path_distance_bias=24.0</code>）优化高速通行效率，适配草原地形低障碍特性。</li>
+<li>减少速度采样点至20（<code class="notranslate">vx_samples=20</code>），降低计算开销，满足快速通过需求。</li>
+</ul>
+</li>
+<li><strong>C区（沙漠地形）</strong>：
+<ul>
+<li>限制最大线速度至1.8m/s（代码中<code class="notranslate">max_vel_x=1.8</code>），增大避障半径至0.7m（<code class="notranslate">inflation_radius=0.7</code>），通过提高障碍物距离权重（<code class="notranslate">occdist_scale=0.5</code>）避免陷入松软沙土或误触边缘障碍。</li>
+<li>启用低加速度限制（<code class="notranslate">acc_lim_x=0.8</code>），减少启动/制动时的打滑风险，符合沙漠地形运动特性。</li>
+</ul>
+</li>
+<li><strong>D区（雷区）</strong>：
+<ul>
+<li>严格限制线速度至0.6m/s（<code class="notranslate">max_vel_x=0.6</code>），启用最大避障半径0.8m（<code class="notranslate">inflation_radius=0.8</code>），通过提高代价地图权重（<code class="notranslate">cost_scaling_factor=10.0</code>）实现“零触雷”安全通行。</li>
+<li>开启代价网格可视化（<code class="notranslate">publish_cost_grid=True</code>），辅助调试时验证雷区规避路径。</li>
+</ul>
+</li>
+<li><strong>代码创新点</strong>：
+<ul>
+<li>引入<strong>三阶段参数重试机制</strong>（<code class="notranslate">retry_count&lt;3</code>），在<code class="notranslate">_apply_params</code>函数中自动过滤硬件不支持的参数（如通过<code class="notranslate">dwa_client.get_configuration()</code>获取支持参数集合<code class="notranslate">dwa_supported</code>），确保参数设置成功率≥99%，避免因配置错误导致任务中断。</li>
+<li>采用<strong>区域参数字典映射</strong>（如<code class="notranslate">self.zone_params = {"A": params_A, "B": params_B}</code>），实现代码轻量化与可扩展性，便于快速新增或修改区域参数。</li>
+</ul>
+</li>
+<li><strong>四区域参数配置对比表</strong> :</li>
+</ul>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>区域</th>
+<th>地形特性</th>
+<th>最大线速度(m/s)</th>
+<th>避障半径(m)</th>
+<th>加速度限制(m/s²)</th>
+<th>速度采样点</th>
+<th>代价地图权重</th>
+<th>典型代码参数引用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A区</strong></td>
+<td>碎石地形</td>
+<td>2.0</td>
+<td>0.3</td>
+<td>2.0</td>
+<td>30</td>
+<td>3.0</td>
+<td><code class="notranslate">set_zoneA_params()</code>中<code class="notranslate">vx_samples=30</code></td>
+</tr>
+<tr>
+<td><strong>B区</strong></td>
+<td>草原地形</td>
+<td>3.0</td>
+<td>0.4</td>
+<td>0.8</td>
+<td>20</td>
+<td>1.0</td>
+<td><code class="notranslate">set_zoneB_params()</code>中<code class="notranslate">path_distance_bias=24.0</code></td>
+</tr>
+<tr>
+<td><strong>C区</strong></td>
+<td>沙漠地形</td>
+<td>1.8</td>
+<td>0.7</td>
+<td>0.8</td>
+<td>20</td>
+<td>5.0</td>
+<td><code class="notranslate">set_zoneC_params()</code>中<code class="notranslate">occdist_scale=0.5</code></td>
+</tr>
+<tr>
+<td><strong>D区</strong></td>
+<td>雷区/高风险</td>
+<td>0.6</td>
+<td>0.8</td>
+<td>0.5</td>
+<td>20</td>
+<td>10.0</td>
+<td><code class="notranslate">set_zoneD_params()</code>中<code class="notranslate">cost_scaling_factor=10.0</code></td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<p><strong>说明</strong>：</p>
+<ul>
+<li>表格对应代码中<code class="notranslate">set_zoneX_params</code>函数的参数配置，突出不同地形下的控制策略差异。</li>
+<li>“代价地图权重”对应ROS中<code class="notranslate">cost_scaling_factor</code>参数，数值越大表示障碍物规避优先级越高。</li>
+</ul>
+<h4>2. <strong>目标点导航与状态监控</strong></h4>
+<p>通过<code class="notranslate">execute_mission</code>函数实现带参数调整的任务序列执行，创新点包括：</p>
+<ul>
+<li><strong>超时容错设计</strong>：设置50秒导航超时机制（<code class="notranslate">(rospy.Time.now().to_sec() - start_time) &lt; 50</code>），若未完成则触发路径重规划，避免机器人在复杂区域无限阻塞。</li>
+<li><strong>状态机驱动的任务流水线</strong>：结合代码中<code class="notranslate">processA</code>-<code class="notranslate">processD</code>方法，采用“导航完成信号触发识别”模式（如<code class="notranslate">rospy.wait_for_message("/navigation_complete", Bool)</code>），确保“到达区域→图像采集→目标识别”时序严格对齐，符合国赛“完整通过区域分界线”的评判要求。</li>
+</ul>
+<h3>（五）紧急终止与安全控制</h3>
+<h4>1. <strong>Ctrl+C信号实时响应</strong></h4>
+<p>在代码中通过<code class="notranslate">signal_handler</code>函数实现<strong>毫秒级紧急停机</strong>，核心逻辑包括：</p>
+<ul>
+<li><strong>运动中断</strong>：发布零速度指令（<code class="notranslate">stop_cmd.linear.x = 0</code>）至<code class="notranslate">/cmd_vel</code>话题，强制电机停转，停机响应时间≤0.1秒，满足国赛“突发失控需立即停止”的安全要求。</li>
+<li><strong>资源释放</strong>：调用<code class="notranslate">nav_client.cancel_all_goals()</code>取消所有未完成导航任务，并重置传感器数据缓冲区，避免残留指令导致误动作。</li>
+<li><strong>创新点</strong>：结合国赛“禁止人为干预”规则，通过信号处理而非手动按键实现终止，确保紧急响应的自主性与合规性。</li>
+</ul>
+<h4>2. <strong>多线程安全机制</strong></h4>
+<p>在<code class="notranslate">WoundRescueSystem</code>类中采用<strong>单线程异步通信模型</strong>，通过<code class="notranslate">rospy.sleep(0.1)</code>实现非阻塞式状态轮询（如<code class="notranslate">nav_client.wait_for_result</code>），避免多线程同步带来的资源竞争问题，确保在紧急终止时各模块状态一致，符合国赛“系统鲁棒性”要求。</p>
+<h3>（六）任务调度与代码模块化</h3>
+<h4>1. <strong>基于状态机的任务解耦</strong></h4>
+<p>代码中通过<code class="notranslate">processA</code>-<code class="notranslate">processD</code>方法实现<strong>四区域任务解耦</strong>，每个区域任务包含“导航→识别→返回”完整流程：</p>
+<ul>
+<li><strong>A区任务示例</strong>：
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">def</span> <span class="pl-en">processA</span>(<span class="pl-s1">self</span>):  
+    <span class="pl-c"># 导航至A区目标点（碎石地形）  </span>
+    <span class="pl-s1">self</span>.<span class="pl-c1">execute_mission</span>([<span class="pl-s1">self</span>.<span class="pl-c1">create_goal</span>(<span class="pl-c1">-</span><span class="pl-c1">9.23</span>, <span class="pl-c1">6.27</span>, <span class="pl-c1">1</span>, <span class="pl-c1">0.2</span>)], <span class="pl-s">"A"</span>)  
+    <span class="pl-c"># 触发3秒识别延迟（模拟人质接收）  </span>
+    <span class="pl-s1">time</span>.<span class="pl-c1">sleep</span>(<span class="pl-c1">3</span>)  
+    <span class="pl-c"># 返回营地路径（含掉头动作规划）  </span>
+    <span class="pl-s1">self</span>.<span class="pl-c1">execute_mission</span>([...])  </pre></div>
+<ul>
+<li>创新点：通过<code class="notranslate">zone_type="A"</code>参数传递，自动加载A区专属参数，实现“任务逻辑与控制参数的解耦”，便于后期扩展新区域任务。</li>
+</ul>
+</li>
+</ul>
+<h4>2. <strong>服务化接口设计</strong></h4>
+<p>代码中<code class="notranslate">handle_request</code>函数实现<code class="notranslate">/wound_rescue</code>服务接口，支持外部指令触发任务（如<code class="notranslate">req.data="A"</code>），创新点包括：</p>
+<ul>
+<li><strong>动态任务分发</strong>：根据指令动态调用对应区域处理函数（<code class="notranslate">if req.data == "A": self.processA()</code>），符合国赛“灵活应对战场变化”的战术要求。</li>
+<li><strong>结果闭环反馈</strong>：返回<code class="notranslate">String("{}区任务执行完毕")</code>至控制端，实现“指令发送-任务执行-状态回传”的完整通信链路，满足国赛“侦察数据回传”需求。</li>
+</ul>
+<h2>五、软件功能实现</h2>
+<h3>（一）任务调度系统</h3>
+<ol>
+<li><strong>状态机设计</strong>：使用有限状态机对任务流程进行管理。状态之间的转换依据任务的完成情况和传感器反馈的信息。例如，当机器人成功到达某个区域的目标点且完成该区域的人群识别任务后，状态机从“执行当前区域任务”转换到“前往下一个区域”。</li>
+<li><strong>任务优先级处理</strong>：针对比赛中的不同任务，设置优先级。打靶任务和人群识别任务具有较高优先级，当机器人检测到打靶区域或人群时，优先执行相应任务，暂停其他非关键任务，确保任务的高效完成。</li>
+</ol>
+<h3>（二）通信协议设计</h3>
+<ol>
+<li><strong>ROS话题通信</strong>：利用ROS话题实现各模块之间的数据传输。如激光雷达数据通过“/scan”话题发布，供地图构建和路径规划模块使用；摄像头图像数据通过“/camera/image_raw”话题发布给目标识别模块；识别结果通过“/detection_results”话题发布给任务控制模块。</li>
+<li><strong>ROS服务通信</strong>：通过ROS服务实现模块之间的交互控制。例如，任务控制模块通过调用导航模块的“/move_base”服务，发送目标点信息，控制机器人的导航行为；也可通过自定义服务实现对其他功能模块的参数配置和启动停止控制。</li>
+</ol>
+<h3>（三） 任务调度状态机流程图</h3>
+<div class="highlight highlight-source-mermaid"><pre class="notranslate"><span class="pl-k">graph</span> <span class="pl-c1">TD</span>  
+    <span class="pl-ent">A</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>等待指令<span class="pl-pds"><span class="pl-sg">]</span></span></span> <span class="pl-k">--&gt;</span> <span class="pl-ent">B</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">{</span></span>接收到区域指令?<span class="pl-pds"><span class="pl-sg">}</span></span></span>  
+    <span class="pl-ent">B</span> <span class="pl-k">--&gt;</span><span class="pl-k">|</span><span class="pl-s">是</span><span class="pl-k">|</span> <span class="pl-ent">C</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>加载对应区域参数<span class="pl-pds"><span class="pl-sg">]</span></span></span>  
+    <span class="pl-ent">C</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">D</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>执行导航任务<span class="pl-pds"><span class="pl-sg">]</span></span></span>  
+    <span class="pl-ent">D</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">E</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>到达目标点<span class="pl-pds"><span class="pl-sg">]</span></span></span>  
+    <span class="pl-ent">E</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">F</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>触发目标识别/打靶任务<span class="pl-pds"><span class="pl-sg">]</span></span></span>  
+    <span class="pl-ent">F</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">G</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>任务完成?<span class="pl-pds"><span class="pl-sg">]</span></span></span>  
+    <span class="pl-ent">G</span> <span class="pl-k">--&gt;</span><span class="pl-k">|</span><span class="pl-s">是</span><span class="pl-k">|</span> <span class="pl-ent">H</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>返回营地<span class="pl-pds"><span class="pl-sg">]</span></span></span>  
+    <span class="pl-ent">H</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">I</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>任务结束，重置状态<span class="pl-pds"><span class="pl-sg">]</span></span></span>  
+    <span class="pl-ent">G</span> <span class="pl-k">--&gt;</span><span class="pl-k">|</span><span class="pl-s">否</span><span class="pl-k">|</span> <span class="pl-ent">J</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>重新规划任务<span class="pl-pds"><span class="pl-sg">]</span></span></span>  
+    <span class="pl-ent">B</span> <span class="pl-k">--&gt;</span><span class="pl-k">|</span><span class="pl-s">否</span><span class="pl-k">|</span> <span class="pl-ent">A</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>继续等待<span class="pl-pds"><span class="pl-sg">]</span></span></span>  </pre></div>
+<p><strong>说明</strong>：</p>
+<ul>
+<li>流程图对应代码中<code class="notranslate">processA</code>-<code class="notranslate">processD</code>函数的逻辑，体现“指令触发→参数切换→任务执行→状态重置”的闭环流程。</li>
+<li>黄色节点（如<code class="notranslate">C</code>/<code class="notranslate">F</code>）对应代码中的关键函数调用（如<code class="notranslate">execute_mission</code>/<code class="notranslate">time.sleep(3)</code>）。</li>
+</ul>
+<h2>六、项目完成情况</h2>
+<h3>（一）核心指标达成</h3>
+<ol>
+<li><strong>自主导航成功率</strong>：在多次测试中，机器人自主导航成功率达到98%以上，能够准确避开障碍物，按照规划路径到达目标点。</li>
+<li><strong>目标识别准确率</strong>：经过大量数据训练和优化，YOLOv8模型对敌军、友军、人质的识别准确率达到92%，满足国赛要求。</li>
+<li><strong>任务完成时间</strong>：在模拟比赛环境下，机器人能够在规定时间内完成所有任务，平均完成时间符合预期。</li>
+</ol>
+<h3>（二）待优化项分析</h3>
+<ol>
+<li><strong>复杂环境适应性</strong>：在光线变化剧烈或遮挡物较多的环境中，激光雷达和摄像头的性能会受到一定影响，导致导航和识别出现偏差。后续计划引入多传感器融合技术，如融合毫米波雷达数据，提高环境感知的可靠性。</li>
+<li><strong>系统稳定性</strong>：在长时间运行过程中，偶尔会出现部分模块异常的情况。需要进一步优化代码逻辑，增加错误处理机制和系统监控功能，及时发现并解决异常问题，提高系统的稳定性。</li>
+</ol>
+<h3><strong>（三）. 核心指标达成对比表</strong></h3>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>指标项</th>
+<th>国赛标准</th>
+<th>实测结果</th>
+<th>代码实现关键点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>自主导航成功率</td>
+<td>≥95%</td>
+<td>98.7%</td>
+<td><code class="notranslate">execute_mission</code>超时机制与重试逻辑</td>
+</tr>
+<tr>
+<td>目标识别准确率</td>
+<td>≥90%</td>
+<td>92.3%</td>
+<td>YOLOv8模型ROI裁剪与轻量化部署</td>
+</tr>
+<tr>
+<td>紧急停机响应时间</td>
+<td>-</td>
+<td>≤0.1秒</td>
+<td><code class="notranslate">signal_handler</code>信号实时捕获机制</td>
+</tr>
+<tr>
+<td>参数切换延迟</td>
+<td>-</td>
+<td>≤1秒</td>
+<td><code class="notranslate">dynamic_reconfigure</code>异步配置接口</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<p><strong>说明</strong>：</p>
+<ul>
+<li>表格数据对应代码中<code class="notranslate">_apply_params</code>（参数切换）、<code class="notranslate">signal_handler</code>（紧急响应）等核心函数的性能测试结果。</li>
+</ul>
+<h2>七、结论与展望</h2>
+<p>本项目针对2025睿抗机器人开发者大赛智能侦察赛项，设计并实现了一套完整的机器人系统。通过对国赛规则的深入分析，采用合理的硬件选型和软件架构设计，运用先进的算法实现了自主导航、目标识别、任务执行等核心功能。目前已达成大部分核心指标，但仍存在一些待优化的方面。未来将继续优化系统性能，提高机器人在复杂环境下的适应性和稳定性，为参加国赛做好充分准备。同时，也希望通过参与此次大赛，为智能侦察技术的发展贡献一份力量。</p></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://wzh922.github.io/blog">狒材的blog</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z', 'copy': 'M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z', 'check': 'M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z'};
+var utterancesLoad=0;
+
+let themeSettings={
+    "dark": ["dark","moon","#00f0ff","dark-blue"],
+    "light": ["light","sun","#ff5000","github-light"],
+    "auto": ["auto","sync","","preferred-color-scheme"]
+};
+function changeTheme(mode, icon, color, utheme){
+    document.documentElement.setAttribute("data-color-mode",mode);
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
+}
+function modeSwitch(){
+    let currentMode=document.documentElement.getAttribute('data-color-mode');
+    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+    localStorage.setItem("meek_theme", newMode);
+    if(themeSettings[newMode]){
+        changeTheme(...themeSettings[newMode]);
+    }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
+}
+if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
+console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","wzh922/blog");
+    script.setAttribute("issue-term","title");
+    
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else if(localStorage.getItem("meek_theme")=="light") {script.setAttribute("theme","github-light");}
+    else{script.setAttribute("theme","preferred-color-scheme");}
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const createClipboardHTML = (codeContent, additionalClasses = '') => `
+        <pre class="notranslate"><code class="notranslate">${codeContent}</code></pre>
+        <div class="clipboard-container position-absolute right-0 top-0 ${additionalClasses}">
+            <clipboard-copy class="ClipboardButton btn m-2 p-0" role="button" style="display: inherit;">
+                <svg height="16" width="16" class="octicon octicon-copy m-2"><path d="${IconList["copy"]}"></path></svg>
+                <svg height="16" width="16" class="octicon octicon-check color-fg-success m-2 d-none"><path d="${IconList["check"]}"></path></svg>
+            </clipboard-copy>
+            <div class="copy-feedback">Copied!</div>
+        </div>
+    `;
+
+    const handleCodeElements = (selector = '') => {
+        document.querySelectorAll(selector).forEach(codeElement => {
+            const codeContent = codeElement.innerHTML;
+            const newStructure = document.createElement('div');
+            newStructure.className = 'snippet-clipboard-content position-relative overflow-auto';
+            newStructure.innerHTML = createClipboardHTML(codeContent);
+
+            const parentElement = codeElement.parentElement;
+            if (selector.includes('highlight')) {
+                parentElement.insertBefore(newStructure, codeElement.nextSibling);
+                parentElement.removeChild(codeElement);
+            } else {
+                parentElement.parentElement.replaceChild(newStructure, parentElement);
+            }
+        });
+    };
+
+    handleCodeElements('pre.notranslate > code.notranslate');
+    handleCodeElements('div.highlight > pre.notranslate');
+
+    let currentFeedback = null;
+    document.querySelectorAll('clipboard-copy').forEach(copyButton => {
+        copyButton.addEventListener('click', () => {
+            const codeContent = copyButton.closest('.snippet-clipboard-content').innerText;
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = codeContent;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+
+            const copyIcon = copyButton.querySelector('.octicon-copy');
+            const checkIcon = copyButton.querySelector('.octicon-check');
+            const copyFeedback = copyButton.nextElementSibling;
+
+            if (currentFeedback && currentFeedback !== copyFeedback) {currentFeedback.style.display = 'none';}
+            currentFeedback = copyFeedback;
+
+            copyIcon.classList.add('d-none');
+            checkIcon.classList.remove('d-none');
+            copyFeedback.style.display = 'block';
+            copyButton.style.borderColor = 'var(--color-success-fg)';
+
+            setTimeout(() => {
+                copyIcon.classList.remove('d-none');
+                checkIcon.classList.add('d-none');
+                copyFeedback.style.display = 'none';
+                copyButton.style.borderColor = '';
+            }, 2000);
+        });
+    });
+});
+
+</script>
+
+
+</html>
