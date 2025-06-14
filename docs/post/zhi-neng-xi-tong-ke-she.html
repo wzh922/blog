@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    <script src='https://blog.meekdai.com/Gmeek/plugins/GmeekBSZ.js'></script>
+    <link rel="icon" href="https://avatars.githubusercontent.com/u/210956220?s=400&u=c0d549ac9c109d6ad35fde23e0aff5b3213fc57e&v=4"><script>
+        let theme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", theme);
+    </script>
+<meta name="description" content="# 实习报告
+
+## 基本情况
+
+**实习名称**：智慧校园订餐机器人系统开发与应用实习
+
+**实习时间**：2024年6月1日至2024年6月10日
+
+**实习单位**：[实习单位名称]
+
+**实习地点**：[实习地点]
+
+**指导教师**：[指导教师姓名]
+
+**学生姓名**：[你的姓名]
+
+**学号**：[你的学号]
+
+**专业班级**：[专业名称][班级名称]
+
+**学院**：[学院名称]
+
+## 实习目的
+
+本次实习旨在通过参与智慧校园订餐机器人系统的完整开发流程，深入掌握机器人感知、决策、控制等核心技术，提升理论与实践结合能力。">
+<meta property="og:title" content="智能系统课设">
+<meta property="og:description" content="# 实习报告
+
+## 基本情况
+
+**实习名称**：智慧校园订餐机器人系统开发与应用实习
+
+**实习时间**：2024年6月1日至2024年6月10日
+
+**实习单位**：[实习单位名称]
+
+**实习地点**：[实习地点]
+
+**指导教师**：[指导教师姓名]
+
+**学生姓名**：[你的姓名]
+
+**学号**：[你的学号]
+
+**专业班级**：[专业名称][班级名称]
+
+**学院**：[学院名称]
+
+## 实习目的
+
+本次实习旨在通过参与智慧校园订餐机器人系统的完整开发流程，深入掌握机器人感知、决策、控制等核心技术，提升理论与实践结合能力。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://wzh922.github.io/blog/post/zhi-neng-xi-tong-ke-she.html">
+<meta property="og:image" content="https://avatars.githubusercontent.com/u/210956220?s=400&u=c0d549ac9c109d6ad35fde23e0aff5b3213fc57e&v=4">
+<title>智能系统课设</title>
+
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">智能系统课设</h1>
+<div class="title-right">
+    <a href="https://wzh922.github.io/blog" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/wzh922/blog/issues/13" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><h1>实习报告</h1>
+<h2>基本情况</h2>
+<p><strong>实习名称</strong>：智慧校园订餐机器人系统开发与应用实习</p>
+<p><strong>实习时间</strong>：2024年6月1日至2024年6月10日</p>
+<p><strong>实习单位</strong>：[实习单位名称]</p>
+<p><strong>实习地点</strong>：[实习地点]</p>
+<p><strong>指导教师</strong>：[指导教师姓名]</p>
+<p><strong>学生姓名</strong>：[你的姓名]</p>
+<p><strong>学号</strong>：[你的学号]</p>
+<p><strong>专业班级</strong>：[专业名称][班级名称]</p>
+<p><strong>学院</strong>：[学院名称]</p>
+<h2>实习目的</h2>
+<p>本次实习旨在通过参与智慧校园订餐机器人系统的完整开发流程，深入掌握机器人感知、决策、控制等核心技术，提升理论与实践结合能力。通过实际项目开发，锻炼团队协作、系统架构设计、模块化开发、调试优化等工程能力。实习还注重培养发现问题、分析问题和解决问题的能力，提升创新意识和工程素养。</p>
+<h2>实习内容</h2>
+<h3>第1天：环境搭建与工程准备</h3>
+<ul>
+<li>
+<p><strong>任务目标</strong>：</p>
+<ul>
+<li>搭建适用于机器人开发的ROS（Robot Operating System）环境。</li>
+<li>配置Python、TensorFlow、OpenCV等依赖库。</li>
+<li>熟悉实验硬件环境，包括机器人小车、摄像头、机械臂等。</li>
+</ul>
+</li>
+<li>
+<p><strong>操作步骤</strong>：</p>
+<ul>
+<li>安装Ubuntu 18.04操作系统，配置SSH服务，实现远程连接机器人小车，便于后续开发和调试。</li>
+<li>创建<code class="notranslate">catkin_ws</code>工作空间，安装ROS Melodic版本，配置环境变量，确保ROS各功能包能够正常编译和运行。</li>
+<li>安装TensorFlow、LabelImg、PyQt5等用于图像识别与标注的工具，测试Python环境的兼容性。</li>
+<li>安装OpenCV库，编写测试脚本验证摄像头数据读取、图像显示和保存功能。</li>
+<li>检查硬件连接，包括摄像头、机械臂、底盘电机等，确保各模块能够被系统识别。</li>
+<li>阅读ROS官方文档，了解ROS节点、话题、服务、参数服务器等基本概念。</li>
+</ul>
+</li>
+<li>
+<p><strong>成果总结</strong>：</p>
+<ul>
+<li>成功搭建ROS开发环境，能够编译和运行官方示例包。</li>
+<li>通过SSH远程连接机器人小车，提升开发效率。</li>
+<li>测试通过摄像头数据采集和OpenCV图像处理，为后续视觉算法开发打下基础。</li>
+<li>熟悉了实验硬件环境和各模块的基本功能。</li>
+</ul>
+</li>
+<li>
+<p><strong>问题与解决方案</strong>：</p>
+<ul>
+<li>安装ROS时出现依赖包冲突问题，部分软件源失效导致下载缓慢。</li>
+<li>解决方案：更换国内apt源，清除apt缓存，重新安装相关依赖包，参考ROS社区解决常见安装问题。</li>
+<li>摄像头驱动与OpenCV版本不兼容，导致无法正常读取图像。</li>
+<li>解决方案：升级OpenCV至4.x版本，重新编译相关依赖，测试多种摄像头接口。</li>
+</ul>
+</li>
+</ul>
+<h3>第2天：机器人运动控制开发</h3>
+<ul>
+<li>
+<p><strong>任务目标</strong>：</p>
+<ul>
+<li>开发基于ROS的机器人运动控制程序。</li>
+<li>实现键盘控制机器人前进、后退、左转、右转、停止等功能。</li>
+<li>掌握ROS消息通信机制，理解底盘控制原理。</li>
+</ul>
+</li>
+<li>
+<p><strong>操作步骤</strong>：</p>
+<ul>
+<li>使用C++或Python编写<code class="notranslate">move_base</code>类，定义机器人的运动控制函数，包括速度设置、方向控制、急停等。</li>
+<li>通过<code class="notranslate">geometry_msgs/Twist</code>消息类型发布速度指令，控制机器人底盘运动。</li>
+<li>使用<code class="notranslate">teleop_twist_keyboard</code>工具进行键盘控制测试，验证指令响应速度和准确性。</li>
+<li>结合<code class="notranslate">rqt_graph</code>工具，分析节点间通信关系，确保消息流畅传递。</li>
+<li>设计并实现速度平滑算法，避免机器人运动时出现突变。</li>
+<li>记录不同速度、加速度参数下机器人的运动表现，分析运动稳定性。</li>
+</ul>
+</li>
+<li>
+<p><strong>成果总结</strong>：</p>
+<ul>
+<li>成功实现机器人基本运动控制逻辑，能够通过键盘实时控制机器人运动。</li>
+<li>掌握了ROS消息发布与订阅机制，理解了底盘控制的基本原理。</li>
+<li>通过<code class="notranslate">rqt_graph</code>可视化节点通信，提升了对系统架构的理解。</li>
+<li>运动控制程序结构清晰，便于后续集成和扩展。</li>
+</ul>
+</li>
+<li>
+<p><strong>问题与解决方案</strong>：</p>
+<ul>
+<li>在测试过程中发现机器人运动时存在抖动现象，速度变化不平滑。</li>
+<li>解决方案：调整PID参数，优化运动控制算法，采用速度滤波和平滑曲线插值，显著提升运动稳定性。</li>
+<li>键盘控制存在延迟，部分指令丢失。</li>
+<li>解决方案：优化消息发布频率，增加指令缓冲机制，确保指令及时响应。</li>
+</ul>
+</li>
+</ul>
+<h3>第3天：二维码识别与定位</h3>
+<ul>
+<li>
+<p><strong>任务目标</strong>：</p>
+<ul>
+<li>开发基于ArUco二维码的识别与定位程序。</li>
+<li>实现机器人根据二维码信息进行导航。</li>
+<li>掌握视觉识别与空间定位的基本方法。</li>
+</ul>
+</li>
+<li>
+<p><strong>操作步骤</strong>：</p>
+<ul>
+<li>使用OpenCV库加载摄像头数据，调用ArUco模块检测二维码。</li>
+<li>计算二维码的ID、位置和姿态，获取二维码在图像中的像素坐标和旋转角度。</li>
+<li>利用相机内参和畸变参数，进行空间坐标转换，估算二维码与机器人的相对距离和角度。</li>
+<li>将识别结果封装为ROS消息格式并发布，供导航模块使用。</li>
+<li>在不同光照、角度、距离下测试二维码识别效果，记录识别率和误差。</li>
+<li>使用<code class="notranslate">rviz</code>可视化二维码识别结果，验证空间定位的准确性。</li>
+</ul>
+</li>
+<li>
+<p><strong>成果总结</strong>：</p>
+<ul>
+<li>机器人能够实时识别二维码并计算其距离和角度，识别速度满足实际需求。</li>
+<li>通过空间坐标转换，实现了二维码的三维定位。</li>
+<li>识别结果能够与导航模块对接，实现基于二维码的定位导航。</li>
+<li>掌握了OpenCV与ROS的集成方法，提升了视觉算法开发能力。</li>
+</ul>
+</li>
+<li>
+<p><strong>问题与解决方案</strong>：</p>
+<ul>
+<li>由于光线不足或二维码污损，导致识别率较低。</li>
+<li>解决方案：调整摄像头曝光参数，增加补光灯设备，优化图像预处理算法（如自适应阈值、去噪等）。</li>
+<li>空间定位误差较大，影响导航精度。</li>
+<li>解决方案：标定相机内参，优化坐标转换算法，增加多帧融合滤波。</li>
+</ul>
+</li>
+</ul>
+<h3>第4天：红绿灯识别</h3>
+<ul>
+<li>
+<p><strong>任务目标</strong>：</p>
+<ul>
+<li>开发基于YOLOv4模型的红绿灯识别程序。</li>
+<li>实现机器人在斑马线前的自动判断。</li>
+<li>掌握深度学习目标检测模型的部署与优化。</li>
+</ul>
+</li>
+<li>
+<p><strong>操作步骤</strong>：</p>
+<ul>
+<li>使用Darknet框架加载预训练的YOLOv4模型，准备红绿灯数据集进行微调。</li>
+<li>编写<code class="notranslate">object_detection</code>类，订阅摄像头图像话题并进行推理，输出红绿灯类别和置信度。</li>
+<li>根据识别结果发布交通信号状态信息，驱动机器人做出相应决策。</li>
+<li>在不同光照、距离、角度下测试识别效果，记录准确率和误报率。</li>
+<li>优化模型推理速度，尝试TensorRT加速部署。</li>
+<li>结合<code class="notranslate">rviz</code>和自定义可视化工具，展示红绿灯检测结果。</li>
+</ul>
+</li>
+<li>
+<p><strong>成果总结</strong>：</p>
+<ul>
+<li>系统能够在斑马线前准确识别红绿灯状态，识别延迟低于200ms。</li>
+<li>支持多尺度目标检测，适应不同距离和大小的红绿灯。</li>
+<li>红绿灯识别结果能够实时驱动机器人决策，提升交通场景下的安全性。</li>
+<li>掌握了YOLOv4模型的训练、部署和优化流程。</li>
+</ul>
+</li>
+<li>
+<p><strong>问题与解决方案</strong>：</p>
+<ul>
+<li>实际环境中红绿灯背景复杂，误识别率较高。</li>
+<li>解决方案：微调模型权重，增加训练样本，采用数据增强（如旋转、缩放、亮度变化等），提升模型泛化能力。</li>
+<li>推理速度受限于硬件性能。</li>
+<li>解决方案：采用模型剪枝、量化等方法，使用GPU加速推理。</li>
+</ul>
+</li>
+</ul>
+<h3>第5天：餐品识别与抓取</h3>
+<ul>
+<li>
+<p><strong>任务目标</strong>：</p>
+<ul>
+<li>开发基于YOLOv4的餐品识别程序。</li>
+<li>控制机械臂完成餐品抓取动作。</li>
+<li>掌握机械臂运动学与视觉伺服控制。</li>
+</ul>
+</li>
+<li>
+<p><strong>操作步骤</strong>：</p>
+<ul>
+<li>使用YOLOv4模型识别餐品种类，输出餐品位置和类别。</li>
+<li>将识别结果通过ROS消息发送给机械臂控制器，计算抓取点坐标。</li>
+<li>机械臂执行抓取动作，反馈执行状态。</li>
+<li>设计抓取策略，包括避障、夹爪开合、路径规划等。</li>
+<li>多次测试不同餐品的识别与抓取，记录成功率和失败原因。</li>
+<li>优化视觉坐标到机械臂坐标的转换算法，提升抓取精度。</li>
+</ul>
+</li>
+<li>
+<p><strong>成果总结</strong>：</p>
+<ul>
+<li>系统能够识别多种常见餐品并完成抓取，抓取成功率超过90%。</li>
+<li>机械臂动作流畅，能够适应不同餐品的形状和位置。</li>
+<li>掌握了视觉伺服控制和机械臂运动学建模方法。</li>
+<li>识别与抓取模块能够与整体系统无缝集成。</li>
+</ul>
+</li>
+<li>
+<p><strong>问题与解决方案</strong>：</p>
+<ul>
+<li>机械臂抓取精度不高，部分餐品抓取失败。</li>
+<li>解决方案：优化视觉坐标转换算法，增加多点校准，提升机械臂定位精度。</li>
+<li>餐品种类多样，部分样本识别效果不佳。</li>
+<li>解决方案：扩充训练数据集，采用多模型融合提升识别准确率。</li>
+</ul>
+</li>
+</ul>
+<h3>第6天：路径规划与导航</h3>
+<ul>
+<li>
+<p><strong>任务目标</strong>：</p>
+<ul>
+<li>开发基于YOLOv4的路径规划程序。</li>
+<li>实现机器人根据线路标识自主导航。</li>
+<li>掌握路径规划算法与导航栈集成。</li>
+</ul>
+</li>
+<li>
+<p><strong>操作步骤</strong>：</p>
+<ul>
+<li>使用YOLOv4识别地面线路标识，输出线路类型和位置。</li>
+<li>编写<code class="notranslate">traffic_line</code>类，解析识别结果并生成导航路径。</li>
+<li>将路径信息发送给导航栈，调用move_base进行避障和路径跟踪。</li>
+<li>测试不同场景下的路径规划效果，包括直线、转弯、交叉路口等。</li>
+<li>结合激光雷达数据，提升路径规划的鲁棒性。</li>
+<li>记录导航过程中的偏差和纠正措施，分析导航精度。</li>
+</ul>
+</li>
+<li>
+<p><strong>成果总结</strong>：</p>
+<ul>
+<li>机器人能够识别线路标识并沿预定路线行驶，支持转弯和交叉路口处理。</li>
+<li>路径规划与避障功能集成顺利，导航过程平稳。</li>
+<li>掌握了基于视觉的路径规划与导航栈集成方法。</li>
+<li>系统能够适应复杂校园环境下的导航需求。</li>
+</ul>
+</li>
+<li>
+<p><strong>问题与解决方案</strong>：</p>
+<ul>
+<li>复杂路径下容易偏离路线，导航精度不足。</li>
+<li>解决方案：增加路径校正算法，结合激光雷达和视觉数据进行多传感器融合。</li>
+<li>路径规划计算量大，影响实时性。</li>
+<li>解决方案：优化算法结构，采用分层规划和局部路径修正。</li>
+</ul>
+</li>
+</ul>
+<h3>第7天：系统集成与测试</h3>
+<ul>
+<li>
+<p><strong>任务目标</strong>：</p>
+<ul>
+<li>将各功能模块集成到统一系统中。</li>
+<li>进行端到端测试，验证整体流程。</li>
+<li>掌握系统集成、调试与测试方法。</li>
+</ul>
+</li>
+<li>
+<p><strong>操作步骤</strong>：</p>
+<ul>
+<li>编写<code class="notranslate">robotController</code>类，协调各模块之间的交互，包括运动控制、视觉识别、机械臂抓取、导航等。</li>
+<li>设计系统状态机，管理各功能模块的切换与协作。</li>
+<li>测试从订单接收、取餐、导航到送餐的完整流程，记录各环节耗时和成功率。</li>
+<li>使用<code class="notranslate">rosbag</code>录制和回放测试数据，便于问题复现和调试。</li>
+<li>分析系统瓶颈，优化模块间通信协议，减少冗余数据传输。</li>
+<li>组织团队成员分工协作，提升集成效率。</li>
+</ul>
+</li>
+<li>
+<p><strong>成果总结</strong>：</p>
+<ul>
+<li>系统能够完成从订单接收、取餐、导航到送餐的全流程，各模块之间通信稳定，响应及时。</li>
+<li>端到端测试通过，系统功能完整，具备实际应用能力。</li>
+<li>掌握了系统集成与调试方法，提升了团队协作能力。</li>
+<li>通过数据录制与回放，提升了问题定位和复现效率。</li>
+</ul>
+</li>
+<li>
+<p><strong>问题与解决方案</strong>：</p>
+<ul>
+<li>模块间通信存在延迟，影响系统响应速度。</li>
+<li>解决方案：优化通信协议，采用异步消息机制，减少冗余数据传输。</li>
+<li>系统集成过程中出现模块兼容性问题。</li>
+<li>解决方案：统一接口规范，增加模块间适配层，提升系统兼容性。</li>
+</ul>
+</li>
+</ul>
+<h3>第8天：优化与调整</h3>
+<ul>
+<li>
+<p><strong>任务目标</strong>：</p>
+<ul>
+<li>对系统进行性能优化。</li>
+<li>提高识别准确率和运动稳定性。</li>
+<li>掌握系统性能分析与优化方法。</li>
+</ul>
+</li>
+<li>
+<p><strong>操作步骤</strong>：</p>
+<ul>
+<li>调整模型超参数，优化推理速度，采用模型剪枝、量化等方法提升效率。</li>
+<li>使用滤波算法平滑运动轨迹，减少机器人运动抖动。</li>
+<li>对机械臂抓取动作进行精细调整，提升抓取精度和稳定性。</li>
+<li>分析各模块CPU、GPU占用率，定位性能瓶颈。</li>
+<li>重构部分代码结构，采用多线程和异步处理机制，提升系统并发能力。</li>
+<li>多轮测试不同优化方案，记录性能提升效果。</li>
+</ul>
+</li>
+<li>
+<p><strong>成果总结</strong>：</p>
+<ul>
+<li>系统性能显著提升，识别准确率提高至95%以上，运动更加平稳，无明显抖动。</li>
+<li>机械臂抓取精度提升，抓取成功率进一步提高。</li>
+<li>掌握了系统性能分析、优化和重构方法。</li>
+<li>系统具备更强的鲁棒性和扩展性。</li>
+</ul>
+</li>
+<li>
+<p><strong>问题与解决方案</strong>：</p>
+<ul>
+<li>某些模块存在性能瓶颈，影响整体效率。</li>
+<li>解决方案：重构代码结构，采用异步处理机制，合理分配计算资源。</li>
+<li>优化过程中出现新Bug，影响系统稳定性。</li>
+<li>解决方案：增加单元测试和集成测试，及时发现和修复问题。</li>
+</ul>
+</li>
+</ul>
+<h3>第9天：功能扩展与创新</h3>
+<ul>
+<li>
+<p><strong>任务目标</strong>：</p>
+<ul>
+<li>扩展系统功能，如语音播报、实时监控等。</li>
+<li>提升用户体验和系统智能化水平。</li>
+<li>掌握多媒体处理与人机交互技术。</li>
+</ul>
+</li>
+<li>
+<p><strong>操作步骤</strong>：</p>
+<ul>
+<li>集成TTS语音合成模块，实现订单提醒和状态播报，提升人机交互体验。</li>
+<li>开发基于RTSP的实时视频传输系统，实现远程监控和调试。</li>
+<li>使用Web界面展示系统运行状态，支持远程操作和数据可视化。</li>
+<li>设计多种交互方式，包括语音、图像、Web端等，提升系统易用性。</li>
+<li>测试各扩展功能的稳定性和兼容性，收集用户反馈。</li>
+<li>分析扩展功能对系统性能的影响，优化资源分配。</li>
+</ul>
+</li>
+<li>
+<p><strong>成果总结</strong>：</p>
+<ul>
+<li>系统功能更加丰富，支持语音交互和远程监控，用户体验得到显著提升。</li>
+<li>多媒体处理与人机交互模块集成顺利，系统智能化水平提升。</li>
+<li>掌握了TTS、RTSP、Web开发等多种技术。</li>
+<li>扩展功能对系统性能影响可控，整体运行稳定。</li>
+</ul>
+</li>
+<li>
+<p><strong>问题与解决方案</strong>：</p>
+<ul>
+<li>视频传输存在延迟，影响实时性。</li>
+<li>解决方案：优化网络配置，使用H.264编码压缩图像数据，提升传输效率。</li>
+<li>语音播报与主流程存在同步问题。</li>
+<li>解决方案：设计异步消息队列，确保语音播报与系统状态同步。</li>
+</ul>
+</li>
+</ul>
+<h3>第10天：总结与汇报</h3>
+<ul>
+<li>
+<p><strong>任务目标</strong>：</p>
+<ul>
+<li>总结实习成果，撰写实习报告。</li>
+<li>准备汇报材料，展示系统功能。</li>
+<li>反思项目过程，提出改进建议。</li>
+</ul>
+</li>
+<li>
+<p><strong>操作步骤</strong>：</p>
+<ul>
+<li>整理实验数据，包括日志、截图、视频等，归档各阶段成果。</li>
+<li>撰写实习报告，详细总结每一阶段的任务、方法、成果与问题。</li>
+<li>制作PPT演示文稿，准备系统演示视频，展示系统功能和技术亮点。</li>
+<li>进行成果汇报，向指导教师和同学展示项目成果，收集反馈意见。</li>
+<li>反思项目开发过程，总结经验教训，提出后续优化和扩展方向。</li>
+</ul>
+</li>
+<li>
+<p><strong>成果总结</strong>：</p>
+<ul>
+<li>完成实习报告和汇报材料，系统功能完善，准备进行正式汇报。</li>
+<li>汇报过程中获得积极反馈，提出多项改进建议。</li>
+<li>项目文档和数据资料齐全，便于后续查阅和复用。</li>
+</ul>
+</li>
+<li>
+<p><strong>问题与解决方案</strong>：</p>
+<ul>
+<li>数据记录不完整，部分实验细节遗漏。</li>
+<li>解决方案：回顾实验过程，补充缺失数据，完善文档记录。</li>
+<li>汇报材料内容繁杂，重点不突出。</li>
+<li>解决方案：梳理汇报结构，突出技术亮点和创新点。</li>
+</ul>
+</li>
+</ul>
+<h2>实习结果</h2>
+<p>通过本次实习，成功开发了一套完整的智慧校园订餐机器人系统。该系统能够实现机器人在校园环境中的自主导航、红绿灯识别、餐品识别与抓取等功能。系统运行稳定，识别准确率高，能够满足实际应用需求。通过项目开发，系统架构设计、模块集成、调试优化等能力得到显著提升。团队协作高效，分工明确，项目进展顺利。实习过程中积累了丰富的工程经验和问题解决能力。</p>
+<h2>实习总结</h2>
+<p>本次实习让我对机器人技术有了更深入的理解，特别是在路径规划、目标识别与控制方面。通过实际项目开发，我掌握了ROS开发环境的搭建、机器人运动控制、视觉识别、机械臂控制、路径规划、系统集成等关键技术。实习过程中，遇到诸多技术难题，如依赖冲突、识别误差、运动抖动、通信延迟等，通过查阅文档、团队讨论和反复调试，逐步解决了问题，提升了工程实践能力。</p>
+<p>此外，实习锻炼了我的团队协作和沟通能力。在项目开发过程中，大家分工协作，互相配合，及时交流进展和问题，保证了项目的顺利推进。通过系统集成与测试，深刻体会到模块化设计和接口规范的重要性。</p>
+<p>在未来的学习和工作中，我将继续深入研究机器人技术，关注人工智能、自动控制、计算机视觉等前沿领域的发展，努力提升自己的专业素养和创新能力，为相关领域的发展贡献自己的力量。</p>
+<p><strong>指导教师评语</strong>：[指导教师评语]</p>
+<p><strong>指导教师签字</strong>：[指导教师姓名]</p>
+<p><strong>日期</strong>：[具体日期]</p>
+<hr>
+<h1>实习日志</h1>
+<h2>第1天：环境搭建与工程准备</h2>
+<ul>
+<li><strong>实习地点</strong>：[实习地点]</li>
+<li><strong>指导教师</strong>：[指导教师姓名]</li>
+<li><strong>实习内容</strong>：
+<ul>
+<li>早上到实验室后，首先对机器人小车、摄像头、机械臂等硬件设备进行了全面检查，确保各模块连接正常。</li>
+<li>通过U盘安装Ubuntu 18.04系统，配置SSH服务，实现远程开发环境，便于后续调试。</li>
+<li>创建ROS工作空间catkin_ws，安装ROS Melodic，配置环境变量，测试官方示例包编译和运行。</li>
+<li>安装TensorFlow、LabelImg、PyQt5等工具，配置Python3虚拟环境，测试各依赖库兼容性。</li>
+<li>安装OpenCV 4.x，编写测试脚本，验证摄像头数据采集、图像显示和保存功能。</li>
+<li>阅读ROS官方文档，了解节点、话题、服务、参数服务器等基本概念。</li>
+<li>记录安装过程中遇到的依赖冲突、源失效等问题，并查阅社区解决方案。</li>
+</ul>
+</li>
+<li><strong>小结</strong>：
+<ul>
+<li>成功搭建了开发环境，能够远程连接和操作机器人小车。</li>
+<li>熟悉了ROS开发流程和常用工具，为后续开发打下坚实基础。</li>
+<li>遇到的问题：在安装ROS过程中遇到依赖包冲突和源失效，通过更换国内源、清理缓存、重新安装等方法解决。</li>
+<li>摄像头驱动与OpenCV版本不兼容，升级OpenCV并测试多种接口后解决。</li>
+<li>通过查阅文档和团队讨论，提升了独立解决问题的能力。</li>
+</ul>
+</li>
+</ul>
+<h2>第2天：机器人运动控制开发</h2>
+<ul>
+<li><strong>实习地点</strong>：[实习地点]</li>
+<li><strong>指导教师</strong>：[指导教师姓名]</li>
+<li><strong>实习内容</strong>：
+<ul>
+<li>学习ROS消息通信机制，重点了解geometry_msgs/Twist消息类型和底盘控制原理。</li>
+<li>编写move_base类，定义机器人的运动控制函数，包括速度设置、方向控制、急停等。</li>
+<li>使用teleop_twist_keyboard工具进行键盘控制测试，验证指令响应速度和准确性。</li>
+<li>结合rqt_graph工具，分析节点间通信关系，确保消息流畅传递。</li>
+<li>设计速度平滑算法，避免机器人运动时出现突变。</li>
+<li>记录不同速度、加速度参数下机器人的运动表现，分析运动稳定性。</li>
+<li>多次测试不同场景下的运动控制效果，收集数据用于后续优化。</li>
+</ul>
+</li>
+<li><strong>小结</strong>：
+<ul>
+<li>机器人能够根据键盘输入执行前进、后退、左转、右转、停止等指令，运动流畅。</li>
+<li>通过rqt_graph可视化节点通信，提升了对系统架构的理解。</li>
+<li>遇到的问题：机器人运动时存在抖动现象，速度变化不平滑。通过调整PID参数、优化控制算法、增加速度滤波，显著提升运动稳定性。</li>
+<li>键盘控制存在延迟，优化消息发布频率和指令缓冲机制后解决。</li>
+<li>通过多次测试和数据分析，积累了运动控制调试经验。</li>
+</ul>
+</li>
+</ul>
+<h2>第3天：二维码识别与定位</h2>
+<ul>
+<li><strong>实习地点</strong>：[实习地点]</li>
+<li><strong>指导教师</strong>：[指导教师姓名]</li>
+<li><strong>实习内容</strong>：
+<ul>
+<li>学习OpenCV ArUco模块，了解二维码检测与空间定位原理。</li>
+<li>编写aruco_distance类，加载摄像头数据，检测二维码ID、位置和姿态。</li>
+<li>利用相机内参和畸变参数，进行空间坐标转换，估算二维码与机器人的相对距离和角度。</li>
+<li>将识别结果封装为ROS消息，发布给导航模块。</li>
+<li>在不同光照、角度、距离下测试二维码识别效果，记录识别率和误差。</li>
+<li>使用rviz可视化二维码识别结果，验证空间定位的准确性。</li>
+<li>记录识别失败的原因，分析改进方向。</li>
+</ul>
+</li>
+<li><strong>小结</strong>：
+<ul>
+<li>机器人能够通过摄像头实时识别二维码，计算距离和角度，满足导航需求。</li>
+<li>遇到的问题：光线不足或二维码污损导致识别率下降，通过调整摄像头参数、增加补光灯、优化图像预处理算法提升识别率。</li>
+<li>空间定位误差较大，标定相机内参、优化坐标转换算法后精度提升。</li>
+<li>掌握了视觉识别与空间定位的基本方法。</li>
+</ul>
+</li>
+</ul>
+<h2>第4天：红绿灯识别</h2>
+<ul>
+<li><strong>实习地点</strong>：[实习地点]</li>
+<li><strong>指导教师</strong>：[指导教师姓名]</li>
+<li><strong>实习内容</strong>：
+<ul>
+<li>学习YOLOv4目标检测模型，准备红绿灯数据集进行微调。</li>
+<li>编写object_detection类，加载YOLOv4模型，订阅摄像头图像话题，进行红绿灯检测。</li>
+<li>输出红绿灯类别和置信度，根据识别结果发布交通信号状态信息。</li>
+<li>在不同光照、距离、角度下测试识别效果，记录准确率和误报率。</li>
+<li>优化模型推理速度，尝试TensorRT加速部署。</li>
+<li>结合rviz和自定义可视化工具，展示红绿灯检测结果。</li>
+</ul>
+</li>
+<li><strong>小结</strong>：
+<ul>
+<li>机器人能够在斑马线前准确识别红绿灯状态，识别延迟低于200ms。</li>
+<li>遇到的问题：实际环境中红绿灯背景复杂，误识别率较高。通过微调模型权重、增加训练样本、采用数据增强等方法提升模型泛化能力。</li>
+<li>推理速度受限于硬件性能，采用模型剪枝、量化和GPU加速后显著提升。</li>
+<li>掌握了深度学习模型的训练、部署和优化流程。</li>
+</ul>
+</li>
+</ul>
+<h2>第5天：餐品识别与抓取</h2>
+<ul>
+<li><strong>实习地点</strong>：[实习地点]</li>
+<li><strong>指导教师</strong>：[指导教师姓名]</li>
+<li><strong>实习内容</strong>：
+<ul>
+<li>学习机械臂运动学与视觉伺服控制原理。</li>
+<li>使用YOLOv4模型进行餐品识别，输出餐品位置和类别。</li>
+<li>编写food_handle类，将识别结果通过ROS消息发送给机械臂控制器，计算抓取点坐标。</li>
+<li>机械臂执行抓取动作，反馈执行状态。</li>
+<li>设计抓取策略，包括避障、夹爪开合、路径规划等。</li>
+<li>多次测试不同餐品的识别与抓取，记录成功率和失败原因。</li>
+<li>优化视觉坐标到机械臂坐标的转换算法，提升抓取精度。</li>
+</ul>
+</li>
+<li><strong>小结</strong>：
+<ul>
+<li>机器人能够识别多种餐品并使用机械臂进行抓取，抓取成功率超过90%。</li>
+<li>遇到的问题：机械臂抓取精度不高，部分餐品抓取失败。通过优化视觉坐标转换算法、增加多点校准、扩充训练数据集，提升了识别和抓取精度。</li>
+<li>掌握了视觉伺服控制和机械臂运动学建模方法。</li>
+</ul>
+</li>
+</ul>
+<h2>第6天：路径规划与导航</h2>
+<ul>
+<li><strong>实习地点</strong>：[实习地点]</li>
+<li><strong>指导教师</strong>：[指导教师姓名]</li>
+<li><strong>实习内容</strong>：
+<ul>
+<li>学习路径规划算法与导航栈集成方法。</li>
+<li>使用YOLOv4识别地面线路标识，输出线路类型和位置。</li>
+<li>编写traffic_line类，解析识别结果并生成导航路径。</li>
+<li>将路径信息发送给导航栈，调用move_base进行避障和路径跟踪。</li>
+<li>测试不同场景下的路径规划效果，包括直线、转弯、交叉路口等。</li>
+<li>结合激光雷达数据，提升路径规划的鲁棒性。</li>
+<li>记录导航过程中的偏差和纠正措施，分析导航精度。</li>
+</ul>
+</li>
+<li><strong>小结</strong>：
+<ul>
+<li>机器人能够识别线路标识并沿预定路线行驶，支持转弯和交叉路口处理。</li>
+<li>遇到的问题：复杂路径下容易偏离路线，导航精度不足。通过增加路径校正算法、融合激光雷达和视觉数据，提升了导航精度。</li>
+<li>掌握了基于视觉的路径规划与导航栈集成方法。</li>
+</ul>
+</li>
+</ul>
+<h2>第7天：系统集成与测试</h2>
+<ul>
+<li><strong>实习地点</strong>：[实习地点]</li>
+<li><strong>指导教师</strong>：[指导教师姓名]</li>
+<li><strong>实习内容</strong>：
+<ul>
+<li>学习系统集成、调试与测试方法。</li>
+<li>编写robotController类，协调各模块之间的交互，包括运动控制、视觉识别、机械臂抓取、导航等。</li>
+<li>设计系统状态机，管理各功能模块的切换与协作。</li>
+<li>测试从订单接收、取餐、导航到送餐的完整流程，记录各环节耗时和成功率。</li>
+<li>使用rosbag录制和回放测试数据，便于问题复现和调试。</li>
+<li>分析系统瓶颈，优化模块间通信协议，减少冗余数据传输。</li>
+<li>组织团队成员分工协作，提升集成效率。</li>
+</ul>
+</li>
+<li><strong>小结</strong>：
+<ul>
+<li>系统能够完成从取餐到送餐的完整流程，各模块之间通信稳定，响应及时。</li>
+<li>遇到的问题：模块间通信存在延迟，影响系统响应速度。通过优化通信协议、采用异步消息机制、减少冗余数据传输，显著提升了系统性能。</li>
+<li>系统集成过程中出现模块兼容性问题，统一接口规范、增加适配层后解决。</li>
+<li>通过数据录制与回放，提升了问题定位和复现效率。</li>
+</ul>
+</li>
+</ul>
+<h2>第8天：优化与调整</h2>
+<ul>
+<li><strong>实习地点</strong>：[实习地点]</li>
+<li><strong>指导教师</strong>：[指导教师姓名]</li>
+<li><strong>实习内容</strong>：
+<ul>
+<li>学习系统性能分析与优化方法。</li>
+<li>调整模型超参数，优化推理速度，采用模型剪枝、量化等方法提升效率。</li>
+<li>使用滤波算法平滑运动轨迹，减少机器人运动抖动。</li>
+<li>对机械臂抓取动作进行精细调整，提升抓取精度和稳定性。</li>
+<li>分析各模块CPU、GPU占用率，定位性能瓶颈。</li>
+<li>重构部分代码结构，采用多线程和异步处理机制，提升系统并发能力。</li>
+<li>多轮测试不同优化方案，记录性能提升效果。</li>
+</ul>
+</li>
+<li><strong>小结</strong>：
+<ul>
+<li>系统性能显著提升，识别准确率提高至95%以上，运动更加平稳，无明显抖动。</li>
+<li>遇到的问题：某些模块存在性能瓶颈，影响整体效率。通过重构代码结构、采用异步处理机制、合理分配计算资源，显著提升了系统性能。</li>
+<li>优化过程中出现新Bug，增加单元测试和集成测试后及时发现和修复。</li>
+<li>掌握了系统性能分析、优化和重构方法。</li>
+</ul>
+</li>
+</ul>
+<h2>第9天：功能扩展与创新</h2>
+<ul>
+<li><strong>实习地点</strong>：[实习地点]</li>
+<li><strong>指导教师</strong>：[指导教师姓名]</li>
+<li><strong>实习内容</strong>：
+<ul>
+<li>学习多媒体处理与人机交互技术。</li>
+<li>集成TTS语音合成模块，实现订单提醒和状态播报。</li>
+<li>开发基于RTSP的实时视频传输系统，实现远程监控和调试。</li>
+<li>使用Web界面展示系统运行状态，支持远程操作和数据可视化。</li>
+<li>设计多种交互方式，包括语音、图像、Web端等，提升系统易用性。</li>
+<li>测试各扩展功能的稳定性和兼容性，收集用户反馈。</li>
+<li>分析扩展功能对系统性能的影响，优化资源分配。</li>
+</ul>
+</li>
+<li><strong>小结</strong>：
+<ul>
+<li>系统功能更加丰富，支持语音交互和远程监控，用户体验得到显著提升。</li>
+<li>遇到的问题：视频传输存在延迟，影响实时性。通过优化网络配置、使用H.264编码压缩图像数据，提升了传输效率。</li>
+<li>语音播报与主流程存在同步问题，设计异步消息队列后解决。</li>
+<li>掌握了TTS、RTSP、Web开发等多种技术。</li>
+</ul>
+</li>
+</ul>
+<h2>第10天：总结与汇报</h2>
+<ul>
+<li><strong>实习地点</strong>：[实习地点]</li>
+<li><strong>指导教师</strong>：[指导教师姓名]</li>
+<li><strong>实习内容</strong>：
+<ul>
+<li>整理实验数据，包括日志、截图、视频等，归档各阶段成果。</li>
+<li>撰写实习报告，详细总结每一阶段的任务、方法、成果与问题。</li>
+<li>制作PPT演示文稿，准备系统演示视频，展示系统功能和技术亮点。</li>
+<li>进行实习成果汇报，向指导教师和同学展示项目成果，收集反馈意见。</li>
+<li>反思项目开发过程，总结经验教训，提出后续优化和扩展方向。</li>
+</ul>
+</li>
+<li><strong>小结</strong>：
+<ul>
+<li>完成实习报告和汇报材料，系统功能完善，准备进行正式汇报。</li>
+<li>遇到的问题：数据记录不完整，部分实验细节遗漏。通过回顾实验过程、补充缺失数据，完善了文档记录。</li>
+<li>汇报材料内容繁杂，重点不突出。通过梳理汇报结构、突出技术亮点和创新点，提升了汇报效果。</li>
+<li>通过本次实习，系统开发能力、团队协作能力和工程素养得到全面提升。</li>
+</ul>
+</li>
+</ul></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://wzh922.github.io/blog">狒材的blog</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+var utterancesLoad=0;
+
+let themeSettings={
+    "dark": ["dark","moon","#00f0ff","dark-blue"],
+    "light": ["light","sun","#ff5000","github-light"],
+    "auto": ["auto","sync","","preferred-color-scheme"]
+};
+function changeTheme(mode, icon, color, utheme){
+    document.documentElement.setAttribute("data-color-mode",mode);
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
+}
+function modeSwitch(){
+    let currentMode=document.documentElement.getAttribute('data-color-mode');
+    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+    localStorage.setItem("meek_theme", newMode);
+    if(themeSettings[newMode]){
+        changeTheme(...themeSettings[newMode]);
+    }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
+}
+if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
+console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","wzh922/blog");
+    script.setAttribute("issue-term","title");
+    
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else if(localStorage.getItem("meek_theme")=="light") {script.setAttribute("theme","github-light");}
+    else{script.setAttribute("theme","preferred-color-scheme");}
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+
+
+</script>
+
+
+</html>
