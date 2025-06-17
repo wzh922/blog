@@ -1,5 +1,17 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>狒材的blog</title><link>https://wzh922.github.io/blog</link><description>前路漫漫亦灿灿！</description><copyright>狒材的blog</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://avatars.githubusercontent.com/u/210956220?s=400&amp;u=c0d549ac9c109d6ad35fde23e0aff5b3213fc57e&amp;v=4</url><title>avatar</title><link>https://wzh922.github.io/blog</link></image><lastBuildDate>Mon, 16 Jun 2025 11:49:42 +0000</lastBuildDate><managingEditor>狒材的blog</managingEditor><ttl>60</ttl><webMaster>狒材的blog</webMaster><item><title>套磁信之模式识别</title><link>https://wzh922.github.io/blog/post/tao-ci-xin-zhi-mo-shi-shi-bie.html</link><description>尊敬的XXX老师：
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>狒材的blog</title><link>https://wzh922.github.io/blog</link><description>前路漫漫亦灿灿！</description><copyright>狒材的blog</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://avatars.githubusercontent.com/u/210956220?s=400&amp;u=c0d549ac9c109d6ad35fde23e0aff5b3213fc57e&amp;v=4</url><title>avatar</title><link>https://wzh922.github.io/blog</link></image><lastBuildDate>Tue, 17 Jun 2025 02:30:21 +0000</lastBuildDate><managingEditor>狒材的blog</managingEditor><ttl>60</ttl><webMaster>狒材的blog</webMaster><item><title>面试记录</title><link>https://wzh922.github.io/blog/post/mian-shi-ji-lu.html</link><description># 2025年6月16日
+
+---
+
+## 一、西北工业大学 · 计算机学院 · 曹聪琦老师
+
+### ▎提问环节
+
+**Q1**  
+你的简历上写了三个和人工智能相关的项目，讲一个最有代表性的？  
+
+**A1**  
+基于深度学习的无人陆空物流系统，我负责标注数据集以及训练YOLO Detect模型，并且引用了开源的YOLOP实现对车道线和车道的分割，此外我还负责实现内网穿透功能，实现网页端能通过调用JavaScript代码实现对我电脑本机后端模型的调用。</description><guid isPermaLink="true">https://wzh922.github.io/blog/post/mian-shi-ji-lu.html</guid><pubDate>Tue, 17 Jun 2025 02:29:53 +0000</pubDate></item><item><title>套磁信之模式识别</title><link>https://wzh922.github.io/blog/post/tao-ci-xin-zhi-mo-shi-shi-bie.html</link><description>尊敬的XXX老师：
 &amp;emsp;&amp;emsp;您好！
 &amp;emsp;&amp;emsp;我是东北林业大学（211、双一流）人工智能专业大三学生王志浩，非常渴望能在您的指导下**攻读硕士学位**，深入探索**模式识别领域**的前沿技术。</description><guid isPermaLink="true">https://wzh922.github.io/blog/post/tao-ci-xin-zhi-mo-shi-shi-bie.html</guid><pubDate>Mon, 16 Jun 2025 02:51:16 +0000</pubDate></item><item><title>被养鱼的回复</title><link>https://wzh922.github.io/blog/post/bei-yang-yu-de-hui-fu.html</link><description>## 被钓成翘嘴了！
 
