@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    <script src='https://blog.meekdai.com/Gmeek/plugins/GmeekBSZ.js'></script>
+    <link rel="icon" href="https://avatars.githubusercontent.com/u/210956220?s=400&u=c0d549ac9c109d6ad35fde23e0aff5b3213fc57e&v=4"><script>
+        let theme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", theme);
+    </script>
+<meta name="description" content="你只看一次：统一的，实时的目标检测
+=================
+
+约瑟夫·雷德曼等
+
+摘  要
+
+　　我们提出了一种新的目标检测方法YOLO。">
+<meta property="og:title" content="You Only Look Once_Unified, Real-Time Object Detection">
+<meta property="og:description" content="你只看一次：统一的，实时的目标检测
+=================
+
+约瑟夫·雷德曼等
+
+摘  要
+
+　　我们提出了一种新的目标检测方法YOLO。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://wzh922.github.io/blog/post/You%20Only%20Look%20Once_Unified%2C%20Real-Time%20Object%20Detection.html">
+<meta property="og:image" content="https://avatars.githubusercontent.com/u/210956220?s=400&u=c0d549ac9c109d6ad35fde23e0aff5b3213fc57e&v=4">
+<title>You Only Look Once_Unified, Real-Time Object Detection</title>
+
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">You Only Look Once_Unified, Real-Time Object Detection</h1>
+<div class="title-right">
+    <a href="https://wzh922.github.io/blog" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/wzh922/blog/issues/22" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><h1>你只看一次：统一的，实时的目标检测</h1>
+<p>约瑟夫·雷德曼等</p>
+<p>摘  要</p>
+<p>　　我们提出了一种新的目标检测方法YOLO。先前在目标检测的工作中重新调整分类来执行检测。我们把目标检测做为一个空间分割边界框和关联类别概率的回归问题框架。一个神经网络在一次评估中，从一张图片中直接预测边界框和类别概率。因为全部的检测流水线在一个网络中，所以它可以直接对检测性能进行端到端优化。</p>
+<p>　　我们的统一架构非常快。我们的Base YOLO模型以每秒45帧的速度实时处理图像。一个小版本的网络模型Fast YOLO，在获得其它实时检测两倍的mAP下，仍能以惊人的155帧每秒的速度处理图像。与目前最先进的检测系统相比，YOLO有更多的定位错误，但是不太可能在背景下预测假阳性。最后，YOLO学习了对象的一般标示方法。与其它检测方法，包括DPM和R-CNN，从自然图像推广到其它领域（如艺术作品），表现优于其它检测方法。</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/728378aa45a6995913cd4c4e34c1c8141ad63588c400dc0a28795dadbbb10efa/68747470733a2f2f696d67323032302e636e626c6f67732e636f6d2f626c6f672f3538383131382f3230323030382f3538383131382d32303230303831313139343332343433322d313230333838373036332e706e67"><img src="https://camo.githubusercontent.com/728378aa45a6995913cd4c4e34c1c8141ad63588c400dc0a28795dadbbb10efa/68747470733a2f2f696d67323032302e636e626c6f67732e636f6d2f626c6f672f3538383131382f3230323030382f3538383131382d32303230303831313139343332343433322d313230333838373036332e706e67" alt="" data-canonical-src="https://img2020.cnblogs.com/blog/588118/202008/588118-20200811194324432-1203887063.png" style="max-width: 100%;"></a></p>
+<p><strong>图1 YOLO检测系统。YOLO处理图像是简单和直接的。我们的系统调整输入图像大小到448×448，在一张图像上运行一个卷积神经网络，并根据模型的置信度对检测结果进行阈值分析。</strong></p>
+<h1>1 引言</h1>
+<p>　　人类看一眼图像就能立即知道图像里面的对象，它们的位置和它们如何相互作用。人类的视觉系统是快速和准确的，使我们能执行例如伴随少意识思考的驾驶这种复杂的任务。对目标检测而言，快速和准确的检测算法，将允许在不使用特殊传感器的条件下去计算机去驾驶汽车，允许辅助设备来传达实时场景信息来给人类用户，并用来开发通用的、反映灵敏的机器人系统。</p>
+<p>　　当前的检测检测系统重新使用分类器来执行检测。为了检测一个对象，这个系统对该对象使用一个分类器，并在测试图像中的不同位置和比例进行评估。像DPM这样的系统使用滑动窗口方法，分类器在整个图像上均匀分布的位置运行。</p>
+<p>　　最近更多的方法（如R-CNN）使用区域建议方法，首先在一张图像中产生可能的边界框。分类后，利用后处理对边界框进行细化，消除重复检测，并根据场景中的其它对象对边界框进行重新扫描。这些复杂的流水线很慢。并且因为每个独立的部分都需要被分开训练，所以很难去优化。</p>
+<p>　　我们将目标检测重新定义为一个单一的检测问题，从图像像素直接到边界框坐标和类别概率。使用我们的系统，你只需要在一张图像看一次就能预测出目标是什么和它们的位置。</p>
+<p>　　YOLO是非常简单单：如图1。一个卷积神经网络同时预测多个边界框和这些框类别概率。YOLO在完整的图像上训练，并直接优化检测性能。这个统一的模型相比较于传统检测模型有很多有点。</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/fb70452fdcdd481ca109afa7e264c3c5bb93359961e4b1427ab53b794378f751/68747470733a2f2f696d67323032302e636e626c6f67732e636f6d2f626c6f672f3538383131382f3230323030382f3538383131382d32303230303831313139343832313434342d313939323737373335352e706e67"><img src="https://camo.githubusercontent.com/fb70452fdcdd481ca109afa7e264c3c5bb93359961e4b1427ab53b794378f751/68747470733a2f2f696d67323032302e636e626c6f67732e636f6d2f626c6f672f3538383131382f3230323030382f3538383131382d32303230303831313139343832313434342d313939323737373335352e706e67" alt="" data-canonical-src="https://img2020.cnblogs.com/blog/588118/202008/588118-20200811194821444-1992777355.png" style="max-width: 100%;"></a></p>
+<p><strong>图****2</strong> **模型。我们的系统把检测模型作为一个回归问题。它把图像分为<strong>S</strong>×S个网格，并且对每个网格单元预测B个边界框，框的置信度，和C个类别概率。这些预测值被编码为S×S×****(<strong>B×5+C</strong>)**<strong>的张量。</strong></p>
+<p>　　第一，YOLO非常快。因为我们把检测做为一个回归问题来处理，所以我们不需要复杂的流水线。我们只需要在测试时对新图像运行神经网络来预测结果。我们的基本网络在一张Titan X GPU上，没有批处理时，运行到达45帧每秒，并且一个快版本超过150帧每秒。这意味着我们可以在小于25毫秒延时的实时情况下处理视频流。此外，YOLO于其它实时检测系统相比，获得了超过两倍的均值平均准确率。</p>
+<p>　　第二，YOLO在预测时对图像给出了全部结果。不像滑动窗口和区域建议技术，YOLO在训练和测试期间看了整张图像，所以它隐式地编码了关于类别和它们位置上下文信息。Fast R-CNN是一种顶级检测方法，它会将图像中的背景片面误认为是物体，因为它看不到更大的背景。YOLO比Fast R-CNN的背景错误数少一半。</p>
+<p>　　第三，YOLO学习对象的一般化表示。当在自然图像上训练和在艺术作品上测试时，YOLO的性能远远优于DPM和R-CNN这种顶级检测方法。因为YOLO有高度通用性，所以当它应用于新的领域和意外输入时，不大可能崩溃。</p>
+<p>　　YOLO在准确率上仍然落后于目前最先进的检测系统。虽然能快速的辨别一张图像中的物体，但它很难精确的定位某些物体，尤其是小物体。我们在实验中进一步检验了这些平衡取舍</p>
+<h1>2 统一检测</h1>
+<p>　　我们在一个神经网络中统一划分目标检测的组件。我们的网络使用来自完整图像的特征来预测每个边界框。它也在一种图像中预测所有类别的同时，预测全部的边界框。YOLO设计能给进行端到端的训练，和在保持高精平均确度同时到达实时的速度。</p>
+<p>　　我们的系统把输入图像划分成S×S个网格。如果一个物体的中心落入到一个网格单元中，那么这个网格单元就负责检测这个物体。</p>
+<p>　　每一个网格单元预测B个边界框和这些框的置信度分数。这些置信度分数反映了这个模型的框包含物体的置信度和它认为框是预测物体的准确度。我们形式的定义置信度为。如果在网格中不存在物体，置信度分数为0。否则我们让置信度分数等于预测框和真实框的交并集。</p>
+<p>　　每个边界框包含5个预测值：x，y，w，h和confidence。(x,y)的坐标表示相对于单元网格框的中心。宽和高是整张图像相对长度预测。最后的置信度预测值表示预测框和任何真实框的交并集。</p>
+<p>　　每个网格单元预测C个类别概率置信度。这些概率是在网格单元上包含物体置信度的概率。无论框B的数量是多少，我们在每个网格单元预测一系列类别概率。</p>
+<p>　　在测试时，我们使用类别概率置信度乘以每个框置信度预测值，</p>
+<p>　　这给了我们每个框特定类别的置信度。这些分数对出现在框中的每个类别的概率和这些预测框匹配程度同时进行编码。</p>
+<p>　　对于YOLO在PASCAL数据集上的评估，我们使S=7，B=2。PASCAL VOC有20个标签，所以C=20。我们最终预测是一个7×7×30的张量。</p>
+<h2>2.1 网络设计</h2>
+<p>　　我们使用卷积神经网络来实现这个模型，并且在PASCAL VOC检测数据集上进行评估。网络的初始卷积层从图像中提取特征，而全连接层则预测输出概率和坐标。</p>
+<p>　　我们的网络结构是从图像分类GoogLeNet模型中获得的灵感。我们的网络有24个卷积</p>
+<p>　　层和最后的2个全连接层。我们简单的使用1×1还原层和接连的3×3卷积层来代替GoogLeNet中的inception模块。完整的网络如图3所示。</p>
+<p> </p>
+<p><strong>图3 结构。我们的检测网络有24个卷积层和连接的2个全连接层。交替的1×1卷积层减少了前一层的特征空间。我们使用一半的分辨率（输入图像为224×224）在ImageNet分类任务网络上预训练了这些卷积层，然后用两倍分辨率来检测。</strong></p>
+<p>　　我们网络最后输出的预测值是7×7×30的张量。</p>
+<h2>2.2 训练</h2>
+<p>　　我们在ImageNet 1000分类竞赛数据集上预训练我们的卷积层。我们用图3的前20个卷积层和随后的一个平均池化层和一个全连接层来预训练。我们对这个网络进行了大约一周的训练，在ImageNet 2012验证集上，单次裁剪top-5的准确率达到88%。与Caffe模型库中的GoogNet模型相当。我们使用Darknet框架进行所有的训练和推理。</p>
+<p>　　然后我们转换模型类执行检测。Ren等人的研究表明在预训练网络中同时使用卷积层和全连接层可以提高网络性能。因为他们的实验，我们添加了随机初始权重的4个卷积层和2个全连接层。检测通常需要细粒度的视觉信息，所以我们把输入网络的分辨率从224×224增大到448×448。</p>
+<p>　　我们的学习率策略如下：在第一个周期，我们将学习率从提高到。如果我们从高学习率开始，我们的模型会因为不稳定的梯度而偏离。我们使用的学习率训练75个周期，然后使用学习率训练30个周期，最后使用学习率训练30个周期。</p>
+<p>　　为了避免过拟合，我们使用了随机丢失和大量的数据增强技术。在第一个全连接层之后，比例为0.5的随机丢失层阻止了层之间的协同适应。在数据增强方面，我们引入了原图像大小20%随机缩放和平移。我们还随机调整了图像的曝光度和饱和度，高达1.5倍的HSV颜色空间。</p>
+<h2>2.3 推断</h2>
+<p>　　正如训练一样，对一张测试图像的检测预测只需要一个网络进行评估。在PASCAL VOC上，网络预测出每张图像98个边界框和每个框的类别概率。YOLO在测试时间上非常快，因为它只需要一个单一的网络进行评估，不像基于分类的方法。</p>
+<p>　　网格设计在边界框预测中加强了空间多样性。通常一个物体落入哪个网格单元中是清楚的，并且网络在一个小格中仅预测一个物体。然而，一些大物体或多个单元边界附近的物体也能被多个单元很好定位。非极大值抑制可用于解决这些多个检测问题。虽然对性能并不像R-CNN或DPM那样重要，但非极大值抑制在mAP中增加了2-3%。</p>
+<h2>2.4 YOLO的局限性</h2>
+<p>　　因为每个网格单元只能预测两个框并且只能有一个类别，所以YOLO对边界框的预测施加了强大的空间约束。这个空间约束限制了我们的模型能预测的附近物体的数量。我们的模型对于像成群出现的小物体（如成群的鸟）的预测很困难。</p>
+<p>　　因为我们的模型从数据中学习预测边界框，所以它很难泛化到一个新的物体，或者不正常的宽高比或者配置。因为我们的框架从输入图像有多个下采样层，我们的模型也使用相对粗糙的特征来预测边界框。</p>
+<p>　　最后，当我们训练近似检测性能的损失函数时，我们的损失函数在小边界框和大边界框中处理错误方式一样。一个小误差在大边框中通常是良性的，但是一个小误差在小边框中对交并集有很大的影响。我们错误的主要来源是错误的定位。</p>
+<h1>3 与其它检测系统的比较</h1>
+<p>　　目标检测是计算机视觉的核心问题。检测流水线通常从输入图像中提取一系列鲁棒性特征开始，如Haar特征，SIFT特征，HOG特征，卷积特征。然后使用分类和定位定位来辨别特征空间中的物体。这些分类和定位器要么在整个图像上以滑动窗口方式运行，要么在图像中某些区域的子集上运行。我们把YOLO检测系统与一些顶级检测结构进行了比较，突出了关键的异同点。</p>
+<p>　　**De<strong>formable Parts Models</strong>。**DMP使用一个滑动窗口方法类检测物体。DPM使用不相交的管道来提取静态特征，分类区域，对高分区域预测边界框等。我的系统使用一个单一的卷积神经网络全部代替了这些相互分离的部分。该网络同时执行特征提取，边界框预测和非极大值抑制，和上下文推理。与静态特征不同，该网络在线训练特征并对其优化以执行检测任务。我们的统一结构带来了比DPM更快、更精确的模型。</p>
+<p>　　**R-CNN。**R-CNN及其变种使用区域建议而不是滑动窗口来寻找图像中的物体。选择性搜索潜在的边界框，一个卷积神经网络提取特征，一个SVM对框评分，一个线性模型调整边界框，并使用非极大值抑制来消除重复检测。这些复杂的流行线的每个阶段都必须独立地进行调整，并且产生的系统非常慢，在测试每张图像需要40秒以上的时间。</p>
+<p>　　YOLO与R-CNN有一些相似之处。每个网格单元建议潜在边界框，并且使用卷积特征对这些框评分。但是，我们的系统在每个网格单元建议有空间约束，这有助于减少对同一物体的多次检测。我们的系统也提出了少得多的边界框，每幅图像只用98个，相比而言选择性搜索大约有2000个。最后我们的系统把这些独立的组件合成一个单一的、联合优化的模型。</p>
+<p>　　<strong>Other Fast Detectors</strong>**。**Fast和Faster R-CNN专注于共享计算加速R-CNN框架，并使用神经网络代替选择性搜索来提出建议区域。虽然它们比R-CNN在速度和准确率都有提高，但它们仍然缺乏实时性能。</p>
+<p>　　许多研究工作集中在加速DPM流水线上。他们使用级联来加速HOG特征计算，并把计算放到GPU中。但是，只有30Hz的DPM可以在实时条件下运行。</p>
+<p>　　与尝试优化巨大检测流水线的每个单独组件相反，YOLO完全抛弃了管道，并且被设计的很快。</p>
+<p>　　单个类别（如人脸和人）的检测器可以得到高度优化，因为它们必须处理更少的变化。YOLO是一个通用的检测器，它可以同时检测多种物体。</p>
+<p>　　**Deep MultiBox。**Szegedy等人不像R-CNN训练一个卷积神经网络预测感兴趣区域来代替使用选择性搜索。MultiBox通过使用一个单一的分类预测,代替置信度预测也能执行单一目标检测。但是，MultiBox不能执行通用的目标检测，并且它仍然是一个巨大检测流水线中的一部分，需要对图像部分进一步分类。YOLO和MultiBox都在一张图像中使用一个卷积神经网络来预测边界框，但是YOLO是一个完整的检测系统。</p>
+<p>　　**OverFeat。**Sermanet等人训练一个卷积神经网络来执行定位，并调整定该位器来执行检测。OverFeat有效的执行滑动窗口检测，但它仍然是一个不关联的系统。OverFeat优化了定位，但没有有优化检测性能。像DPM一样，在预测是定位器只能看见局部信息。OverFeat不能产生全局上下文，因此需要大量的后处理来产生相关检测。</p>
+<p>　　**MultiGrasp。**我们的工作在设计上与Redmon等人提出的抓取检测工作类似。我们的网格边界框预测方法是基于回归抓取的MulitGrasp系统的。但是抓取检测比目标检测简单得多。对于包含一个物体的一张图像，MultiGrasp只需要预测一个可抓取区域。它不需要去估计大小、定位，或物体的边界，或预测分类。它只需要找到一个可抓取的区域。YOLO在一张图像中对多个物体和多个类别同时预测边界框和类别概率。</p>
+<h1>4 实验</h1>
+<p>　　首先我们把YOLO与其它实时检测系统在PASCAL VOC 2007上进行对比。为了理解YOLO和R-CNN变种的不同，我们探究YOLO和Fast R-CNN（其中一个在R-CNN中执行最快的版本）在VOC 2007上的错误率。基于这些不同错误的分析，我们证明了YOLO可以用于快速恢复Fast R-CNN检测，并且减少了背景为假阳性的错误率，使得性能极大的提升。我们也展示了VOC 2012上的结果，并将mAP与当前最先在的方法进行了比较。最后，我们证明了YOLO在两个艺术数据集上比其它检测器更好的推广到新的领域。</p>
+<h2>4.1 与其它实时系统的比较</h2>
+<p><strong>表****1</strong> <strong>在****PASCAL VOC 2007上的实时系统。对比最快检测器的性能和速度。Fast YOLO在PASCAL VOC上是最快的检测器，同时它的检测精度是其它实时检测器的两倍。YOLO的准确率比最快版高10个mAP，同时仍能有很好的实时速度。</strong></p>
+<p>　　目标检测的许多研究工作都集中在快速建立标准检测管道上。但是，只有Sdeghi等人真正实现了一个实时运行（30帧每秒或更快）的检测系统。我们把YOLO与他们的DPM在GPU上的实现（它能运行在30Hz或100Hz）进行比较。虽然其它的努力没有达到实时里程碑，我们也比较了他们的相对mAP和速度，用来检测在目标检测系统中可用的准确率和性能的折中。</p>
+<p>　　Fast YOLO是在PASCAL上我们已知的最快的目标检测方法，它是现在最快的目标检测器。mAP为52.7%，比先前的实时检测高出一倍多。YOLO将mAP提高到63.4%，同时仍能保持实时性能。</p>
+<p>　　我们也使用VGG-16来训练YOLO。这种模型精确度更高，但也比YOLO慢很多。与其它依赖与VGG-16的检测系统相比，它是有用的，但是由于它比实时慢，所以本文的其余部分将重点放在我们更快的模型上。</p>
+<p>　　最快的DPM在不牺牲大量mAP情况下能有效的加快DPM，但它仍然比实时性能差2倍。与神经网络方法相比，它的检测精度仍然相对较低。</p>
+<p>　　R-CNN减去R用静态边界框建议代替选择性搜索。虽然它比R-CNN快得多，但它仍然缺乏实时性，由于没有好的边界框建议，它的准确率受到了很大打击。</p>
+<p>　　Fast R-CNN加快了R-CNN分类阶段的速度，但是它仍然依赖与选择性搜索，这将花费每张图像2秒的时间来生成边界框建议。虽然他有很高的mAP，但只有0.5帧每秒，所以它仍然离实时很远。</p>
+<p>　　最近的Faster R-CNN用神经网络代替了区域搜索来建议边界框，与Szegedy等人类似。在我们的测试中，他们最准确的模型达到了7帧每秒，而更小、更不精确的模型能以18帧每秒运行。Faster R-CNN的VGG-16版本比YOLO高10个mAP，但要慢6倍。ZeilerFergus的Faster R-CNN只比YOLO慢2.5倍，但精确度很差。</p>
+<h2>4.2 在VOC 2007上的错误分析</h2>
+<p>　　为了进一步检测YOLO和最先进的检测器之间的区别，我们查看了在VOC 2007上的详细结果。我们把YOLO与Fast R-CNN进行比较，因为Fast R-CNN是在PASCAL上执行最快的检测器，同时它的检测结果是公开的。</p>
+<p> </p>
+<p><strong>图****4</strong> <strong>错误分析：Fast R-CNN与YOLO 这些饼图显示了在各种类别中前N个检测中位置和背景的百分比（N=#在类别中的物体）。</strong></p>
+<p>　　我们使用Hoiem等人的方法和工具。对在测试时间的每个类别，我们查看该类别的前N个预测值。每种预测值要么是正确的，要是是对误差的类型进行分类：正确：类别正确，IOU&gt;0.5</p>
+<ul>
+<li>位置：类别正确，0.1&lt;IOU&lt;0.5</li>
+<li>类似：类别类似，IOU&gt;0.1</li>
+<li>其它：类别错误，IOU&gt;0.1</li>
+<li>背景：其它物体，IOU&lt;0.1</li>
+</ul>
+<p>　　图4显示了20个类别中每个错误类型的平均值。</p>
+<p>　　YOLO努力去正确定位物体。位置错误在YOLO错误的比例超过了其它所有错误来源的总和。Fast R-CNN有更少的位置错误，但有很多的背景错误。它的最高的检测假阳性错误中13.6%不包含任何物体。Fast R-CNN的预测背景检测错误是YOLO的3倍多。</p>
+<h2>4.3 结合Fast R-CNN和YOLO</h2>
+<p>　　YOLO比Fast R-CNN有更少的背景错误。通过使用YOLO来消除R-CNN中的背景检测错误，我们可以显著提高性能。对于R-CNN预测的每一个边界框，我们都用YOLO预测相似的框来检查。如果是这样的话，我们会根据YOLO预测的概率和两个盒子之间的重叠来提高预测值。</p>
+<p>　　最好的Fast R-CNN模型在VOC 2007测试集上获得了71.8%的mAP。当它与YOLO结合时，它的mAP提高了3.2%，到了75.0%。我们也尝试把最好的Fast R-CNN模型与其它版本的Fast R-CNN结合，这些组合产生了很小mAP增幅，在0.3%到0.6%之间，详见表2。</p>
+<p><strong>表****2</strong> <strong>在****VOC 2007上的模型结合实验。我们检测了把最好版本的Fast R-CNN与多种模型结合的影响。Fast R-CNN的其它版本只能提高很小的收益，但是YOLO提高了一个显著的性能提升。</strong></p>
+<p>　　YOLO的提升不仅仅是模型融合的副产品，因为合并不同版本的Fast R-CNN几乎没有好处。相反，正是因为YOLO在测试时犯了不同种类的错误，所以它在提高Fast R-CNN的性能方面非常有效。</p>
+<p>　　不幸的是，这种结合对YOLO的速度没有好处。所以这是我们分开运行模型，然后结合模型的原因。但是，YOLO运行的太快，与Fast R-CNN相比，它没有增加任何重要的计算时间。</p>
+<h2>4.4 在VOC 2012上的结果</h2>
+<p><strong>表****3 PASCAL VOC 2012排行榜。YOLO与截止2015年11月6日的comp4（允许外部数据）公开排行榜进行了对比。与各种各样的检测模型的均值平均准确率和每个类别平均准确率被显示。YOLO是唯一一个实时的检测器。Fast R-CNN + YOLO的方法排名第四，相比于Fast R-CNN提高了2.3%。</strong></p>
+<p>　　在VOC 2012测试集上，YOLO的mAP得分是57.9%。这比当前最先进的方法要少很多，接近与原始的使用VGG-16的R-CNN，请看表3。与最近的竞争对手相比，我们的系统在处理小物体时遇到了困难。在像瓶子、羊和电视这种小物体上，YOLO的得分只有8-10%，远小于R-CNN或Feature Edit。但是在其它类别如猫和火车上，YOLO获得了很高的性能。</p>
+<p>　　我们结合的Fast R-CNN + YOLO模型是检测性能最高的模型。Fast R-CNN与YOLO结合获得了2.3%的提升，在公开排行榜上提升了5个位置。</p>
+<p><strong>图5 在Picasso和People-Art数据集上的泛化结果</strong></p>
+<h2>4.5 泛化：艺术作品中的人物识别</h2>
+<p>　　目标检测的学术数据集对训练和测试数据的划分服从相同的分布。在现实世界应用中，很难预测所有的用例，并且测试数据可能会偏离系统之前的看到的情况。我们把YOLO与其它检测系统在Picasso数据集上和People-Art数据上进行比较，这两个数据集都是在艺术作品中测试人物检测的。</p>
+<p>　　图5显示了YOLO和其它检测方法之间的性能比较。作为参考，我们给出了在VOC 2007上的人物检测平均准确率，这些模型仅只训练了VOC 2007上的数据。在Picasso上的模型是在VOC 2012上训练的，同时在People-Art上的模型是在VOC 2010上训练的。</p>
+<p>　　R-CNN在VOC2007上有很好的准确率。但是，在应用于艺术作品时会产生大幅下降。R-CNN使用选择性搜索的边界框建议，这是调整为自然图像。在R-CNN中的分类步骤只能看见很小的区域，并且需要好的建议。</p>
+<p>　　DPM在应用于艺术作品时保持了它的平均准确率。DPM先前工作的原理执行的很好是因为它有很好的形状的空间模型和物体布局。虽然DPM没有像R-CNN那样下降，但它是从一个很低的平均准确率开始的。</p>
+<p>　　YOLO在VOC 2007上有很好的性能，并且它当它应用在艺术作品上时平均准确下降远小于其它模型。像DPM一样，YOLO也会对物体的大小形状和对象之间的关系，以及物体通常出现的位置重新建模。</p>
+<p>　　艺术作品和自然图像在一个像素等级上有很大的区别，但是它们在物体的大小和形状方面是相似的，所以YOLO仍然能很好的预测边界框和检测结果。</p>
+<p><strong>图6 定性结果。YOLO运行在一些网络上的艺术作品和自然图像上。它基本上是准确的，虽然它会把一个人认为是飞机。</strong></p>
+<h1>5 在野外的实时检测</h1>
+<p>　　YOLO是快速的，准确的目标检测器，使得它能在计算机视觉应用中取得理想效果。我们把YOLO连接一个网络摄像头，并验证其是否保存实时性，包括从摄像头抓取图像和显示检测结果。</p>
+<p>　　系统结果是交互式的和让人激动的。虽然YOLO单独处理每张图像，但当它连接网络摄像图时，它的功能类似一个跟踪系统，在物体移动和外观变化时检测它们。</p>
+<h1>6 结论</h1>
+<p>　　我们介绍了YOLO，一个统一的目标检测模型。我们的模型结构很简单，可以直接在整张图像上训练。不像基于分类的方法，YOLO是在一个与检测性能直接相关的损失函数上训练的，整个模型是联合训练的。Fast YOLO是在文献中最快的通用目标检测器，并且它推动了实时目标检测的发展。YOLO在新领域中的泛化能力同样很好，使得它对依赖于快速的、鲁棒的目标检测应用程序是理想的选择。</p>
+<h1>参考资料：</h1>
+<p>1.xxx.itp.ac.cn/pdf/1506.02640</p>
+<p>本文转自 <a href="https://www.cnblogs.com/d442130165/p/13479613.html" rel="nofollow">https://www.cnblogs.com/d442130165/p/13479613.html</a>，如有侵权，请联系删除。</p></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://wzh922.github.io/blog">狒材的blog</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if("05/29/2025"!=""){
+    var startSite=new Date("05/29/2025");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+var utterancesLoad=0;
+
+let themeSettings={
+    "dark": ["dark","moon","#00f0ff","dark-blue"],
+    "light": ["light","sun","#ff5000","github-light"],
+    "auto": ["auto","sync","","preferred-color-scheme"]
+};
+function changeTheme(mode, icon, color, utheme){
+    document.documentElement.setAttribute("data-color-mode",mode);
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
+}
+function modeSwitch(){
+    let currentMode=document.documentElement.getAttribute('data-color-mode');
+    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+    localStorage.setItem("meek_theme", newMode);
+    if(themeSettings[newMode]){
+        changeTheme(...themeSettings[newMode]);
+    }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
+}
+if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
+console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","wzh922/blog");
+    script.setAttribute("issue-term","title");
+    
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else if(localStorage.getItem("meek_theme")=="light") {script.setAttribute("theme","github-light");}
+    else{script.setAttribute("theme","preferred-color-scheme");}
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+
+
+</script>
+<script src='https://blog.meekdai.com/Gmeek/plugins/GmeekTOC.js'></script><script src='https://blog.meekdai.com/Gmeek/plugins/lightbox.js'></script>
+
+</html>
