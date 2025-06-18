@@ -1,5 +1,53 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>狒材的blog</title><link>https://wzh922.github.io/blog</link><description>前路漫漫亦灿灿！</description><copyright>狒材的blog</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://avatars.githubusercontent.com/u/210956220?s=400&amp;u=c0d549ac9c109d6ad35fde23e0aff5b3213fc57e&amp;v=4</url><title>avatar</title><link>https://wzh922.github.io/blog</link></image><lastBuildDate>Wed, 18 Jun 2025 07:16:54 +0000</lastBuildDate><managingEditor>狒材的blog</managingEditor><ttl>60</ttl><webMaster>狒材的blog</webMaster><item><title>CV论文地址</title><link>https://wzh922.github.io/blog/post/CV-lun-wen-di-zhi.html</link><description># Deep Learning Papers Translation(CV)
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>狒材的blog</title><link>https://wzh922.github.io/blog</link><description>前路漫漫亦灿灿！</description><copyright>狒材的blog</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://avatars.githubusercontent.com/u/210956220?s=400&amp;u=c0d549ac9c109d6ad35fde23e0aff5b3213fc57e&amp;v=4</url><title>avatar</title><link>https://wzh922.github.io/blog</link></image><lastBuildDate>Wed, 18 Jun 2025 10:59:56 +0000</lastBuildDate><managingEditor>狒材的blog</managingEditor><ttl>60</ttl><webMaster>狒材的blog</webMaster><item><title>“你有什么想问我的吗？”</title><link>https://wzh922.github.io/blog/post/%E2%80%9C-ni-you-shen-me-xiang-wen-wo-de-ma-%EF%BC%9F%E2%80%9D.html</link><description>## **【课题组核心问题清单】**  
+### **一、科研方向与课题**（展示你的学术兴趣）  
+1. **'课题组目前最核心的研究方向是什么？未来3-5年有哪些重点突破目标？'**  
+2. **'我注意到您最近发表的XX论文（提前查1-2篇），这个方向的后续研究计划是什么？学生可以如何参与？'**  
+3. **'课题组的研究是否涉及跨学科合作（如AI+生物、材料+工程）？学生有机会参与这类项目吗？'**  
+4. **'您认为这个领域目前最值得关注的前沿问题是什么？'**  
+5. **'课题组是否有和国内外其他实验室或企业的合作项目？'**  
+
+---
+
+### **二、学生培养模式**（判断是否适合你的风格）  
+6. **'组内学生一般如何安排科研节奏？是导师指定课题还是自主探索？'**  
+7. **'新加入的学生通常会从哪些任务开始参与？（如文献调研、实验、数据分析）'**  
+8. **'课题组开会频率如何？（如组会、文献分享、进度汇报）'**  
+9. **'您会如何指导学生的科研进展？比如定期一对一讨论，还是主要通过组会反馈？'**  
+10. **'组内是否有学长学姐带新人的传统？学生之间的合作多吗？'**  
+
+---
+
+### **三、资源与支持**（了解能获得哪些帮助）  
+11. **'课题组有哪些实验设备/计算资源/数据库可供学生使用？'**  
+12. **'如果学生对某些技术不熟悉（如编程、实验操作），组内会提供培训吗？'**  
+13. **'课题组是否支持学生参加学术会议或交流访学？是否有相关经费？'**  
+14. **'学生如果申请奖学金或科研基金，课题组会提供哪些帮助？'**  
+15. **'组内是否有固定的科研经费支持学生的实验或数据采集？'**  
+
+---
+
+### **四、毕业去向与职业发展**（展示长远规划）  
+16. **'过去几年组里毕业生的主要去向是哪些？（如高校、企业、出国等）'**  
+17. **'如果学生对学术道路感兴趣，您会建议如何规划研究生阶段？'**  
+18. **'课题组的研究方向在工业界有哪些应用？相关企业或岗位有哪些？'**  
+19. **'您会为学生推荐实习或合作机会吗？'**  
+20. **'组里是否有校友网络或职业发展资源可以共享？'**  
+
+---
+
+### **五、高阶策略问题**（适合自信且对课题组较了解的学生）  
+21. **'课题组目前面临的最大挑战是什么？学生可以如何贡献？'**  
+22. **'您觉得我的背景（如XX技能/经历）可以如何与课题组的研究结合？'**  
+23. **'如果我有幸加入，您会建议我在入学前提前做哪些准备？'**  
+24. **'您最欣赏的学生通常具备哪些特质？'**  
+25. **'您对课题组学生的长期期望是什么？'**  
+
+---
+
+## **【提问技巧 &amp; 避雷指南】**  
+✅ **必做：**  
+- 提前查阅导师近3年的论文，至少读摘要和引言，提问时提及具体内容。</description><guid isPermaLink="true">https://wzh922.github.io/blog/post/%E2%80%9C-ni-you-shen-me-xiang-wen-wo-de-ma-%EF%BC%9F%E2%80%9D.html</guid><pubDate>Wed, 18 Jun 2025 10:59:30 +0000</pubDate></item><item><title>CV论文地址</title><link>https://wzh922.github.io/blog/post/CV-lun-wen-di-zhi.html</link><description># Deep Learning Papers Translation(CV)
 
 ## 大神GitHub地址[GitHub](https://github.com/SnailTyan/deep-learning-papers-translation)
 
