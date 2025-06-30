@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>狒材的blog</title><link>https://wzh922.github.io/blog</link><description>前路漫漫亦灿灿！</description><copyright>狒材的blog</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://avatars.githubusercontent.com/u/210956220?s=400&amp;u=c0d549ac9c109d6ad35fde23e0aff5b3213fc57e&amp;v=4</url><title>avatar</title><link>https://wzh922.github.io/blog</link></image><lastBuildDate>Sun, 29 Jun 2025 12:35:28 +0000</lastBuildDate><managingEditor>狒材的blog</managingEditor><ttl>60</ttl><webMaster>狒材的blog</webMaster><item><title>Python算法小技巧</title><link>https://wzh922.github.io/blog/post/Python-suan-fa-xiao-ji-qiao.html</link><description># 结构体排序
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>狒材的blog</title><link>https://wzh922.github.io/blog</link><description>前路漫漫亦灿灿！</description><copyright>狒材的blog</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://avatars.githubusercontent.com/u/210956220?s=400&amp;u=c0d549ac9c109d6ad35fde23e0aff5b3213fc57e&amp;v=4</url><title>avatar</title><link>https://wzh922.github.io/blog</link></image><lastBuildDate>Mon, 30 Jun 2025 02:42:11 +0000</lastBuildDate><managingEditor>狒材的blog</managingEditor><ttl>60</ttl><webMaster>狒材的blog</webMaster><item><title>Python算法小技巧</title><link>https://wzh922.github.io/blog/post/Python-suan-fa-xiao-ji-qiao.html</link><description># 结构体排序
 题目链接：[牛客 BGN22 小苯送礼物](https://www.nowcoder.com/practice/466e02d2177845589ab5fa5decc2857f?tpId=385&amp;tags=&amp;title=&amp;difficulty=0&amp;judgeStatus=0&amp;rp=0&amp;sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3D%25E7%25AE%2597%25E6%25B3%2595%25E7%25AF%2587%26topicId%3D385)
 ## 第一版，超时了
 ```python
@@ -71,6 +71,27 @@ res.sort()
 print(' '.join(map(str, res)))
 ```
 
+# 字典排序？
+```python
+word_list = input().split(' ')
+word_count = {}
+for word in word_list:
+    if word not in word_count:
+        word_count[word] = 1
+    else:
+        word_count[word] += 1
+
+# 把字典转为列表才可以排序
+# 按值降序排序，值相同的情况下按键的逆序排序
+sorted_word_count = sorted(word_count.items(), key=lambda x: (-x[1], x[0]), reverse=False)
+
+# 打印排序后的结果
+for key,value in sorted_word_count:
+    if value&gt;=3:
+        print(key)
+    else:
+        break
+```
 ---
 开发中......。</description><guid isPermaLink="true">https://wzh922.github.io/blog/post/Python-suan-fa-xiao-ji-qiao.html</guid><pubDate>Sun, 29 Jun 2025 12:35:02 +0000</pubDate></item><item><title>服务通信工作过程</title><link>https://wzh922.github.io/blog/post/fu-wu-tong-xin-gong-zuo-guo-cheng.html</link><description># 一.创建工作空间
 https://blog.csdn.net/weixin_42237429/article/details/90238000#:~:text=catkin_init_workspace%E8%BF%99%E6%A0%B7%E5%B0%B1%E5%9C%A8src%E6%96%87%E4%BB%B6%E4%B8%AD%E5%88%9B%E5%BB%BA%E4%BA%86%E4%B8%80%E4%B8%AA%20CMakeLists.txt

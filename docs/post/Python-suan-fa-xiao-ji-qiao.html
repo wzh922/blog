@@ -82,6 +82,27 @@ res.sort()
 print(' '.join(map(str, res)))
 ```
 
+# 字典排序？
+```python
+word_list = input().split(' ')
+word_count = {}
+for word in word_list:
+    if word not in word_count:
+        word_count[word] = 1
+    else:
+        word_count[word] += 1
+
+# 把字典转为列表才可以排序
+# 按值降序排序，值相同的情况下按键的逆序排序
+sorted_word_count = sorted(word_count.items(), key=lambda x: (-x[1], x[0]), reverse=False)
+
+# 打印排序后的结果
+for key,value in sorted_word_count:
+    if value>=3:
+        print(key)
+    else:
+        break
+```
 ---
 开发中......。">
 <meta property="og:title" content="Python算法小技巧">
@@ -157,6 +178,27 @@ res.sort()
 print(' '.join(map(str, res)))
 ```
 
+# 字典排序？
+```python
+word_list = input().split(' ')
+word_count = {}
+for word in word_list:
+    if word not in word_count:
+        word_count[word] = 1
+    else:
+        word_count[word] += 1
+
+# 把字典转为列表才可以排序
+# 按值降序排序，值相同的情况下按键的逆序排序
+sorted_word_count = sorted(word_count.items(), key=lambda x: (-x[1], x[0]), reverse=False)
+
+# 打印排序后的结果
+for key,value in sorted_word_count:
+    if value>=3:
+        print(key)
+    else:
+        break
+```
 ---
 开发中......。">
 <meta property="og:type" content="article">
@@ -294,6 +336,25 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <span class="pl-c"># 对结果进行排序并打印</span>
 <span class="pl-s1">res</span>.<span class="pl-c1">sort</span>()
 <span class="pl-en">print</span>(<span class="pl-s">" "</span>.<span class="pl-c1">join</span>(<span class="pl-en">map</span>(<span class="pl-s1">str</span>, <span class="pl-s1">res</span>)))</pre></div>
+<h1>字典排序？</h1>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">word_list</span> <span class="pl-c1">=</span> <span class="pl-en">input</span>().<span class="pl-c1">split</span>(<span class="pl-s">" "</span>)
+<span class="pl-s1">word_count</span> <span class="pl-c1">=</span> {}
+<span class="pl-k">for</span> <span class="pl-s1">word</span> <span class="pl-c1">in</span> <span class="pl-s1">word_list</span>:
+    <span class="pl-k">if</span> <span class="pl-s1">word</span> <span class="pl-c1"><span class="pl-c1">not</span> <span class="pl-c1">in</span></span> <span class="pl-s1">word_count</span>:
+        <span class="pl-s1">word_count</span>[<span class="pl-s1">word</span>] <span class="pl-c1">=</span> <span class="pl-c1">1</span>
+    <span class="pl-k">else</span>:
+        <span class="pl-s1">word_count</span>[<span class="pl-s1">word</span>] <span class="pl-c1">+=</span> <span class="pl-c1">1</span>
+
+<span class="pl-c"># 把字典转为列表才可以排序</span>
+<span class="pl-c"># 按值降序排序，值相同的情况下按键的逆序排序</span>
+<span class="pl-s1">sorted_word_count</span> <span class="pl-c1">=</span> <span class="pl-en">sorted</span>(<span class="pl-s1">word_count</span>.<span class="pl-c1">items</span>(), <span class="pl-s1">key</span><span class="pl-c1">=</span><span class="pl-k">lambda</span> <span class="pl-s1">x</span>: (<span class="pl-c1">-</span><span class="pl-s1">x</span>[<span class="pl-c1">1</span>], <span class="pl-s1">x</span>[<span class="pl-c1">0</span>]), <span class="pl-s1">reverse</span><span class="pl-c1">=</span><span class="pl-c1">False</span>)
+
+<span class="pl-c"># 打印排序后的结果</span>
+<span class="pl-k">for</span> <span class="pl-s1">key</span>,<span class="pl-s1">value</span> <span class="pl-c1">in</span> <span class="pl-s1">sorted_word_count</span>:
+    <span class="pl-k">if</span> <span class="pl-s1">value</span><span class="pl-c1">&gt;=</span><span class="pl-c1">3</span>:
+        <span class="pl-en">print</span>(<span class="pl-s1">key</span>)
+    <span class="pl-k">else</span>:
+        <span class="pl-k">break</span></pre></div>
 <hr>
 <p>开发中......</p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>

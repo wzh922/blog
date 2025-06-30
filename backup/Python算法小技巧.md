@@ -70,5 +70,26 @@ res.sort()
 print(" ".join(map(str, res)))
 ```
 
+# 字典排序？
+```python
+word_list = input().split(" ")
+word_count = {}
+for word in word_list:
+    if word not in word_count:
+        word_count[word] = 1
+    else:
+        word_count[word] += 1
+
+# 把字典转为列表才可以排序
+# 按值降序排序，值相同的情况下按键的逆序排序
+sorted_word_count = sorted(word_count.items(), key=lambda x: (-x[1], x[0]), reverse=False)
+
+# 打印排序后的结果
+for key,value in sorted_word_count:
+    if value>=3:
+        print(key)
+    else:
+        break
+```
 ---
 开发中......
