@@ -108,38 +108,38 @@ string message
 <h3>2. 修改 <code class="notranslate">CMakeLists.txt</code></h3>
 <p>在 <code class="notranslate">CMakeLists.txt</code> 文件中，需要添加服务文件的路径，并指定服务文件的生成依赖。同时，还需要添加服务文件的编译指令。</p>
 <p><strong><code class="notranslate">send_goals/CMakeLists.txt</code></strong></p>
-<div class="highlight highlight-source-cmake"><pre class="notranslate"><span class="pl-c1">cmake_minimum_required</span>(<span class="pl-c1">VERSION</span> <span class="pl-s">3.0.2</span>)
-<span class="pl-c1">project</span>(<span class="pl-s">my_robot_navigation</span>)
+<div class="highlight highlight-source-cmake"><pre class="notranslate"><span class="pl-k">cmake_minimum_required</span>(<span class="pl-e">VERSION</span> 3.0.2)
+<span class="pl-k">project</span>(my_robot_navigation)
 
-<span class="pl-c">#<span class="pl-c"> 找到必要的依赖</span></span>
-<span class="pl-c1">find_package</span>(<span class="pl-s">catkin</span> <span class="pl-s">REQUIRED</span> <span class="pl-en">COMPONENTS</span>
-  <span class="pl-en">rospy</span>
-  <span class="pl-en">roscpp</span>
-  <span class="pl-en">move_base_msgs</span>
-  <span class="pl-en">actionlib</span>
-  <span class="pl-en">actionlib_msgs</span>
+<span class="pl-c"># 找到必要的依赖</span>
+<span class="pl-k">find_package</span>(catkin REQUIRED COMPONENTS
+  rospy
+  roscpp
+  move_base_msgs
+  actionlib
+  actionlib_msgs
 )
 
-<span class="pl-c">#<span class="pl-c"> 添加服务文件</span></span>
-<span class="pl-en">add_service_files</span>(
-  <span class="pl-c1">FILES</span>
-  <span class="pl-s">SendTask.srv</span>
+<span class="pl-c"># 添加服务文件</span>
+add_service_files(
+  <span class="pl-e">FILES</span>
+  SendTask.srv
 )
 
-<span class="pl-c">#<span class="pl-c"> 生成消息和服务</span></span>
-<span class="pl-en">generate_messages</span>(
-  <span class="pl-en">DEPENDENCIES</span>
-  <span class="pl-en">std_msgs</span>
+<span class="pl-c"># 生成消息和服务</span>
+generate_messages(
+  DEPENDENCIES
+  std_msgs
 )
 
-<span class="pl-c">#<span class="pl-c"> 包含目录</span></span>
-<span class="pl-c1">include_directories</span>(
-  <span class="pl-smi">${catkin_INCLUDE_DIRS}</span>
+<span class="pl-c"># 包含目录</span>
+<span class="pl-k">include_directories</span>(
+  <span class="pl-k">${catkin_INCLUDE_DIRS}</span>
 )
 
 
-<span class="pl-c">#<span class="pl-c"> 添加依赖</span></span>
-<span class="pl-en">catkin_package</span>()</pre></div>
+<span class="pl-c"># 添加依赖</span>
+catkin_package()</pre></div>
 <h3>3. 修改 <code class="notranslate">package.xml</code></h3>
 <p>在 <code class="notranslate">package.xml</code> 文件中，需要添加对 <code class="notranslate">message_generation</code> 和 <code class="notranslate">message_runtime</code> 的依赖。</p>
 <p><strong><code class="notranslate">send_goals/package.xml</code></strong></p>
