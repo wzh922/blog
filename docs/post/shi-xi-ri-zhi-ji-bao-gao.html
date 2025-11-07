@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    <script src='https://blog.meekdai.com/Gmeek/plugins/GmeekBSZ.js'></script>
+    <link rel="icon" href="https://avatars.githubusercontent.com/u/210956220?s=400&u=c0d549ac9c109d6ad35fde23e0aff5b3213fc57e&v=4"><script>
+        let theme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", theme);
+    </script>
+<meta name="description" content="好的，没问题。">
+<meta property="og:title" content="实习日志及报告">
+<meta property="og:description" content="好的，没问题。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://wzh922.github.io/blog/post/shi-xi-ri-zhi-ji-bao-gao.html">
+<meta property="og:image" content="https://avatars.githubusercontent.com/u/210956220?s=400&u=c0d549ac9c109d6ad35fde23e0aff5b3213fc57e&v=4">
+<title>实习日志及报告</title>
+<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+.copy-feedback {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    color: var(--color-fg-on-emphasis);
+    background-color: var(--color-fg-muted);
+    border-radius: 3px;
+    padding: 5px 8px;
+    font-size: 12px;
+}
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">实习日志及报告</h1>
+<div class="title-right">
+    <a href="https://wzh922.github.io/blog" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/wzh922/blog/issues/32" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><p>好的，没问题。我将为您扩展和充实实习报告和实习日志的内容，使其更加详实、专业，符合一份优秀实习报告的标准。</p>
+<hr>
+<h3><strong>第一部分：AI提示词（生成凸透镜成像Julia代码的增强版）</strong></h3>
+<p>这是一个更加具体、专业的提示词，旨在生成一个功能完整、具有交互性的仿真程序。</p>
+<div class="highlight highlight-source-julia"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 使用Julia语言和Plots.jl、Interact.jl库，创建一个交互式的凸透镜成像仿真程序。</span>
+<span class="pl-c"><span class="pl-c">#</span> 要求：</span>
+<span class="pl-c"><span class="pl-c">#</span> 1. 定义核心光学参数：透镜焦距f（可调，范围10-50cm）、物距u（可调，范围0-100cm）、物高h_object（可调，范围1-20cm）。</span>
+<span class="pl-c"><span class="pl-c">#</span> 2. 根据透镜公式 1/f = 1/u + 1/v 计算像距v，并根据放大率公式 M = -v/u 计算像高h_image。</span>
+<span class="pl-c"><span class="pl-c">#</span> 3. 实现一个详细的光线追迹函数，至少绘制三条特殊光线：</span>
+<span class="pl-c"><span class="pl-c">#</span>    - 平行于主光轴的光线，经过透镜后穿过焦点。</span>
+<span class="pl-c"><span class="pl-c">#</span>    - 穿过光心的光线，方向不变。</span>
+<span class="pl-c"><span class="pl-c">#</span>    - 穿过焦点的光线，经过透镜后平行于主光轴。</span>
+<span class="pl-c"><span class="pl-c">#</span> 4. 创建一个交互式图形界面，使用滑块动态调整焦距f、物距u和物高h_object。当参数改变时，图形实时更新，展示新的光路图和成像效果。</span>
+<span class="pl-c"><span class="pl-c">#</span> 5. 在图形上清晰标注以下元素：透镜位置、焦点F、物体、实像/虚像、光轴。</span>
+<span class="pl-c"><span class="pl-c">#</span> 6. 在图形旁边或下方以文本形式输出当前的成像属性，包括：</span>
+<span class="pl-c"><span class="pl-c">#</span>    - 像距 v</span>
+<span class="pl-c"><span class="pl-c">#</span>    - 像高 h_image 和放大率 M</span>
+<span class="pl-c"><span class="pl-c">#</span>    - 像的类型（实像/虚像）</span>
+<span class="pl-c"><span class="pl-c">#</span>    - 像的方向（正立/倒立）</span>
+<span class="pl-c"><span class="pl-c">#</span>    - 像的大小相对于物的比较（放大/缩小/等大）</span>
+<span class="pl-c"><span class="pl-c">#</span> 7. 注意处理虚像的情况（当物距u &lt; 焦距f时），此时像距v为负值，光线需要用虚线反向延长以表示虚像。</span>
+<span class="pl-c"><span class="pl-c">#</span> 8. 图形布局美观，线条、颜色、标注清晰可辨。</span>
+
+<span class="pl-c"><span class="pl-c">#</span> 请提供完整的、可直接复制运行的Julia代码。</span></pre></div>
+<hr>
+<h3><strong>第二部分：充实的实习报告内容</strong></h3>
+<p><strong>东 北 林 业 大 学</strong><br>
+<strong>实 习 报 告</strong></p>
+<p><strong>学 生：</strong> 张三<br>
+<strong>学 号：</strong> 202101010101<br>
+<strong>专业、班级：</strong> 计算机科学与技术 2021级1班<br>
+<strong>学 院：</strong> 信息与计算机工程学院<br>
+<strong>指 导 教 师：</strong> 李四 副教授<br>
+<strong>年 月 日：</strong> 2025年7月20日</p>
+<hr>
+<h4><strong>一、基本情况</strong></h4>
+<ul>
+<li><strong>实习名称：</strong> 科学计算与系统建模仿真系统开发实训</li>
+<li><strong>实习时间：</strong> 2025年7月1日至2025年7月20日</li>
+<li><strong>实习单位：</strong> 东北林业大学工程训练与创新实验中心</li>
+<li><strong>指导教师/职称：</strong> 李四 副教授</li>
+</ul>
+<h4><strong>二、实习目的</strong></h4>
+<p>本次实习旨在深入理解和掌握国产自主可控的科学计算与系统建模仿真平台MWORKS的核心功能与应用。通过本次实训，我期望达到以下目标：</p>
+<ol>
+<li><strong>掌握核心平台：</strong> 熟练掌握MWORKS.Syslab科学计算环境的基本操作与Julia语言编程，熟悉MWORKS.Sysplorer系统建模仿真环境的建模、仿真与分析流程。</li>
+<li><strong>贯通理论知识：</strong> 将《大学物理》中的光学理论与《计算机图形学》中的几何变换知识相结合，通过建模仿真解决具体的科学问题。</li>
+<li><strong>提升工程实践能力：</strong> 独立完成一个从需求分析、算法设计、代码实现、调试优化到结果可视化的完整项目，培养解决复杂工程问题的系统性思维和能力。</li>
+<li><strong>培养创新意识：</strong> 探索将传统物理实验数字化、交互化的方法，设计并实现一个用户体验良好的凸透镜成像仿真实验模块。</li>
+</ol>
+<h4><strong>三、实习内容</strong></h4>
+<ol>
+<li>
+<p><strong>理论学习阶段（第1周）：</strong></p>
+<ul>
+<li>系统学习了MWORKS平台的架构与设计理念，了解了其在装备数字化工程中的核心地位。</li>
+<li>通过官方文档和视频教程，掌握了MWORKS.Syslab的代码编辑器、调试器、包管理器、工作区等核心功能的使用。</li>
+<li>学习了Julia语言的基本语法、数据类型、控制流程以及Plots.jl、Interact.jl等关键绘图与交互库。</li>
+</ul>
+</li>
+<li>
+<p><strong>建模与仿真入门（第2周）：</strong></p>
+<ul>
+<li>重点学习了MWORKS.Sysplorer的图形化建模方法，包括框图建模和物理建模。</li>
+<li>通过简单实例（如弹簧振子系统）熟悉了在Sysplorer中创建模型、设置参数、运行仿真并分析结果的全过程。</li>
+<li>对比了Sysplorer与MATLAB/Simulink在建模范式与功能上的异同，加深了对多领域统一建模规范Modelica的理解。</li>
+</ul>
+</li>
+<li>
+<p><strong>项目开发与实践（第3-4周）：</strong></p>
+<ul>
+<li><strong>项目选题：</strong> 确定“凸透镜成像仿真实验”为最终项目。</li>
+<li><strong>算法设计：</strong> 基于几何光学原理，设计了光线追迹算法，明确了三条特殊光线的绘制逻辑，并推导了成像公式和放大率的计算过程。</li>
+<li><strong>代码实现：</strong> 在MWORKS.Syslab中，使用Julia语言编写了仿真程序。核心部分包括：参数输入与验证、像距与像高计算、光线路径生成、交互式图形界面构建。</li>
+<li><strong>系统集成与调试：</strong> 将各部分代码集成，处理了虚像绘制（使用虚线）、图像实时刷新、滑块事件回调等技术难点，确保了程序的稳定性和交互流畅性。</li>
+<li><strong>功能测试与优化：</strong> 在不同参数组合（u&gt;2f, u=2f, f&lt;u&lt;2f, u&lt;f）下进行充分测试，验证仿真结果与理论预测的一致性，并优化了图形界面的布局和标注，提升了用户体验。</li>
+</ul>
+</li>
+</ol>
+<h4><strong>四、解决的主要问题及效果</strong></h4>
+<ol>
+<li>
+<p><strong>问题：虚像的可视化表示。</strong></p>
+<ul>
+<li><strong>描述：</strong> 当物距小于焦距时，成虚像。在程序中，像距为负值，光线需要反向延长，这与实像的绘制逻辑不同。</li>
+<li><strong>解决方案：</strong> 在代码中增加条件判断，当v为负时，将像的绘制位置调整到透镜同侧，并将汇聚光线的延长线用虚线表示。</li>
+<li><strong>效果：</strong> 成功实现了虚像的准确、直观可视化，符合物理学中的表示惯例。</li>
+</ul>
+</li>
+<li>
+<p><strong>问题：交互式界面的实时响应性能。</strong></p>
+<ul>
+<li><strong>描述：</strong> 初期实现中，拖动滑块后图形更新有延迟，影响用户体验。</li>
+<li><strong>解决方案：</strong> 对绘图函数进行了优化，避免了不必要的重复计算和图形对象重建。利用Interact.jl库的高效回调机制，确保参数变化能快速触发图形更新。</li>
+<li><strong>效果：</strong> 实现了近乎实时的交互响应，用户可以平滑地观察参数变化对成像的连续影响。</li>
+</ul>
+</li>
+<li>
+<p><strong>问题：从理论公式到代码逻辑的转化。</strong></p>
+<ul>
+<li><strong>描述：</strong> 如何将物理教科书中的透镜公式和光线追迹规则，精确地转化为Julia的算法和绘图指令。</li>
+<li><strong>解决方案：</strong> 首先在纸上详细推导了所有计算步骤和坐标变换关系，然后采用“分步实现、逐项验证”的策略，先确保核心计算正确，再叠加绘图功能。</li>
+<li><strong>效果：</strong> 最终程序的计算结果与理论值高度吻合，光路图准确无误，成功地将抽象理论转化为了具体的、可运行的仿真模型。</li>
+</ul>
+</li>
+</ol>
+<h4><strong>五、实习结果</strong></h4>
+<p>成功开发了一个基于MWORKS.Syslab和Julia的“凸透镜成像交互式仿真系统”。该系统具备以下特点：</p>
+<ul>
+<li><strong>功能完整：</strong> 完整实现了凸透镜成像的所有情况（实像、虚像、等大、放大、缩小）。</li>
+<li><strong>交互性强：</strong> 用户可通过滑块自由调节焦距、物距和物高，仿真结果实时动态更新。</li>
+<li><strong>可视化效果好：</strong> 清晰绘制光路图，区分实线和虚线，并标注关键点和参数。</li>
+<li><strong>教学意义突出：</strong> 该仿真系统可作为大学物理光学部分的有效辅助教学工具，帮助学生直观理解成像规律。</li>
+</ul>
+<p>最终提交的成果包括：完整的Julia源代码、可执行的程序文件、一份详细的设计文档以及本实习报告。</p>
+<h4><strong>六、学生自我总结</strong></h4>
+<p>为期二十天的实习让我受益匪浅。我不仅学会了MWORK这一先进的工业级软件平台，更重要的是经历了一次完整的“理论-实践-创新”的工程训练周期。</p>
+<p>在技术层面，我深化了对Julia语言的理解，掌握了科学计算、数据可视化和交互式应用开发的技能。对系统建模仿真的流程和方法有了亲身体验，认识到了模型在解决复杂工程问题中的核心价值。</p>
+<p>在软技能层面，我独立解决实际问题的能力得到了极大锻炼。从遇到bug时的焦头烂额，到通过查阅文档、分析逻辑最终解决问题的豁然开朗，这个过程极大地提升了我的抗压能力和调试技巧。同时，撰写技术报告和日志也锻炼了我的文档撰写与归纳总结能力。</p>
+<p>通过此次实习，我深刻体会到国产工业软件的强大与潜力，也为能将所学知识应用于解决一个具体的科学问题而感到自豪。这段经历为我未来的毕业设计乃至职业生涯打下了坚实的基础。感谢李四老师的悉心指导与学校提供的宝贵实习机会。</p>
+<hr>
+<h3><strong>第三部分：详细的20天实习日志</strong></h3>
+<p><strong>东北林业大学</strong><br>
+<strong>学生实习日志</strong></p>
+<p><strong>学院：</strong> 信息与计算机工程学院<br>
+<strong>专业：</strong> 计算机科学与技术<br>
+<strong>姓名：</strong> 张三</p>
+<hr>
+<p><strong>第1天 (2025-07-01)</strong></p>
+<ul>
+<li><strong>实习内容：</strong> 实习启动，了解本次实训的整体安排与要求。阅读实训方案，明确MWORKS平台的学习目标和最终项目任务。安装并配置MWORKS.Syslab环境。</li>
+<li><strong>小结：</strong> 初步认识了MWORKS作为新一代科学计算与系统建模仿真平台的重要性，对后续学习充满期待。环境配置顺利，为明天开始正式学习打下了基础。</li>
+</ul>
+<p><strong>第2天 (2025-07-02)</strong></p>
+<ul>
+<li><strong>实习内容：</strong> 系统学习MWORKS.Syslab的界面布局和基本功能，包括资源管理器、代码编辑器、REPL命令行窗口的使用。完成第一个Julia程序"Hello, World!"和简单的数学计算。</li>
+<li><strong>小结：</strong> 熟悉了Syslab的工作环境，Julia语言的交互式特性让人印象深刻。代码编辑器的语法高亮和提示功能很好用。</li>
+</ul>
+<p><strong>第3天 (2025-07-03)</strong></p>
+<ul>
+<li><strong>实习内容：</strong> 深入学习Julia语言基础，包括变量、数据类型、基本运算符、数组和字典。学习使用Plots.jl库进行简单的二维图形绘制，如正弦波。</li>
+<li><strong>小结：</strong> Julia的语法简洁而强大，数组操作尤其方便。初步掌握了数据可视化的基本方法，这是后续仿真结果展示的关键。</li>
+</ul>
+<p><strong>第4天 (2025-07-04)</strong></p>
+<ul>
+<li><strong>实习内容：</strong> 学习Julia的控制流（循环、条件判断）和函数定义。尝试编写一个计算阶乘和求解一元二次方程的函数。</li>
+<li><strong>小结：</strong> 对Julia的程序结构有了更深的理解。函数式编程的思想有助于写出更清晰、可复用的代码。</li>
+</ul>
+<p><strong>第5天 (2025-07-05)</strong></p>
+<ul>
+<li><strong>实习内容：</strong> 开始学习MWORKS.Sysplorer。了解其图形化建模界面，学习如何创建新模型、添加组件、连接信号线。通过一个简单的RC电路模型体验建模与仿真流程。</li>
+<li><strong>小结：</strong> 从代码环境切换到图形化建模环境，感觉非常新颖。Sysplorer的模型库很丰富，直观的拖拽式建模大大降低了复杂系统建模的门槛。</li>
+</ul>
+<p><strong>第6天 (2025-07-06)</strong></p>
+<ul>
+<li><strong>实习内容：</strong> 深入学习Sysplorer中的物理建模，了解Modelica语言基础。对比文本建模与图形化建模的优缺点。尝试修改模型参数并观察仿真结果的变化。</li>
+<li><strong>小结：</strong> 认识到Modelica作为一种面向对象的方程描述语言，在处理多领域物理系统时的优势。图形化背后是严谨的数学方程。</li>
+</ul>
+<p><strong>第7天 (2025-07-07)</strong></p>
+<ul>
+<li><strong>实习内容：</strong> 确定最终项目为“凸透镜成像仿真”。复习凸透镜成像的物理原理、透镜公式和光线追迹法。明确项目的核心需求和技术难点。</li>
+<li><strong>小结：</strong> 项目方向已定。将物理问题转化为计算模型是关键的第一步，需要仔细设计算法。</li>
+</ul>
+<p><strong>第8天 (2025-07-08)</strong></p>
+<ul>
+<li><strong>实习内容：</strong> 进行项目详细设计。用伪代码勾勒出主程序流程：参数输入 -&gt; 像距计算 -&gt; 像高计算 -&gt; 光线端点计算 -&gt; 图形绘制。</li>
+<li><strong>小结：</strong> 设计阶段至关重要。清晰的流程图让后续的编码工作目标明确，减少了盲目性。</li>
+</ul>
+<p><strong>第9天 (2025-07-09)</strong></p>
+<ul>
+<li><strong>实习内容：</strong> 开始编写Julia代码。首先实现核心计算函数：根据u和f计算v，根据v和u计算放大率M和像高。</li>
+<li><strong>小结：</strong> 核心算法实现顺利，计算结果与手算一致，增强了信心。</li>
+</ul>
+<p><strong>第10天 (2025-07-10)</strong></p>
+<ul>
+<li><strong>实习内容：</strong> 实现基本的光线追迹函数。编写一个函数，输入物体点和透镜参数，输出三条特殊光线的路径坐标。使用Plots.jl绘制静态的光路图。</li>
+<li><strong>小结：</strong> 成功绘制出了第一个静态光路图！虽然还没有交互，但看到理论变成可视化的图形，非常有成就感。</li>
+</ul>
+<p><strong>第11天 (2025-07-11)</strong></p>
+<ul>
+<li><strong>实习内容：</strong> 学习Interact.jl库，研究如何创建滑块（Slider）等交互控件。将控件与绘图函数进行初步关联。</li>
+<li><strong>小结：</strong> 交互功能的引入让程序“活”了起来。初步实现了通过改变物距来更新图像，但响应速度有待优化。</li>
+</ul>
+<p><strong>第12天 (2025-07-12)</strong></p>
+<ul>
+<li><strong>实习内容：</strong> 集中解决交互响应的性能问题。优化绘图代码，避免在回调函数中重复创建图形对象。完善虚像的绘制逻辑，确保用虚线正确表示。</li>
+<li><strong>小结：</strong> 经过优化，交互流畅度显著提升。虚像绘制的bug被修复，程序的核心功能已基本稳定。</li>
+</ul>
+<p><strong>第13天 (2025-07-13)</strong></p>
+<ul>
+<li><strong>实习内容：</strong> 对程序进行美化与增强。添加图形标题、坐标轴标签、焦点和光心标注。在图形旁以文本形式输出像的属性（实像/虚像，放大/缩小等）。</li>
+<li><strong>小结：</strong> 细节决定成败。良好的标注和输出使仿真程序更具可读性和教学价值。</li>
+</ul>
+<p><strong>第14天 (2025-07-14)</strong></p>
+<ul>
+<li><strong>实习内容：</strong> 进行全面的系统测试。遍历物距从大于2f到小于f的各种情况，将程序输出的像距、像高与理论公式计算结果进行比对，确保仿真准确性。</li>
+<li><strong>小结：</strong> 所有测试用例均通过，仿真结果与理论完美契合。项目主要开发工作告一段落。</li>
+</ul>
+<p><strong>第15天 (2025-07-15)</strong></p>
+<ul>
+<li><strong>实习内容：</strong> 整理和注释项目代码。撰写项目设计文档，包括项目背景、设计思路、核心算法、使用说明等。</li>
+<li><strong>小结：</strong> 代码重构和文档撰写是项目开发的重要环节。清晰的代码和文档体现了工程素养。</li>
+</ul>
+<p><strong>第16天 (2025-07-16)</strong></p>
+<ul>
+<li><strong>实习内容：</strong> 开始撰写实习报告初稿，重点完成“实习目的”、“实习内容”和“解决的主要问题”等部分。</li>
+<li><strong>小结：</strong> 将实践过程转化为文字是一次再学习的过程，帮助我系统地梳理了本次实习的收获。</li>
+</ul>
+<p><strong>第17天 (2025-07-17)</strong></p>
+<ul>
+<li><strong>实习内容：</strong> 继续撰写实习报告，完成“实习结果”和“学生自我总结”部分。整理实习期间积累的日志草稿。</li>
+<li><strong>小结：</strong> 自我总结是对个人成长的深度反思，认识到自己在技术能力和工程思维上的进步与不足。</li>
+</ul>
+<p><strong>第18天 (2025-07-18)</strong></p>
+<ul>
+<li><strong>实习内容：</strong> 对整个实习报告进行通读、修改和润色。检查格式是否规范，语言是否通顺，逻辑是否清晰。</li>
+<li><strong>小结：</strong> 精益求精，一份高质量的报告是对自己辛勤工作的最好总结。</li>
+</ul>
+<p><strong>第19天 (2025-07-19)</strong></p>
+<ul>
+<li><strong>实习内容：</strong> 根据二十天的日志草稿，整理、补充并最终定稿这份详细的实习日志。准备项目答辩的演示文稿。</li>
+<li><strong>小结：</strong> 回顾二十天的点滴，每一天都充实而有收获。日志是成长最忠实的记录者。</li>
+</ul>
+<p><strong>第20天 (2025-07-20)</strong></p>
+<ul>
+<li><strong>实习内容：</strong> 最终检查所有提交材料：源代码、可执行文件、设计文档、实习报告、实习日志。参加实习答辩，向老师和同学展示我的凸透镜成像仿真系统。</li>
+<li><strong>小结：</strong> 答辩顺利完成，项目得到了老师的肯定。为期二十天的实习画上了圆满的句号。这是一段宝贵的学习经历，我将带着这份收获继续前行。</li>
+</ul>
+<hr>
+<p>希望这份详尽的实习报告和日志对您有帮助！</p></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://wzh922.github.io/blog">狒材的blog</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if("05/29/2025"!=""){
+    var startSite=new Date("05/29/2025");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z', 'copy': 'M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z', 'check': 'M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z'};
+var utterancesLoad=0;
+
+let themeSettings={
+    "dark": ["dark","moon","#00f0ff","dark-blue"],
+    "light": ["light","sun","#ff5000","github-light"],
+    "auto": ["auto","sync","","preferred-color-scheme"]
+};
+function changeTheme(mode, icon, color, utheme){
+    document.documentElement.setAttribute("data-color-mode",mode);
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
+}
+function modeSwitch(){
+    let currentMode=document.documentElement.getAttribute('data-color-mode');
+    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+    localStorage.setItem("meek_theme", newMode);
+    if(themeSettings[newMode]){
+        changeTheme(...themeSettings[newMode]);
+    }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
+}
+if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
+console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","wzh922/blog");
+    script.setAttribute("issue-term","title");
+    
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else if(localStorage.getItem("meek_theme")=="light") {script.setAttribute("theme","github-light");}
+    else{script.setAttribute("theme","preferred-color-scheme");}
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const createClipboardHTML = (codeContent, additionalClasses = '') => `
+        <pre class="notranslate"><code class="notranslate">${codeContent}</code></pre>
+        <div class="clipboard-container position-absolute right-0 top-0 ${additionalClasses}">
+            <clipboard-copy class="ClipboardButton btn m-2 p-0" role="button" style="display: inherit;">
+                <svg height="16" width="16" class="octicon octicon-copy m-2"><path d="${IconList["copy"]}"></path></svg>
+                <svg height="16" width="16" class="octicon octicon-check color-fg-success m-2 d-none"><path d="${IconList["check"]}"></path></svg>
+            </clipboard-copy>
+            <div class="copy-feedback">Copied!</div>
+        </div>
+    `;
+
+    const handleCodeElements = (selector = '') => {
+        document.querySelectorAll(selector).forEach(codeElement => {
+            const codeContent = codeElement.innerHTML;
+            const newStructure = document.createElement('div');
+            newStructure.className = 'snippet-clipboard-content position-relative overflow-auto';
+            newStructure.innerHTML = createClipboardHTML(codeContent);
+
+            const parentElement = codeElement.parentElement;
+            if (selector.includes('highlight')) {
+                parentElement.insertBefore(newStructure, codeElement.nextSibling);
+                parentElement.removeChild(codeElement);
+            } else {
+                parentElement.parentElement.replaceChild(newStructure, parentElement);
+            }
+        });
+    };
+
+    handleCodeElements('pre.notranslate > code.notranslate');
+    handleCodeElements('div.highlight > pre.notranslate');
+
+    let currentFeedback = null;
+    document.querySelectorAll('clipboard-copy').forEach(copyButton => {
+        copyButton.addEventListener('click', () => {
+            const codeContent = copyButton.closest('.snippet-clipboard-content').innerText;
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = codeContent;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+
+            const copyIcon = copyButton.querySelector('.octicon-copy');
+            const checkIcon = copyButton.querySelector('.octicon-check');
+            const copyFeedback = copyButton.nextElementSibling;
+
+            if (currentFeedback && currentFeedback !== copyFeedback) {currentFeedback.style.display = 'none';}
+            currentFeedback = copyFeedback;
+
+            copyIcon.classList.add('d-none');
+            checkIcon.classList.remove('d-none');
+            copyFeedback.style.display = 'block';
+            copyButton.style.borderColor = 'var(--color-success-fg)';
+
+            setTimeout(() => {
+                copyIcon.classList.remove('d-none');
+                checkIcon.classList.add('d-none');
+                copyFeedback.style.display = 'none';
+                copyButton.style.borderColor = '';
+            }, 2000);
+        });
+    });
+});
+
+</script>
+<script src='https://blog.meekdai.com/Gmeek/plugins/GmeekTOC.js'></script><script src='https://blog.meekdai.com/Gmeek/plugins/lightbox.js'></script>
+
+</html>
