@@ -1,5 +1,576 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>狒材的blog</title><link>https://wzh922.github.io/blog</link><description>前路漫漫亦灿灿！</description><copyright>狒材的blog</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://avatars.githubusercontent.com/u/210956220?s=400&amp;u=c0d549ac9c109d6ad35fde23e0aff5b3213fc57e&amp;v=4</url><title>avatar</title><link>https://wzh922.github.io/blog</link></image><lastBuildDate>Fri, 07 Nov 2025 07:25:42 +0000</lastBuildDate><managingEditor>狒材的blog</managingEditor><ttl>60</ttl><webMaster>狒材的blog</webMaster><item><title>实习日志及报告</title><link>https://wzh922.github.io/blog/post/shi-xi-ri-zhi-ji-bao-gao.html</link><description>好的，没问题。</description><guid isPermaLink="true">https://wzh922.github.io/blog/post/shi-xi-ri-zhi-ji-bao-gao.html</guid><pubDate>Fri, 07 Nov 2025 07:25:12 +0000</pubDate></item><item><title>专业英语论文</title><link>https://wzh922.github.io/blog/post/zhuan-ye-ying-yu-lun-wen.html</link><description># 中文版本
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>狒材的blog</title><link>https://wzh922.github.io/blog</link><description>前路漫漫亦灿灿！</description><copyright>狒材的blog</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://avatars.githubusercontent.com/u/210956220?s=400&amp;u=c0d549ac9c109d6ad35fde23e0aff5b3213fc57e&amp;v=4</url><title>avatar</title><link>https://wzh922.github.io/blog</link></image><lastBuildDate>Sat, 08 Nov 2025 02:46:37 +0000</lastBuildDate><managingEditor>狒材的blog</managingEditor><ttl>60</ttl><webMaster>狒材的blog</webMaster><item><title>实用代码</title><link>https://wzh922.github.io/blog/post/shi-yong-dai-ma.html</link><description># 实用代码
+
+## geojson 转 shp
+
+```python
+import geopandas as gpd
+import pandas as pd
+import os
+from shapely.geometry import shape
+import fiona
+
+def geojson_to_shp(geojson_file, shp_file):
+    '''
+    将GeoJSON文件转换为Shapefile文件
+    
+    参数:
+    geojson_file: 输入的GeoJSON文件路径
+    shp_file: 输出的Shapefile文件路径
+    '''
+    try:
+        # 读取GeoJSON文件
+        print(f'正在读取GeoJSON文件: {geojson_file}')
+        gdf = gpd.read_file(geojson_file)
+        
+        # 确保输出目录存在
+        output_dir = os.path.dirname(shp_file)
+        if output_dir and not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+        
+        # 保存为Shapefile
+        print(f'正在转换为Shapefile: {shp_file}')
+        gdf.to_file(shp_file, encoding='utf-8')
+        
+        print('转换完成!')
+        return True
+        
+    except Exception as e:
+        print(f'转换过程中发生错误: {e}')
+        return False
+ def read_shp_info(shp_file):
+    '''
+    读取Shapefile文件并打印各种信息
+    
+    参数:
+    shp_file: Shapefile文件路径
+    '''
+    try:
+        # 读取Shapefile
+        print(f'\n正在读取Shapefile文件: {shp_file}')
+        gdf = gpd.read_file(shp_file)
+        
+        # 1. 基本信息
+        print('\n' + '='*50)
+        print('Shapefile基本信息')
+        print('='*50)
+        print(f'文件路径: {shp_file}')
+        print(f'要素数量: {len(gdf)}')
+        print(f'几何类型: {gdf.geometry.type.unique()}')
+        print(f'坐标参考系(CRS): {gdf.crs}')
+        
+        # 2. 字段信息
+        print('\n' + '='*50)
+        print('字段信息')
+        print('='*50)
+        print(f'字段数量: {len(gdf.columns)}')
+        print('字段详情:')
+        for i, col in enumerate(gdf.columns, 1):
+            dtype = gdf[col].dtype
+            print(f'  {i}. {col} ({dtype})')
+        
+        # 3. 属性表预览
+        print('\n' + '='*50)
+        print('属性表前5行')
+        print('='*50)
+        print(gdf.head())
+        
+        # 4. 空间范围
+        print('\n' + '='*50)
+        print('空间范围')
+        print('='*50)
+        bounds = gdf.total_bounds
+        print(f'最小X: {bounds[0]:.6f}')
+        print(f'最小Y: {bounds[1]:.6f}')
+        print(f'最大X: {bounds[2]:.6f}')
+        print(f'最大Y: {bounds[3]:.6f}')
+        
+        # 5. 几何信息统计
+        print('\n' + '='*50)
+        print('几何信息统计')
+        print('='*50)
+        print(f'总面积: {gdf.area.sum():.6f} 平方单位')
+        print(f'总长度: {gdf.length.sum():.6f} 单位')
+        
+        # 6. 各几何类型的数量统计
+        print('\n' + '='*50)
+        print('几何类型统计')
+        print('='*50)
+        geometry_counts = gdf.geometry.type.value_counts()
+        for geom_type, count in geometry_counts.items():
+            print(f'{geom_type}: {count} 个')
+        
+        # 7. 空间参考系统详细信息
+        print('\n' + '='*50)
+        print('坐标参考系详细信息')
+        print('='*50)
+        if gdf.crs is not None:
+            crs_info = gdf.crs.to_dict()
+            for key, value in crs_info.items():
+                print(f'{key}: {value}')
+        else:
+            print('未定义坐标参考系')
+            
+        # 8. 内存使用情况
+        print('\n' + '='*50)
+        print('内存使用信息')
+        print('='*50)
+        memory_usage = gdf.memory_usage(deep=True).sum()
+        print(f'总内存使用: {memory_usage / 1024:.2f} KB')
+        
+        return gdf
+        
+    except Exception as e:
+        print(f'读取Shapefile时发生错误: {e}')
+        return None
+geojson_file = r'D:\DownLoad\chrome\黔东南苗族侗族自治州_县.geojson'  # 替换为您的GeoJSON文件路径
+shp_file = '黔东南苗族侗族自治州_县.shp'
+
+# 执行转换
+print('\n开始GeoJSON到Shapefile的转换...')
+success = geojson_to_shp(geojson_file, shp_file)
+
+if success:
+    # 读取并显示Shapefile信息
+    gdf = read_shp_info(shp_file)
+    
+    # 可选: 显示更多详细信息
+    if gdf is not None:
+        print('\n' + '='*50)
+        print('前3个要素的详细信息')
+        print('='*50)
+        for i, (idx, row) in enumerate(gdf.head(3).iterrows()):
+            print(f'\n要素 {i+1}:')
+            for col in gdf.columns:
+                if col != 'geometry':
+                    print(f'  {col}: {row[col]}')
+            print(f'  几何类型: {row.geometry.geom_type}')
+            print(f'  面积: {row.geometry.area:.2f}')
+            print(f'  边界: {row.geometry.bounds}')
+
+print('\n程序执行完成!')
+```
+
+## 切分shp，切分县
+
+### 切分2块
+
+#### 代码
+
+```python
+import geopandas as gpd
+import pandas as pd
+import numpy as np
+from shapely.geometry import Polygon, MultiPolygon, LineString
+from shapely.ops import split
+import os
+import math
+
+def split_polygon_into_two(polygon, split_direction='longest'):
+    '''
+    将多边形切分为两部分
+    '''
+    try:
+        if polygon.is_empty:
+            return None, None
+            
+        # 获取多边形的边界框
+        minx, miny, maxx, maxy = polygon.bounds
+        
+        if split_direction == 'longest':
+            # 按最长边方向切分
+            width = maxx - minx
+            height = maxy - miny
+            if width &gt; height:
+                split_direction = 'vertical'
+            else:
+                split_direction = 'horizontal'
+        
+        if split_direction == 'vertical':
+            # 垂直切分（东西方向）
+            mid_x = (minx + maxx) / 2
+            split_line = LineString([(mid_x, miny - 1), (mid_x, maxy + 1)])
+        else:
+            # 水平切分（南北方向）
+            mid_y = (miny + maxy) / 2
+            split_line = LineString([(minx - 1, mid_y), (maxx + 1, mid_y)])
+        
+        # 执行切分
+        split_parts = split(polygon, split_line)
+        
+        # 过滤有效的多边形
+        valid_parts = [part for part in split_parts.geoms 
+                      if isinstance(part, (Polygon, MultiPolygon)) and not part.is_empty]
+        
+        if len(valid_parts) &gt;= 2:
+            return valid_parts[0], valid_parts[1]
+        else:
+            # 如果切分不成功，尝试对角线切分
+            return split_by_diagonal(polygon)
+            
+    except Exception as e:
+        print(f'切分多边形时出错: {e}')
+        return split_by_diagonal(polygon)
+
+def split_by_diagonal(polygon):
+    '''
+    通过对角线切分的备选方法
+    '''
+    try:
+        minx, miny, maxx, maxy = polygon.bounds
+        # 从左上到右下
+        split_line = LineString([(minx, maxy), (maxx, miny)])
+        split_parts = split(polygon, split_line)
+        
+        valid_parts = [part for part in split_parts.geoms 
+                      if isinstance(part, (Polygon, MultiPolygon)) and not part.is_empty]
+        
+        if len(valid_parts) &gt;= 2:
+            return valid_parts[0], valid_parts[1]
+        else:
+            # 从右上到左下
+            split_line = LineString([(maxx, maxy), (minx, miny)])
+            split_parts = split(polygon, split_line)
+            valid_parts = [part for part in split_parts.geoms 
+                          if isinstance(part, (Polygon, MultiPolygon)) and not part.is_empty]
+            
+            if len(valid_parts) &gt;= 2:
+                return valid_parts[0], valid_parts[1]
+            else:
+                print('所有切分方法都失败，返回原始多边形')
+                return polygon, polygon
+    except Exception as e:
+        print(f'对角线切分也失败: {e}')
+        return polygon, polygon
+
+def auto_detect_town_field(gdf):
+    '''
+    自动检测乡镇名字段
+    '''
+    # 常见的中文乡镇字段名
+    town_keywords = ['镇', '乡', '街道', 'town', 'TOWN', 'name', 'NAME', '名称', '地名']
+    
+    for field in gdf.columns:
+        field_lower = str(field).lower()
+        # 检查字段名是否包含乡镇相关关键词
+        for keyword in town_keywords:
+            if keyword.lower() in field_lower:
+                return field
+        
+        # 检查字段内容是否包含乡镇特征
+        sample_values = gdf[field].dropna().head(10)
+        if len(sample_values) &gt; 0:
+            sample_str = ' '.join(str(x) for x in sample_values)
+            if any(keyword in sample_str for keyword in ['镇', '乡', '街道']):
+                return field
+    
+    # 如果没有找到，返回第一个非几何字段
+    non_geom_fields = [col for col in gdf.columns if col != gdf.geometry.name]
+    return non_geom_fields[0] if non_geom_fields else gdf.columns[0]
+
+def auto_detect_county_field(gdf):
+    '''
+    自动检测县名字段
+    '''
+    # 常见的中文县字段名
+    county_keywords = ['县', '区', '市', 'county', 'COUNTY', 'city', 'CITY']
+    
+    for field in gdf.columns:
+        field_lower = str(field).lower()
+        for keyword in county_keywords:
+            if keyword.lower() in field_lower:
+                return field
+        
+        # 检查字段内容是否包含县区特征
+        sample_values = gdf[field].dropna().head(10)
+        if len(sample_values) &gt; 0:
+            sample_str = ' '.join(str(x) for x in sample_values)
+            if any(keyword in sample_str for keyword in ['县', '区', '市']):
+                return field
+    
+    # 如果没有找到，尝试用乡镇字段名
+    town_field = auto_detect_town_field(gdf)
+    if town_field != gdf.columns[0]:
+        return gdf.columns[0]
+    else:
+        return '未知县'
+
+def clean_filename(name):
+    '''
+    清理文件名，移除非法字符
+    '''
+    import re
+    # 移除Windows文件名中的非法字符
+    illegal_chars = r'[&lt;&gt;:'/\\|?*]'
+    cleaned = re.sub(illegal_chars, '_', str(name))
+    # 移除开头和结尾的空格和点号
+    cleaned = cleaned.strip().strip('.')
+    # 限制文件名长度
+    if len(cleaned) &gt; 100:
+        cleaned = cleaned[:100]
+    return cleaned
+
+def save_single_shapefile(gdf, output_path, file_name):
+    '''
+    保存单个Shapefile文件
+    '''
+    try:
+        # 确保输出目录存在
+        output_dir = os.path.dirname(output_path)
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+        
+        # 完整的文件路径
+        full_path = os.path.join(output_path, f'{file_name}.shp')
+        
+        # 保存为Shapefile
+        gdf.to_file(full_path, encoding='utf-8')
+        
+        print(f'  已保存: {file_name}.shp')
+        return True
+        
+    except Exception as e:
+        print(f'  保存文件 {file_name}.shp 时出错: {e}')
+        return False
+
+def split_towns_to_individual_files(shp_file, output_dir):
+    '''
+    自动读取县级shp文件，将每个乡镇切分为两部分，并保存为单独的shp文件
+    
+    参数:
+    shp_file: 输入的县级Shapefile文件路径
+    output_dir: 输出目录
+    '''
+    
+    # 确保输出目录存在
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    
+    try:
+        # 读取Shapefile
+        print(f'正在读取文件: {shp_file}')
+        gdf = gpd.read_file(shp_file)
+        
+        # 自动检测字段
+        town_field = auto_detect_town_field(gdf)
+        county_field = auto_detect_county_field(gdf)
+        
+        print(f'检测到县字段: {county_field}')
+        print(f'检测到乡镇字段: {town_field}')
+        
+        # 显示字段信息
+        print(f'\n所有字段: {list(gdf.columns)}')
+        print(f'几何类型: {gdf.geometry.type.unique()}')
+        print(f'要素数量: {len(gdf)}')
+        
+        # 显示乡镇列表
+        towns = gdf[town_field].unique()
+        print(f'\n发现 {len(towns)} 个乡镇:')
+        for i, town in enumerate(towns, 1):
+            print(f'  {i}. {town}')
+        
+        # 获取县名
+        if county_field in gdf.columns and len(gdf[county_field].unique()) == 1:
+            county_name = gdf[county_field].iloc[0]
+        else:
+            # 从文件名提取县名或使用默认值
+            county_name = os.path.basename(shp_file).replace('.shp', '')
+            print(f'使用文件名作为县名: {county_name}')
+        
+        # 清理县名用于文件名
+        county_name_clean = clean_filename(county_name)
+        
+        # 创建县目录
+        county_dir = os.path.join(output_dir, county_name_clean)
+        if not os.path.exists(county_dir):
+            os.makedirs(county_dir)
+        
+        print(f'\n开始切分并保存乡镇文件...')
+        print('='*60)
+        
+        success_count = 0
+        fail_count = 0
+        total_files_created = 0
+        
+        for idx, row in gdf.iterrows():
+            town_name = row[town_field]
+            geometry = row.geometry
+            
+            print(f'\n处理乡镇: {town_name}')
+            
+            # 清理乡镇名用于文件名
+            town_name_clean = clean_filename(town_name)
+            
+            # 处理MultiPolygon
+            if isinstance(geometry, MultiPolygon):
+                polygons = list(geometry.geoms)
+            else:
+                polygons = [geometry]
+            
+            town_parts = []
+            
+            for poly_idx, polygon in enumerate(polygons):
+                # 切分多边形
+                part1, part2 = split_polygon_into_two(polygon)
+                
+                if part1 is not None and part2 is not None and not part1.equals(part2):
+                    town_parts.extend([part1, part2])
+                    print(f'  ✓ 成功切分第{poly_idx+1}个多边形')
+                else:
+                    # 如果切分失败，使用边界框切分
+                    print(f'  ⚠ 第{poly_idx+1}个多边形切分不理想，使用边界框切分')
+                    part1, part2 = split_by_bounds(polygon)
+                    if part1 is not None and part2 is not None and not part1.equals(part2):
+                        town_parts.extend([part1, part2])
+                    else:
+                        print(f'  ✗ 第{poly_idx+1}个多边形切分完全失败，保留原状')
+                        town_parts.append(polygon)
+            
+            # 为每个部分创建单独的shp文件
+            for i, part in enumerate(town_parts[:2], 1):  # 只取前两个部分
+                # 创建新的GeoDataFrame
+                new_row = row.copy()
+                new_row.geometry = part
+                # 添加切分信息
+                new_row['SPLIT_ID'] = f'{county_name}-{town_name}-{i}'
+                new_row['ORIGINAL_TOWN'] = town_name
+                new_row['SPLIT_PART'] = i
+                new_row['COUNTY_NAME'] = county_name
+                
+                single_gdf = gpd.GeoDataFrame([new_row], crs=gdf.crs)
+                
+                # 生成文件名
+                file_name = f'{county_name_clean}-{town_name_clean}-{i}'
+                
+                # 保存为单独的shp文件
+                if save_single_shapefile(single_gdf, county_dir, file_name):
+                    total_files_created += 1
+                    print(f'  ✓ 保存: {file_name}.shp')
+                else:
+                    print(f'  ✗ 保存失败: {file_name}.shp')
+            
+            if len(town_parts) &gt;= 2:
+                success_count += 1
+            else:
+                fail_count += 1
+        
+        print(f'\n' + '='*60)
+        print(f'处理完成!')
+        print('='*60)
+        print(f'原始乡镇数量: {len(gdf)}')
+        print(f'成功切分: {success_count} 个乡镇')
+        print(f'切分失败: {fail_count} 个乡镇')
+        print(f'创建的shp文件总数: {total_files_created}')
+        print(f'输出目录: {county_dir}')
+        
+        # 显示生成的文件列表
+        print(f'\n生成的文件列表:')
+        shp_files = [f for f in os.listdir(county_dir) if f.endswith('.shp')]
+        for i, file in enumerate(shp_files[:20], 1):  # 只显示前20个文件
+            print(f'  {i}. {file}')
+        
+        if len(shp_files) &gt; 20:
+            print(f'  ... 还有 {len(shp_files) - 20} 个文件')
+        
+        # 保存处理日志
+        save_processing_log(county_dir, county_name, gdf, success_count, fail_count, total_files_created)
+        
+        return total_files_created
+        
+    except Exception as e:
+        print(f'处理过程中发生错误: {e}')
+        import traceback
+        traceback.print_exc()
+        return 0
+
+def split_by_bounds(polygon):
+    '''
+    使用边界框进行切分
+    '''
+    try:
+        minx, miny, maxx, maxy = polygon.bounds
+        center_x, center_y = (minx + maxx) / 2, (miny + maxy) / 2
+        
+        # 创建四个象限的矩形
+        rect1 = Polygon([(minx, miny), (center_x, miny), (center_x, center_y), (minx, center_y), (minx, miny)])
+        rect2 = Polygon([(center_x, miny), (maxx, miny), (maxx, center_y), (center_x, center_y), (center_x, miny)])
+        rect3 = Polygon([(minx, center_y), (center_x, center_y), (center_x, maxy), (minx, maxy), (minx, center_y)])
+        rect4 = Polygon([(center_x, center_y), (maxx, center_y), (maxx, maxy), (center_x, maxy), (center_x, center_y)])
+        
+        # 与原始多边形求交
+        parts = []
+        for rect in [rect1, rect2, rect3, rect4]:
+            intersection = polygon.intersection(rect)
+            if not intersection.is_empty and intersection.area &gt; 0:
+                if isinstance(intersection, MultiPolygon):
+                    parts.extend(list(intersection.geoms))
+                else:
+                    parts.append(intersection)
+        
+        # 按面积排序，取前两个最大的部分
+        parts.sort(key=lambda x: x.area, reverse=True)
+        if len(parts) &gt;= 2:
+            return parts[0], parts[1]
+        elif len(parts) == 1:
+            return parts[0], parts[0]
+        else:
+            return polygon, polygon
+            
+    except Exception as e:
+        print(f'边界框切分失败: {e}')
+        return polygon, polygon
+
+def save_processing_log(output_dir, county_name, original_gdf, success_count, fail_count, total_files):
+    '''
+    保存处理日志
+    '''
+    try:
+        log_file = os.path.join(output_dir, f'处理日志.txt')
+        
+        with open(log_file, 'w', encoding='utf-8') as f:
+            f.write(f'乡镇切分处理日志\n')
+            f.write(f'=' * 50 + '\n')
+            f.write(f'处理时间: {pd.Timestamp.now().strftime('%Y-%m-%d %H:%M:%S')}\n')
+            f.write(f'县名称: {county_name}\n')
+            f.write(f'原始乡镇数量: {len(original_gdf)}\n')
+            f.write(f'成功切分: {success_count} 个乡镇\n')
+            f.write(f'切分失败: {fail_count} 个乡镇\n')
+            f.write(f'生成的shp文件总数: {total_files}\n')
+            f.write(f'\n原始乡镇列表:\n')
+            
+            town_field = auto_detect_town_field(original_gdf)
+            for town in original_gdf[town_field].unique():
+                f.write(f'  - {town}\n')
+        
+        print(f'处理日志已保存: {log_file}')
+        
+    except Exception as e:
+        print(f'保存处理日志时出错: {e}')
+
+# 使用示例
+if __name__ == '__main__':
+    # 输入文件路径 - 替换为您的县级Shapefile路径
+    input_shp = '黔东南苗族侗族自治州_县.shp'  # 您的县级shp文件
+    output_directory = input_shp.split('.')[0]
+    
+    print('开始自动切分乡镇并保存为单独文件...')
+    print('='*60)
+    
+    # 执行切分
+    files_created = split_towns_to_individual_files(
+        shp_file=input_shp,
+        output_dir=output_directory
+    )
+    
+    if files_created &gt; 0:
+        print(f'\n' + '='*60)
+        print('处理完成！')
+        print('='*60)
+        print(f'总共生成了 {files_created} 个shp文件')
+        print(f'文件命名格式: 县名-镇名-编号.shp')
+        print(f'示例: 某县-某镇-1.shp, 某县-某镇-2.shp')
+    else:
+        print('\n处理失败，请检查输入文件和错误信息。</description><guid isPermaLink="true">https://wzh922.github.io/blog/post/shi-yong-dai-ma.html</guid><pubDate>Sat, 08 Nov 2025 02:46:06 +0000</pubDate></item><item><title>实习日志及报告</title><link>https://wzh922.github.io/blog/post/shi-xi-ri-zhi-ji-bao-gao.html</link><description>好的，没问题。</description><guid isPermaLink="true">https://wzh922.github.io/blog/post/shi-xi-ri-zhi-ji-bao-gao.html</guid><pubDate>Fri, 07 Nov 2025 07:25:12 +0000</pubDate></item><item><title>专业英语论文</title><link>https://wzh922.github.io/blog/post/zhuan-ye-ying-yu-lun-wen.html</link><description># 中文版本
 
 ---
 
