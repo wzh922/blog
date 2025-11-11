@@ -1,5 +1,22 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>狒材的blog</title><link>https://wzh922.github.io/blog</link><description>前路漫漫亦灿灿！</description><copyright>狒材的blog</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://avatars.githubusercontent.com/u/210956220?s=400&amp;u=c0d549ac9c109d6ad35fde23e0aff5b3213fc57e&amp;v=4</url><title>avatar</title><link>https://wzh922.github.io/blog</link></image><lastBuildDate>Sat, 08 Nov 2025 02:46:37 +0000</lastBuildDate><managingEditor>狒材的blog</managingEditor><ttl>60</ttl><webMaster>狒材的blog</webMaster><item><title>实用代码</title><link>https://wzh922.github.io/blog/post/shi-yong-dai-ma.html</link><description># 实用代码
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>狒材的blog</title><link>https://wzh922.github.io/blog</link><description>前路漫漫亦灿灿！</description><copyright>狒材的blog</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://avatars.githubusercontent.com/u/210956220?s=400&amp;u=c0d549ac9c109d6ad35fde23e0aff5b3213fc57e&amp;v=4</url><title>avatar</title><link>https://wzh922.github.io/blog</link></image><lastBuildDate>Tue, 11 Nov 2025 02:08:06 +0000</lastBuildDate><managingEditor>狒材的blog</managingEditor><ttl>60</ttl><webMaster>狒材的blog</webMaster><item><title>新版实习报告➕日志</title><link>https://wzh922.github.io/blog/post/xin-ban-shi-xi-bao-gao-%E2%9E%95-ri-zhi.html</link><description># 东北林业大学实习报告
+**学生**：王志浩  
+**学号**：2022212925  
+**专业、班级**：2022级人工智能2班  
+**学院**：计算机与控制工程学院  
+**指导教师**：苗岩  
+**日期**：2025年11月7日  
+
+| 基本情况 | 详情 |
+| --- | --- |
+| 实习名称 | 科学计算与系统建模仿真系统开发 |
+| 实习时间 | 2025年10月13日至2025年11月7日 |
+| 实习单位 | 东北林业大学 |
+| 实习地点 | 丹青902 |
+| 指导教师/职称 | 苗岩 |
+
+## 实习目的
+1. 熟悉国产化科学计算与系统建模仿真系统MWORKS科学计算环境MWORKS.Syslab的基本功能和基本操作方法。</description><guid isPermaLink="true">https://wzh922.github.io/blog/post/xin-ban-shi-xi-bao-gao-%E2%9E%95-ri-zhi.html</guid><pubDate>Tue, 11 Nov 2025 02:07:38 +0000</pubDate></item><item><title>实用代码</title><link>https://wzh922.github.io/blog/post/shi-yong-dai-ma.html</link><description># 实用代码
 
 ## geojson 转 shp
 
