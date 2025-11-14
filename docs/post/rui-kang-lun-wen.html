@@ -83,7 +83,7 @@
 <meta property="og:url" content="https://wzh922.github.io/blog/post/rui-kang-lun-wen.html">
 <meta property="og:image" content="https://avatars.githubusercontent.com/u/210956220?s=400&u=c0d549ac9c109d6ad35fde23e0aff5b3213fc57e&v=4">
 <title>睿抗论文</title>
-<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
+
 
 
 </head>
@@ -107,17 +107,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
     body {padding: 8px;}
     .postTitle{font-size:24px;}
 }
-.copy-feedback {
-    display: none;
-    position: absolute;
-    top: 10px;
-    right: 50px;
-    color: var(--color-fg-on-emphasis);
-    background-color: var(--color-fg-muted);
-    border-radius: 3px;
-    padding: 5px 8px;
-    font-size: 12px;
-}
+
 </style>
 
 
@@ -405,14 +395,15 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <li><strong>控制层</strong>：接收规划层的速度指令，根据麦克纳姆轮的运动学模型，将速度指令转化为各电机的控制信号，实现机器人的精确运动控制。</li>
 <li><strong>任务层</strong>：设计任务调度器，依据比赛任务要求，按照一定的逻辑顺序调度各个功能模块，实现任务的有序执行，并通过ROS服务与外部进行交互。</li>
 </ol>
-<div class="highlight highlight-source-mermaid"><pre class="notranslate"><span class="pl-k">graph</span> <span class="pl-c1">LR</span>  
-    <span class="pl-ent">A</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>硬件层<span class="pl-pds"><span class="pl-sg">]</span></span></span> <span class="pl-k">--&gt;</span> <span class="pl-ent">B</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>驱动层<span class="pl-pds"><span class="pl-sg">]</span></span></span> <span class="pl-k">--&gt;</span> <span class="pl-ent">C</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>感知层<span class="pl-pds"><span class="pl-sg">]</span></span></span> <span class="pl-k">--&gt;</span> <span class="pl-ent">D</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>规划层<span class="pl-pds"><span class="pl-sg">]</span></span></span> <span class="pl-k">--&gt;</span> <span class="pl-ent">E</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>控制层<span class="pl-pds"><span class="pl-sg">]</span></span></span> <span class="pl-k">--&gt;</span> <span class="pl-ent">F</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>任务层<span class="pl-pds"><span class="pl-sg">]</span></span></span>  
-    <span class="pl-k">subgraph</span> <span class="pl-en">ROS</span>框架  
-        <span class="pl-ent">B</span> <span class="pl-k">--&gt;</span><span class="pl-k">|</span><span class="pl-s">/scan</span><span class="pl-k">|</span> <span class="pl-ent">C</span>  
-        <span class="pl-ent">C</span> <span class="pl-k">--&gt;</span><span class="pl-k">|</span><span class="pl-s">/map</span><span class="pl-k">|</span> <span class="pl-ent">D</span>  
-        <span class="pl-ent">D</span> <span class="pl-k">--&gt;</span><span class="pl-k">|</span><span class="pl-s">/cmd_vel</span><span class="pl-k">|</span> <span class="pl-ent">E</span>  
-        <span class="pl-ent">E</span> <span class="pl-k">--&gt;</span><span class="pl-k">|</span><span class="pl-s">/status</span><span class="pl-k">|</span> <span class="pl-ent">F</span>  
-    <span class="pl-k">end</span>  </pre></div>
+<pre lang="mermaid" class="notranslate"><code class="notranslate">graph LR  
+    A[硬件层] --&gt; B[驱动层] --&gt; C[感知层] --&gt; D[规划层] --&gt; E[控制层] --&gt; F[任务层]  
+    subgraph ROS框架  
+        B --&gt;|/scan| C  
+        C --&gt;|/map| D  
+        D --&gt;|/cmd_vel| E  
+        E --&gt;|/status| F  
+    end  
+</code></pre>
 <ul>
 <li><strong>驱动层</strong>：封装激光雷达（<code class="notranslate">/scan</code>话题）、摄像头（<code class="notranslate">/camera/image_raw</code>）、IMU（<code class="notranslate">/imu</code>）驱动，实现硬件数据的标准化输出。</li>
 <li><strong>感知层</strong>：
@@ -611,10 +602,11 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <ul>
 <li><strong>检测逻辑</strong>：在<code class="notranslate">execute_mission</code>函数中，对比当前位置与20秒前位置（通过<code class="notranslate">get_current_pose</code>获取<code class="notranslate">/odom</code>数据），若位移小于0.1米（<code class="notranslate">distance_moved &lt; 0.1</code>），则判定为徘徊。</li>
 <li><strong>脱困动作链</strong>：
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">self</span>.<span class="pl-c1">nav_client</span>.<span class="pl-c1">cancel_goal</span>()        <span class="pl-c"># 取消当前目标，避免路径锁死  </span>
-<span class="pl-s1">self</span>.<span class="pl-c1">clear_costmaps</span>()                <span class="pl-c"># 清理代价地图中的虚假障碍物  </span>
-<span class="pl-s1">self</span>.<span class="pl-c1">rotate_in_place</span>(<span class="pl-s1">duration</span><span class="pl-c1">=</span><span class="pl-c1">3.0</span>)   <span class="pl-c"># 原地旋转3秒，获取新的激光雷达扫描数据  </span>
-<span class="pl-s1">self</span>.<span class="pl-c1">nav_client</span>.<span class="pl-c1">send_goal</span>(<span class="pl-s1">goal</span>)      <span class="pl-c"># 基于新地图重新规划路径  </span></pre></div>
+<pre lang="python" class="notranslate"><code class="notranslate">self.nav_client.cancel_goal()        # 取消当前目标，避免路径锁死  
+self.clear_costmaps()                # 清理代价地图中的虚假障碍物  
+self.rotate_in_place(duration=3.0)   # 原地旋转3秒，获取新的激光雷达扫描数据  
+self.nav_client.send_goal(goal)      # 基于新地图重新规划路径  
+</code></pre>
 </li>
 </ul>
 <p><strong>（2） 原地旋转的运动学实现</strong><br>
@@ -636,13 +628,14 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 </ul>
 <h4>4. <strong>参数切换的鲁棒性设计</strong></h4>
 <p>针对ROS动态参数配置可能因网络延迟导致的失效问题，代码引入<strong>三阶段重试机制</strong>（<code class="notranslate">retry_count&lt;3</code>）：</p>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">while</span> <span class="pl-s1">retry_count</span> <span class="pl-c1">&lt;</span> <span class="pl-c1">3</span> <span class="pl-c1">and</span> <span class="pl-s1">self</span>.<span class="pl-c1">active</span>:  
-    <span class="pl-k">try</span>:  
-        <span class="pl-s1">self</span>.<span class="pl-c1">dwa_client</span>.<span class="pl-c1">update_configuration</span>(<span class="pl-s1">dwa_params</span>)  
-        <span class="pl-k">break</span>  
-    <span class="pl-k">except</span> <span class="pl-v">Exception</span> <span class="pl-k">as</span> <span class="pl-s1">e</span>:  
-        <span class="pl-s1">retry_count</span> <span class="pl-c1">+=</span> <span class="pl-c1">1</span>  
-        <span class="pl-s1">rospy</span>.<span class="pl-c1">sleep</span>(<span class="pl-c1">0.5</span>)  <span class="pl-c"># 间隔0.5秒重试  </span></pre></div>
+<pre lang="python" class="notranslate"><code class="notranslate">while retry_count &lt; 3 and self.active:  
+    try:  
+        self.dwa_client.update_configuration(dwa_params)  
+        break  
+    except Exception as e:  
+        retry_count += 1  
+        rospy.sleep(0.5)  # 间隔0.5秒重试  
+</code></pre>
 <ul>
 <li><strong>技术效果</strong>：通过<code class="notranslate">dwa_client.get_configuration()</code>实时获取控制器支持的参数集合（如<code class="notranslate">dwa_supported</code>），自动过滤硬件不兼容的配置（如超电机转速限制的速度参数），确保参数设置成功率从92%提升至99.3%。</li>
 </ul>
@@ -661,16 +654,17 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <p>代码中通过<code class="notranslate">processA</code>-<code class="notranslate">processD</code>方法实现<strong>四区域任务解耦</strong>，每个区域任务包含“导航→识别→返回”完整流程：</p>
 <ul>
 <li><strong>A区任务示例</strong>：
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">def</span> <span class="pl-en">processA</span>(<span class="pl-s1">self</span>):
-    <span class="pl-s">"""A区救援任务"""</span>
-    <span class="pl-s1">rospy</span>.<span class="pl-c1">loginfo</span>(<span class="pl-s">"开始执行A区救援任务"</span>)
-    <span class="pl-s1">goals</span> <span class="pl-c1">=</span> [
-    <span class="pl-s1">self</span>.<span class="pl-c1">create_goal</span>(<span class="pl-c1">1.5</span>, <span class="pl-c1">2.1</span>, <span class="pl-c1">0</span>, <span class="pl-c1">1</span>),  <span class="pl-c"># 到达A点</span>
+<pre lang="python" class="notranslate"><code class="notranslate">def processA(self):
+    """A区救援任务"""
+    rospy.loginfo("开始执行A区救援任务")
+    goals = [
+    self.create_goal(1.5, 2.1, 0, 1),  # 到达A点
     ]
-    <span class="pl-k">if</span> <span class="pl-s1">self</span>.<span class="pl-c1">execute_mission</span>(<span class="pl-s1">goals</span>, <span class="pl-s">"A"</span>):
-    <span class="pl-s1">rospy</span>.<span class="pl-c1">loginfo</span>(<span class="pl-s">"到达A区，正在接收伤员..."</span>)
-    <span class="pl-s1">self</span>.<span class="pl-c1">detect</span>(<span class="pl-s">"test1.jpg"</span>, <span class="pl-c1">0.5</span>)
-    <span class="pl-s1">time</span>.<span class="pl-c1">sleep</span>(<span class="pl-c1">3</span>)</pre></div>
+    if self.execute_mission(goals, "A"):
+    rospy.loginfo("到达A区，正在接收伤员...")
+    self.detect("test1.jpg", 0.5)
+    time.sleep(3)
+</code></pre>
 <ul>
 <li>创新点：通过<code class="notranslate">zone_type="A"</code>参数传递，自动加载A区专属参数，实现“任务逻辑与控制参数的解耦”，便于后期扩展新区域任务。</li>
 </ul>
@@ -723,17 +717,18 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 </tbody>
 </table></markdown-accessiblity-table>
 <h3>（三） 任务调度状态机流程图</h3>
-<div class="highlight highlight-source-mermaid"><pre class="notranslate"><span class="pl-k">graph</span> <span class="pl-c1">TD</span>  
-    <span class="pl-ent">A</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>等待指令<span class="pl-pds"><span class="pl-sg">]</span></span></span> <span class="pl-k">--&gt;</span> <span class="pl-ent">B</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">{</span></span>接收到区域指令?<span class="pl-pds"><span class="pl-sg">}</span></span></span>  
-    <span class="pl-ent">B</span> <span class="pl-k">--&gt;</span><span class="pl-k">|</span><span class="pl-s">是</span><span class="pl-k">|</span> <span class="pl-ent">C</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>加载对应区域参数<span class="pl-pds"><span class="pl-sg">]</span></span></span>  
-    <span class="pl-ent">C</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">D</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>执行导航任务<span class="pl-pds"><span class="pl-sg">]</span></span></span>  
-    <span class="pl-ent">D</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">E</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>到达目标点<span class="pl-pds"><span class="pl-sg">]</span></span></span>  
-    <span class="pl-ent">E</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">F</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>触发目标识别/打靶任务<span class="pl-pds"><span class="pl-sg">]</span></span></span>  
-    <span class="pl-ent">F</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">G</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>任务完成?<span class="pl-pds"><span class="pl-sg">]</span></span></span>  
-    <span class="pl-ent">G</span> <span class="pl-k">--&gt;</span><span class="pl-k">|</span><span class="pl-s">是</span><span class="pl-k">|</span> <span class="pl-ent">H</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>返回营地<span class="pl-pds"><span class="pl-sg">]</span></span></span>  
-    <span class="pl-ent">H</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">I</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>任务结束，重置状态<span class="pl-pds"><span class="pl-sg">]</span></span></span>  
-    <span class="pl-ent">G</span> <span class="pl-k">--&gt;</span><span class="pl-k">|</span><span class="pl-s">否</span><span class="pl-k">|</span> <span class="pl-ent">J</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>重新规划任务<span class="pl-pds"><span class="pl-sg">]</span></span></span>  
-    <span class="pl-ent">B</span> <span class="pl-k">--&gt;</span><span class="pl-k">|</span><span class="pl-s">否</span><span class="pl-k">|</span> <span class="pl-ent">A</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>继续等待<span class="pl-pds"><span class="pl-sg">]</span></span></span>  </pre></div>
+<pre lang="mermaid" class="notranslate"><code class="notranslate">graph TD  
+    A[等待指令] --&gt; B{接收到区域指令?}  
+    B --&gt;|是| C[加载对应区域参数]  
+    C --&gt; D[执行导航任务]  
+    D --&gt; E[到达目标点]  
+    E --&gt; F[触发目标识别/打靶任务]  
+    F --&gt; G[任务完成?]  
+    G --&gt;|是| H[返回营地]  
+    H --&gt; I[任务结束，重置状态]  
+    G --&gt;|否| J[重新规划任务]  
+    B --&gt;|否| A[继续等待]  
+</code></pre>
 <p><strong>说明</strong>：</p>
 <ul>
 <li>流程图对应代码中<code class="notranslate">processA</code>-<code class="notranslate">processD</code>函数的逻辑，体现“指令触发→参数切换→任务执行→状态重置”的闭环流程。</li>
@@ -829,388 +824,393 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <h2>八、附录：核心代码</h2>
 <h3>（一）区域参数动态调整</h3>
 <p>以下代码展示了不同区域参数的设置和动态调整机制，是实现多地形自适应导航的核心：</p>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">def</span> <span class="pl-en">set_zoneA_params</span>(<span class="pl-s1">self</span>):
-    <span class="pl-s">"""设置A区域（碎石地形）的导航参数"""</span>
-    <span class="pl-c"># 创建参数字典</span>
-    <span class="pl-s1">params_A</span> <span class="pl-c1">=</span> {
-        <span class="pl-s">'max_vel_x'</span>: <span class="pl-c1">2.0</span>,           <span class="pl-c"># 降低最大线速度，适应碎石地形</span>
-        <span class="pl-s">'min_vel_x'</span>: <span class="pl-c1">0.0</span>,
-        <span class="pl-s">'max_vel_theta'</span>: <span class="pl-c1">1.0</span>,
-        <span class="pl-s">'min_in_place_vel_theta'</span>: <span class="pl-c1">0.4</span>,
-        <span class="pl-s">'acc_lim_x'</span>: <span class="pl-c1">2.0</span>,           <span class="pl-c"># 增大加速度限制</span>
-        <span class="pl-s">'acc_lim_theta'</span>: <span class="pl-c1">3.2</span>,
-        <span class="pl-s">'xy_goal_tolerance'</span>: <span class="pl-c1">0.2</span>,
-        <span class="pl-s">'yaw_goal_tolerance'</span>: <span class="pl-c1">0.1</span>,
-        <span class="pl-s">'vx_samples'</span>: <span class="pl-c1">30</span>,           <span class="pl-c"># 增加速度采样点，提升路径平滑度</span>
-        <span class="pl-s">'inflation_radius'</span>: <span class="pl-c1">0.3</span>,    <span class="pl-c"># 设置避障半径</span>
-        <span class="pl-s">'path_distance_bias'</span>: <span class="pl-c1">32.0</span>,
-        <span class="pl-s">'goal_distance_bias'</span>: <span class="pl-c1">20.0</span>,
-        <span class="pl-s">'occdist_scale'</span>: <span class="pl-c1">0.02</span>,
-        <span class="pl-s">'cost_scaling_factor'</span>: <span class="pl-c1">3.0</span>   <span class="pl-c"># 代价地图权重</span>
+<pre lang="python" class="notranslate"><code class="notranslate">def set_zoneA_params(self):
+    """设置A区域（碎石地形）的导航参数"""
+    # 创建参数字典
+    params_A = {
+        'max_vel_x': 2.0,           # 降低最大线速度，适应碎石地形
+        'min_vel_x': 0.0,
+        'max_vel_theta': 1.0,
+        'min_in_place_vel_theta': 0.4,
+        'acc_lim_x': 2.0,           # 增大加速度限制
+        'acc_lim_theta': 3.2,
+        'xy_goal_tolerance': 0.2,
+        'yaw_goal_tolerance': 0.1,
+        'vx_samples': 30,           # 增加速度采样点，提升路径平滑度
+        'inflation_radius': 0.3,    # 设置避障半径
+        'path_distance_bias': 32.0,
+        'goal_distance_bias': 20.0,
+        'occdist_scale': 0.02,
+        'cost_scaling_factor': 3.0   # 代价地图权重
     }
     
-    <span class="pl-c"># 应用参数</span>
-    <span class="pl-s1">self</span>.<span class="pl-c1">_apply_params</span>(<span class="pl-s1">params_A</span>)
-    <span class="pl-s1">rospy</span>.<span class="pl-c1">loginfo</span>(<span class="pl-s">"已应用A区域（碎石地形）参数"</span>)
+    # 应用参数
+    self._apply_params(params_A)
+    rospy.loginfo("已应用A区域（碎石地形）参数")
 
-<span class="pl-k">def</span> <span class="pl-en">set_zoneD_params</span>(<span class="pl-s1">self</span>):
-    <span class="pl-s">"""设置D区域（雷区）的导航参数"""</span>
-    <span class="pl-c"># 创建参数字典</span>
-    <span class="pl-s1">params_D</span> <span class="pl-c1">=</span> {
-        <span class="pl-s">'max_vel_x'</span>: <span class="pl-c1">0.6</span>,           <span class="pl-c"># 严格限制线速度，确保安全</span>
-        <span class="pl-s">'min_vel_x'</span>: <span class="pl-c1">0.0</span>,
-        <span class="pl-s">'max_vel_theta'</span>: <span class="pl-c1">0.5</span>,
-        <span class="pl-s">'min_in_place_vel_theta'</span>: <span class="pl-c1">0.2</span>,
-        <span class="pl-s">'acc_lim_x'</span>: <span class="pl-c1">0.5</span>,           <span class="pl-c"># 低加速度限制，避免急动作</span>
-        <span class="pl-s">'acc_lim_theta'</span>: <span class="pl-c1">1.0</span>,
-        <span class="pl-s">'xy_goal_tolerance'</span>: <span class="pl-c1">0.1</span>,
-        <span class="pl-s">'yaw_goal_tolerance'</span>: <span class="pl-c1">0.05</span>,
-        <span class="pl-s">'vx_samples'</span>: <span class="pl-c1">20</span>,
-        <span class="pl-s">'inflation_radius'</span>: <span class="pl-c1">0.8</span>,    <span class="pl-c"># 最大避障半径，确保安全距离</span>
-        <span class="pl-s">'path_distance_bias'</span>: <span class="pl-c1">32.0</span>,
-        <span class="pl-s">'goal_distance_bias'</span>: <span class="pl-c1">20.0</span>,
-        <span class="pl-s">'occdist_scale'</span>: <span class="pl-c1">0.5</span>,       <span class="pl-c"># 提高障碍物距离权重</span>
-        <span class="pl-s">'cost_scaling_factor'</span>: <span class="pl-c1">10.0</span>, <span class="pl-c"># 最高代价地图权重</span>
-        <span class="pl-s">'publish_cost_grid'</span>: <span class="pl-c1">True</span>    <span class="pl-c"># 开启代价网格可视化</span>
+def set_zoneD_params(self):
+    """设置D区域（雷区）的导航参数"""
+    # 创建参数字典
+    params_D = {
+        'max_vel_x': 0.6,           # 严格限制线速度，确保安全
+        'min_vel_x': 0.0,
+        'max_vel_theta': 0.5,
+        'min_in_place_vel_theta': 0.2,
+        'acc_lim_x': 0.5,           # 低加速度限制，避免急动作
+        'acc_lim_theta': 1.0,
+        'xy_goal_tolerance': 0.1,
+        'yaw_goal_tolerance': 0.05,
+        'vx_samples': 20,
+        'inflation_radius': 0.8,    # 最大避障半径，确保安全距离
+        'path_distance_bias': 32.0,
+        'goal_distance_bias': 20.0,
+        'occdist_scale': 0.5,       # 提高障碍物距离权重
+        'cost_scaling_factor': 10.0, # 最高代价地图权重
+        'publish_cost_grid': True    # 开启代价网格可视化
     }
     
-    <span class="pl-c"># 应用参数</span>
-    <span class="pl-s1">self</span>.<span class="pl-c1">_apply_params</span>(<span class="pl-s1">params_D</span>)
-    <span class="pl-s1">rospy</span>.<span class="pl-c1">loginfo</span>(<span class="pl-s">"已应用D区域（雷区）参数"</span>)
+    # 应用参数
+    self._apply_params(params_D)
+    rospy.loginfo("已应用D区域（雷区）参数")
 
-<span class="pl-k">def</span> <span class="pl-en">_apply_params</span>(<span class="pl-s1">self</span>, <span class="pl-s1">params</span>):
-    <span class="pl-s">"""应用导航参数，包含三阶段重试机制"""</span>
-    <span class="pl-s1">retry_count</span> <span class="pl-c1">=</span> <span class="pl-c1">0</span>
-    <span class="pl-k">while</span> <span class="pl-s1">retry_count</span> <span class="pl-c1">&lt;</span> <span class="pl-c1">3</span> <span class="pl-c1">and</span> <span class="pl-s1">self</span>.<span class="pl-c1">active</span>:  <span class="pl-c"># 三阶段重试机制</span>
-        <span class="pl-k">try</span>:
-            <span class="pl-c"># 获取当前支持的参数集合</span>
-            <span class="pl-s1">dwa_supported</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">dwa_client</span>.<span class="pl-c1">get_configuration</span>()
-            <span class="pl-s1">dwa_params</span> <span class="pl-c1">=</span> {}
+def _apply_params(self, params):
+    """应用导航参数，包含三阶段重试机制"""
+    retry_count = 0
+    while retry_count &lt; 3 and self.active:  # 三阶段重试机制
+        try:
+            # 获取当前支持的参数集合
+            dwa_supported = self.dwa_client.get_configuration()
+            dwa_params = {}
             
-            <span class="pl-c"># 过滤不支持的参数</span>
-            <span class="pl-k">for</span> <span class="pl-s1">key</span>, <span class="pl-s1">value</span> <span class="pl-c1">in</span> <span class="pl-s1">params</span>.<span class="pl-c1">items</span>():
-                <span class="pl-k">if</span> <span class="pl-s1">key</span> <span class="pl-c1">in</span> <span class="pl-s1">dwa_supported</span>:
-                    <span class="pl-s1">dwa_params</span>[<span class="pl-s1">key</span>] <span class="pl-c1">=</span> <span class="pl-s1">value</span>
-                <span class="pl-k">else</span>:
-                    <span class="pl-s1">rospy</span>.<span class="pl-c1">logwarn</span>(<span class="pl-s">f"参数 <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">key</span><span class="pl-kos">}</span></span> 不被当前硬件支持，已跳过"</span>)
+            # 过滤不支持的参数
+            for key, value in params.items():
+                if key in dwa_supported:
+                    dwa_params[key] = value
+                else:
+                    rospy.logwarn(f"参数 {key} 不被当前硬件支持，已跳过")
             
-            <span class="pl-c"># 更新配置</span>
-            <span class="pl-s1">self</span>.<span class="pl-c1">dwa_client</span>.<span class="pl-c1">update_configuration</span>(<span class="pl-s1">dwa_params</span>)
-            <span class="pl-k">break</span>
-        <span class="pl-k">except</span> <span class="pl-v">Exception</span> <span class="pl-k">as</span> <span class="pl-s1">e</span>:
-            <span class="pl-s1">retry_count</span> <span class="pl-c1">+=</span> <span class="pl-c1">1</span>
-            <span class="pl-s1">rospy</span>.<span class="pl-c1">logwarn</span>(<span class="pl-s">f"参数设置失败，正在重试 (<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">retry_count</span><span class="pl-kos">}</span></span>/3): <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">e</span><span class="pl-kos">}</span></span>"</span>)
-            <span class="pl-s1">rospy</span>.<span class="pl-c1">sleep</span>(<span class="pl-c1">0.5</span>)  <span class="pl-c"># 间隔0.5秒重试</span>
+            # 更新配置
+            self.dwa_client.update_configuration(dwa_params)
+            break
+        except Exception as e:
+            retry_count += 1
+            rospy.logwarn(f"参数设置失败，正在重试 ({retry_count}/3): {e}")
+            rospy.sleep(0.5)  # 间隔0.5秒重试
     
-    <span class="pl-k">if</span> <span class="pl-s1">retry_count</span> <span class="pl-c1">==</span> <span class="pl-c1">3</span>:
-        <span class="pl-s1">rospy</span>.<span class="pl-c1">logerr</span>(<span class="pl-s">"参数设置失败，将使用默认参数"</span>)</pre></div>
+    if retry_count == 3:
+        rospy.logerr("参数设置失败，将使用默认参数")
+</code></pre>
 <h3>（二）目标识别实现</h3>
 <p>以下代码展示了基于YOLOv8的目标识别实现，包括模型加载、图像处理和结果输出：</p>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">def</span> <span class="pl-en">detect</span>(<span class="pl-s1">self</span>, <span class="pl-s1">image_path</span><span class="pl-c1">=</span><span class="pl-c1">None</span>, <span class="pl-s1">conf_threshold</span><span class="pl-c1">=</span><span class="pl-c1">0.5</span>):
-        <span class="pl-c"># 初始化结果字典</span>
-        <span class="pl-s1">result_counts</span> <span class="pl-c1">=</span> {<span class="pl-s1">name</span>: <span class="pl-c1">0</span> <span class="pl-k">for</span> <span class="pl-s1">name</span> <span class="pl-c1">in</span> <span class="pl-s1">class_names</span>.<span class="pl-c1">values</span>()}
+<pre lang="python" class="notranslate"><code class="notranslate">def detect(self, image_path=None, conf_threshold=0.5):
+        # 初始化结果字典
+        result_counts = {name: 0 for name in class_names.values()}
 
-        <span class="pl-c"># 获取检测图像</span>
-        <span class="pl-k">if</span> <span class="pl-s1">image_path</span> <span class="pl-c1">is</span> <span class="pl-c1">None</span>:
-            <span class="pl-c"># 自动拍照模式</span>
-            <span class="pl-s1">cap</span> <span class="pl-c1">=</span> <span class="pl-s1">cv2</span>.<span class="pl-c1">VideoCapture</span>(<span class="pl-c1">0</span>)
-            <span class="pl-k">if</span> <span class="pl-c1">not</span> <span class="pl-s1">cap</span>.<span class="pl-c1">isOpened</span>():
-                <span class="pl-k">return</span> <span class="pl-s">"无法打开摄像头"</span>, <span class="pl-s">""</span>
+        # 获取检测图像
+        if image_path is None:
+            # 自动拍照模式
+            cap = cv2.VideoCapture(0)
+            if not cap.isOpened():
+                return "无法打开摄像头", ""
 
-            <span class="pl-s1">ret</span>, <span class="pl-s1">frame</span> <span class="pl-c1">=</span> <span class="pl-s1">cap</span>.<span class="pl-c1">read</span>()
-            <span class="pl-s1">cap</span>.<span class="pl-c1">release</span>()
-            <span class="pl-k">if</span> <span class="pl-c1">not</span> <span class="pl-s1">ret</span>:
-                <span class="pl-k">return</span> <span class="pl-s">"拍照失败"</span>, <span class="pl-s">""</span>
+            ret, frame = cap.read()
+            cap.release()
+            if not ret:
+                return "拍照失败", ""
 
-            <span class="pl-c"># 保存原始照片</span>
-            <span class="pl-s1">timestamp</span> <span class="pl-c1">=</span> <span class="pl-s1">datetime</span>.<span class="pl-c1">now</span>().<span class="pl-c1">strftime</span>(<span class="pl-s">"%Y%m%d_%H%M%S"</span>)
-            <span class="pl-s1">captured_image_path</span> <span class="pl-c1">=</span> <span class="pl-s">"detect_%s.jpg"</span> <span class="pl-c1">%</span> <span class="pl-s1">timestamp</span>
-            <span class="pl-s1">cv2</span>.<span class="pl-c1">imwrite</span>(<span class="pl-s1">captured_image_path</span>, <span class="pl-s1">frame</span>)
-            <span class="pl-s1">image_to_detect</span> <span class="pl-c1">=</span> <span class="pl-s1">captured_image_path</span>
-        <span class="pl-k">elif</span> <span class="pl-s1">image_path</span> <span class="pl-c1">in</span> [<span class="pl-s">"A"</span>, <span class="pl-s">"B"</span>, <span class="pl-s">"C"</span>, <span class="pl-s">"D"</span>]:
-            <span class="pl-s1">cap</span> <span class="pl-c1">=</span> <span class="pl-s1">cv2</span>.<span class="pl-c1">VideoCapture</span>(<span class="pl-c1">0</span>)
-            <span class="pl-k">if</span> <span class="pl-c1">not</span> <span class="pl-s1">cap</span>.<span class="pl-c1">isOpened</span>():
-                <span class="pl-k">return</span> <span class="pl-s">"无法打开摄像头"</span>, <span class="pl-s">""</span>
+            # 保存原始照片
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            captured_image_path = "detect_%s.jpg" % timestamp
+            cv2.imwrite(captured_image_path, frame)
+            image_to_detect = captured_image_path
+        elif image_path in ["A", "B", "C", "D"]:
+            cap = cv2.VideoCapture(0)
+            if not cap.isOpened():
+                return "无法打开摄像头", ""
 
-            <span class="pl-s1">ret</span>, <span class="pl-s1">frame</span> <span class="pl-c1">=</span> <span class="pl-s1">cap</span>.<span class="pl-c1">read</span>()
-            <span class="pl-s1">cap</span>.<span class="pl-c1">release</span>()
-            <span class="pl-k">if</span> <span class="pl-c1">not</span> <span class="pl-s1">ret</span>:
-                <span class="pl-k">return</span> <span class="pl-s">"拍照失败"</span>, <span class="pl-s">""</span>
+            ret, frame = cap.read()
+            cap.release()
+            if not ret:
+                return "拍照失败", ""
 
-            <span class="pl-c"># 保存原始照片</span>
-            <span class="pl-s1">captured_image_path</span> <span class="pl-c1">=</span> <span class="pl-s">"%s.jpg"</span> <span class="pl-c1">%</span> <span class="pl-s1">image_path</span>
-            <span class="pl-s1">cv2</span>.<span class="pl-c1">imwrite</span>(<span class="pl-s1">captured_image_path</span>, <span class="pl-s1">frame</span>)
-            <span class="pl-s1">image_to_detect</span> <span class="pl-c1">=</span> <span class="pl-s1">captured_image_path</span>
-        <span class="pl-k">else</span>:
-            <span class="pl-s1">image_to_detect</span> <span class="pl-c1">=</span> <span class="pl-s1">image_path</span>
+            # 保存原始照片
+            captured_image_path = "%s.jpg" % image_path
+            cv2.imwrite(captured_image_path, frame)
+            image_to_detect = captured_image_path
+        else:
+            image_to_detect = image_path
 
-        <span class="pl-c"># 执行检测（使用YOLO自带的绘图功能）</span>
-        <span class="pl-s1">results</span> <span class="pl-c1">=</span> <span class="pl-s1">model</span>.<span class="pl-c1">predict</span>(
-            <span class="pl-s1">source</span><span class="pl-c1">=</span><span class="pl-s1">image_to_detect</span>,
-            <span class="pl-s1">conf</span><span class="pl-c1">=</span><span class="pl-s1">conf_threshold</span>,
-            <span class="pl-s1">save</span><span class="pl-c1">=</span><span class="pl-c1">True</span>,  <span class="pl-c"># 自动保存结果图片</span>
-            <span class="pl-s1">save_txt</span><span class="pl-c1">=</span><span class="pl-c1">False</span>,
-            <span class="pl-s1">save_conf</span><span class="pl-c1">=</span><span class="pl-c1">False</span>,
-            <span class="pl-s1">exist_ok</span><span class="pl-c1">=</span><span class="pl-c1">True</span>,
+        # 执行检测（使用YOLO自带的绘图功能）
+        results = model.predict(
+            source=image_to_detect,
+            conf=conf_threshold,
+            save=True,  # 自动保存结果图片
+            save_txt=False,
+            save_conf=False,
+            exist_ok=True,
         )
 
-        <span class="pl-c"># 统计结果（只统计置信度大于阈值的检测）</span>
-        <span class="pl-k">for</span> <span class="pl-s1">r</span> <span class="pl-c1">in</span> <span class="pl-s1">results</span>:
-            <span class="pl-k">for</span> <span class="pl-s1">box</span> <span class="pl-c1">in</span> <span class="pl-s1">r</span>.<span class="pl-c1">boxes</span>:
-                <span class="pl-k">if</span> <span class="pl-en">float</span>(<span class="pl-s1">box</span>.<span class="pl-c1">conf</span>) <span class="pl-c1">&gt;=</span> <span class="pl-s1">conf_threshold</span>:
-                    <span class="pl-s1">class_id</span> <span class="pl-c1">=</span> <span class="pl-en">int</span>(<span class="pl-s1">box</span>.<span class="pl-c1">cls</span>)
-                    <span class="pl-s1">class_name</span> <span class="pl-c1">=</span> <span class="pl-s1">class_names</span>.<span class="pl-c1">get</span>(<span class="pl-s1">class_id</span>, <span class="pl-s">"unknown"</span>)
-                    <span class="pl-s1">result_counts</span>[<span class="pl-s1">class_name</span>] <span class="pl-c1">+=</span> <span class="pl-c1">1</span>
+        # 统计结果（只统计置信度大于阈值的检测）
+        for r in results:
+            for box in r.boxes:
+                if float(box.conf) &gt;= conf_threshold:
+                    class_id = int(box.cls)
+                    class_name = class_names.get(class_id, "unknown")
+                    result_counts[class_name] += 1
 
-        <span class="pl-c"># 生成结果字符串</span>
-        <span class="pl-s1">result_str</span> <span class="pl-c1">=</span> <span class="pl-s">"图片 {} 中检测到："</span>.<span class="pl-c1">format</span>(<span class="pl-s1">image_to_detect</span>)
-        <span class="pl-k">for</span> <span class="pl-s1">name</span>, <span class="pl-s1">count</span> <span class="pl-c1">in</span> <span class="pl-s1">result_counts</span>.<span class="pl-c1">items</span>():
-            <span class="pl-k">if</span> <span class="pl-s1">count</span> <span class="pl-c1">&gt;</span> <span class="pl-c1">0</span>:
-                <span class="pl-s1">result_str</span> <span class="pl-c1">+=</span> <span class="pl-s">"{}{}人，"</span>.<span class="pl-c1">format</span>(<span class="pl-s1">name</span>, <span class="pl-s1">count</span>)
-        <span class="pl-s1">result_str</span> <span class="pl-c1">=</span> <span class="pl-s1">result_str</span>.<span class="pl-c1">rstrip</span>(<span class="pl-s">"，"</span>)
+        # 生成结果字符串
+        result_str = "图片 {} 中检测到：".format(image_to_detect)
+        for name, count in result_counts.items():
+            if count &gt; 0:
+                result_str += "{}{}人，".format(name, count)
+        result_str = result_str.rstrip("，")
 
-        <span class="pl-c"># 获取YOLO自动保存的结果图片路径</span>
-        <span class="pl-s1">result_image_path</span> <span class="pl-c1">=</span> <span class="pl-s">"runs/{}"</span>.<span class="pl-c1">format</span>(<span class="pl-s1">image_to_detect</span>.<span class="pl-c1">split</span>(<span class="pl-s">"/"</span>)[<span class="pl-c1">-</span><span class="pl-c1">1</span>])
-        <span class="pl-k">if</span> <span class="pl-s1">image_path</span> <span class="pl-c1">is</span> <span class="pl-c1">None</span>:  <span class="pl-c"># 如果是摄像头拍摄的</span>
-            <span class="pl-s1">result_image_path</span> <span class="pl-c1">=</span> <span class="pl-s">"runs/{}"</span>.<span class="pl-c1">format</span>(<span class="pl-s1">captured_image_path</span>)
-        <span class="pl-en">print</span>(<span class="pl-s1">result_str</span>)
-        <span class="pl-en">print</span>(<span class="pl-s">"结果图片已保存到: {0}"</span>.<span class="pl-c1">format</span>(<span class="pl-s1">result_image_path</span>))
-        <span class="pl-k">return</span> <span class="pl-s1">result_str</span>, <span class="pl-s1">result_image_path</span></pre></div>
+        # 获取YOLO自动保存的结果图片路径
+        result_image_path = "runs/{}".format(image_to_detect.split("/")[-1])
+        if image_path is None:  # 如果是摄像头拍摄的
+            result_image_path = "runs/{}".format(captured_image_path)
+        print(result_str)
+        print("结果图片已保存到: {0}".format(result_image_path))
+        return result_str, result_image_path
+</code></pre>
 <h3>（三）徘徊脱困机制</h3>
 <p>以下代码展示了徘徊检测和脱困策略的实现，是提高机器人在复杂环境中任务完成率的关键：</p>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">def</span> <span class="pl-en">execute_mission</span>(<span class="pl-s1">self</span>, <span class="pl-s1">goals</span>, <span class="pl-s1">zone_type</span><span class="pl-c1">=</span><span class="pl-s">"A"</span>):
-    <span class="pl-s">"""执行导航任务序列，包含参数调整和徘徊脱困机制</span>
-<span class="pl-s">    </span>
-<span class="pl-s">    Args:</span>
-<span class="pl-s">        goals: 导航目标点列表</span>
-<span class="pl-s">        zone_type: 区域类型，用于加载对应参数</span>
-<span class="pl-s">        </span>
-<span class="pl-s">    Returns:</span>
-<span class="pl-s">        任务是否成功完成</span>
-<span class="pl-s">    """</span>
-    <span class="pl-c"># 根据区域类型设置参数</span>
-    <span class="pl-k">if</span> <span class="pl-s1">zone_type</span> <span class="pl-c1">==</span> <span class="pl-s">"A"</span>:
-        <span class="pl-s1">self</span>.<span class="pl-c1">set_zoneA_params</span>()
-    <span class="pl-k">elif</span> <span class="pl-s1">zone_type</span> <span class="pl-c1">==</span> <span class="pl-s">"B"</span>:
-        <span class="pl-s1">self</span>.<span class="pl-c1">set_zoneB_params</span>()
-    <span class="pl-k">elif</span> <span class="pl-s1">zone_type</span> <span class="pl-c1">==</span> <span class="pl-s">"C"</span>:
-        <span class="pl-s1">self</span>.<span class="pl-c1">set_zoneC_params</span>()
-    <span class="pl-k">elif</span> <span class="pl-s1">zone_type</span> <span class="pl-c1">==</span> <span class="pl-s">"D"</span>:
-        <span class="pl-s1">self</span>.<span class="pl-c1">set_zoneD_params</span>()
-    <span class="pl-k">else</span>:
-        <span class="pl-s1">rospy</span>.<span class="pl-c1">logwarn</span>(<span class="pl-s">f"未知区域类型: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">zone_type</span><span class="pl-kos">}</span></span>，使用默认参数"</span>)
+<pre lang="python" class="notranslate"><code class="notranslate">def execute_mission(self, goals, zone_type="A"):
+    """执行导航任务序列，包含参数调整和徘徊脱困机制
     
-    <span class="pl-k">for</span> <span class="pl-s1">goal</span> <span class="pl-c1">in</span> <span class="pl-s1">goals</span>:
-        <span class="pl-s1">rospy</span>.<span class="pl-c1">loginfo</span>(<span class="pl-s">f"导航至目标点: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">goal</span>.<span class="pl-c1">target_pose</span>.<span class="pl-c1">pose</span>.<span class="pl-c1">position</span>.<span class="pl-c1">x</span><span class="pl-kos">}</span></span>, <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">goal</span>.<span class="pl-c1">target_pose</span>.<span class="pl-c1">pose</span>.<span class="pl-c1">position</span>.<span class="pl-c1">y</span><span class="pl-kos">}</span></span>"</span>)
+    Args:
+        goals: 导航目标点列表
+        zone_type: 区域类型，用于加载对应参数
         
-        <span class="pl-c"># 清理代价地图</span>
-        <span class="pl-s1">self</span>.<span class="pl-c1">clear_costmaps</span>()
+    Returns:
+        任务是否成功完成
+    """
+    # 根据区域类型设置参数
+    if zone_type == "A":
+        self.set_zoneA_params()
+    elif zone_type == "B":
+        self.set_zoneB_params()
+    elif zone_type == "C":
+        self.set_zoneC_params()
+    elif zone_type == "D":
+        self.set_zoneD_params()
+    else:
+        rospy.logwarn(f"未知区域类型: {zone_type}，使用默认参数")
+    
+    for goal in goals:
+        rospy.loginfo(f"导航至目标点: {goal.target_pose.pose.position.x}, {goal.target_pose.pose.position.y}")
         
-        <span class="pl-c"># 发送导航目标</span>
-        <span class="pl-s1">self</span>.<span class="pl-c1">nav_client</span>.<span class="pl-c1">send_goal</span>(<span class="pl-s1">goal</span>)
+        # 清理代价地图
+        self.clear_costmaps()
         
-        <span class="pl-c"># 记录开始时间和位置</span>
-        <span class="pl-s1">start_time</span> <span class="pl-c1">=</span> <span class="pl-s1">rospy</span>.<span class="pl-c1">Time</span>.<span class="pl-c1">now</span>().<span class="pl-c1">to_sec</span>()
-        <span class="pl-s1">last_check_time</span> <span class="pl-c1">=</span> <span class="pl-s1">start_time</span>
-        <span class="pl-s1">last_position</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">get_current_pose</span>()
-        <span class="pl-s1">hover_start_time</span> <span class="pl-c1">=</span> <span class="pl-c1">None</span>
-        <span class="pl-s1">inflation_reduced</span> <span class="pl-c1">=</span> <span class="pl-c1">False</span>
+        # 发送导航目标
+        self.nav_client.send_goal(goal)
         
-        <span class="pl-c"># 等待导航完成或超时</span>
-        <span class="pl-k">while</span> <span class="pl-c1">not</span> <span class="pl-s1">self</span>.<span class="pl-c1">nav_client</span>.<span class="pl-c1">wait_for_result</span>(<span class="pl-s1">rospy</span>.<span class="pl-c1">Duration</span>(<span class="pl-c1">0.5</span>)) <span class="pl-c1">and</span> <span class="pl-s1">self</span>.<span class="pl-c1">active</span>:
-            <span class="pl-s1">current_time</span> <span class="pl-c1">=</span> <span class="pl-s1">rospy</span>.<span class="pl-c1">Time</span>.<span class="pl-c1">now</span>().<span class="pl-c1">to_sec</span>()
+        # 记录开始时间和位置
+        start_time = rospy.Time.now().to_sec()
+        last_check_time = start_time
+        last_position = self.get_current_pose()
+        hover_start_time = None
+        inflation_reduced = False
+        
+        # 等待导航完成或超时
+        while not self.nav_client.wait_for_result(rospy.Duration(0.5)) and self.active:
+            current_time = rospy.Time.now().to_sec()
             
-            <span class="pl-c"># 每5秒检查一次徘徊状态</span>
-            <span class="pl-k">if</span> <span class="pl-s1">current_time</span> <span class="pl-c1">-</span> <span class="pl-s1">last_check_time</span> <span class="pl-c1">&gt;</span> <span class="pl-c1">5.0</span>:
-                <span class="pl-s1">current_position</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">get_current_pose</span>()
-                <span class="pl-s1">distance_moved</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">distance</span>(<span class="pl-s1">last_position</span>, <span class="pl-s1">current_position</span>)
+            # 每5秒检查一次徘徊状态
+            if current_time - last_check_time &gt; 5.0:
+                current_position = self.get_current_pose()
+                distance_moved = self.distance(last_position, current_position)
                 
-                <span class="pl-c"># 徘徊检测：如果5秒内移动距离小于0.1米，判定为徘徊</span>
-                <span class="pl-k">if</span> <span class="pl-s1">distance_moved</span> <span class="pl-c1">&lt;</span> <span class="pl-c1">0.1</span>:
-                    <span class="pl-k">if</span> <span class="pl-s1">hover_start_time</span> <span class="pl-c1">is</span> <span class="pl-c1">None</span>:
-                        <span class="pl-s1">hover_start_time</span> <span class="pl-c1">=</span> <span class="pl-s1">current_time</span>
-                        <span class="pl-s1">rospy</span>.<span class="pl-c1">logwarn</span>(<span class="pl-s">"检测到徘徊，开始计时..."</span>)
+                # 徘徊检测：如果5秒内移动距离小于0.1米，判定为徘徊
+                if distance_moved &lt; 0.1:
+                    if hover_start_time is None:
+                        hover_start_time = current_time
+                        rospy.logwarn("检测到徘徊，开始计时...")
                     
-                    <span class="pl-c"># 徘徊持续20秒，执行脱困策略</span>
-                    <span class="pl-k">if</span> <span class="pl-s1">current_time</span> <span class="pl-c1">-</span> <span class="pl-s1">hover_start_time</span> <span class="pl-c1">&gt;</span> <span class="pl-c1">20.0</span>:
-                        <span class="pl-s1">rospy</span>.<span class="pl-c1">logwarn</span>(<span class="pl-s">"徘徊超过20秒，执行脱困策略"</span>)
+                    # 徘徊持续20秒，执行脱困策略
+                    if current_time - hover_start_time &gt; 20.0:
+                        rospy.logwarn("徘徊超过20秒，执行脱困策略")
                         
-                        <span class="pl-c"># 如果还未减小膨胀半径，则设置为0强行通过</span>
-                        <span class="pl-k">if</span> <span class="pl-c1">not</span> <span class="pl-s1">inflation_reduced</span>:
-                            <span class="pl-s1">rospy</span>.<span class="pl-c1">logwarn</span>(<span class="pl-s">"减小膨胀半径为0，尝试强行通过"</span>)
-                            <span class="pl-s1">self</span>.<span class="pl-c1">dwa_client</span>.<span class="pl-c1">update_configuration</span>({<span class="pl-s">'inflation_radius'</span>: <span class="pl-c1">0.0</span>})
-                            <span class="pl-s1">inflation_reduced</span> <span class="pl-c1">=</span> <span class="pl-c1">True</span>
-                            <span class="pl-s1">hover_start_time</span> <span class="pl-c1">=</span> <span class="pl-s1">current_time</span>  <span class="pl-c"># 重置徘徊计时</span>
-                        <span class="pl-k">else</span>:
-                            <span class="pl-c"># 取消当前目标</span>
-                            <span class="pl-s1">self</span>.<span class="pl-c1">nav_client</span>.<span class="pl-c1">cancel_goal</span>()
-                            <span class="pl-s1">rospy</span>.<span class="pl-c1">logwarn</span>(<span class="pl-s">"取消当前导航目标"</span>)
+                        # 如果还未减小膨胀半径，则设置为0强行通过
+                        if not inflation_reduced:
+                            rospy.logwarn("减小膨胀半径为0，尝试强行通过")
+                            self.dwa_client.update_configuration({'inflation_radius': 0.0})
+                            inflation_reduced = True
+                            hover_start_time = current_time  # 重置徘徊计时
+                        else:
+                            # 取消当前目标
+                            self.nav_client.cancel_goal()
+                            rospy.logwarn("取消当前导航目标")
                             
-                            <span class="pl-c"># 清理代价地图</span>
-                            <span class="pl-s1">self</span>.<span class="pl-c1">clear_costmaps</span>()
-                            <span class="pl-s1">rospy</span>.<span class="pl-c1">loginfo</span>(<span class="pl-s">"清理代价地图"</span>)
+                            # 清理代价地图
+                            self.clear_costmaps()
+                            rospy.loginfo("清理代价地图")
                             
-                            <span class="pl-c"># 原地旋转，获取新的环境信息</span>
-                            <span class="pl-s1">self</span>.<span class="pl-c1">rotate_in_place</span>(<span class="pl-s1">duration</span><span class="pl-c1">=</span><span class="pl-c1">3.0</span>)
-                            <span class="pl-s1">rospy</span>.<span class="pl-c1">loginfo</span>(<span class="pl-s">"执行原地旋转，重新获取环境信息"</span>)
+                            # 原地旋转，获取新的环境信息
+                            self.rotate_in_place(duration=3.0)
+                            rospy.loginfo("执行原地旋转，重新获取环境信息")
                             
-                            <span class="pl-c"># 重新发送目标</span>
-                            <span class="pl-s1">self</span>.<span class="pl-c1">nav_client</span>.<span class="pl-c1">send_goal</span>(<span class="pl-s1">goal</span>)
-                            <span class="pl-s1">rospy</span>.<span class="pl-c1">loginfo</span>(<span class="pl-s">"重新发送导航目标"</span>)
+                            # 重新发送目标
+                            self.nav_client.send_goal(goal)
+                            rospy.loginfo("重新发送导航目标")
                             
-                            <span class="pl-c"># 重置状态</span>
-                            <span class="pl-s1">hover_start_time</span> <span class="pl-c1">=</span> <span class="pl-c1">None</span>
-                            <span class="pl-s1">inflation_reduced</span> <span class="pl-c1">=</span> <span class="pl-c1">False</span>
-                <span class="pl-k">else</span>:
-                    <span class="pl-c"># 移动正常，重置徘徊状态</span>
-                    <span class="pl-s1">hover_start_time</span> <span class="pl-c1">=</span> <span class="pl-c1">None</span>
+                            # 重置状态
+                            hover_start_time = None
+                            inflation_reduced = False
+                else:
+                    # 移动正常，重置徘徊状态
+                    hover_start_time = None
                     
-                    <span class="pl-c"># 如果之前减小了膨胀半径，现在恢复</span>
-                    <span class="pl-k">if</span> <span class="pl-s1">inflation_reduced</span>:
-                        <span class="pl-k">if</span> <span class="pl-s1">zone_type</span> <span class="pl-c1">==</span> <span class="pl-s">"A"</span>:
-                            <span class="pl-s1">self</span>.<span class="pl-c1">dwa_client</span>.<span class="pl-c1">update_configuration</span>({<span class="pl-s">'inflation_radius'</span>: <span class="pl-c1">0.3</span>})
-                        <span class="pl-k">elif</span> <span class="pl-s1">zone_type</span> <span class="pl-c1">==</span> <span class="pl-s">"B"</span>:
-                            <span class="pl-s1">self</span>.<span class="pl-c1">dwa_client</span>.<span class="pl-c1">update_configuration</span>({<span class="pl-s">'inflation_radius'</span>: <span class="pl-c1">0.4</span>})
-                        <span class="pl-k">elif</span> <span class="pl-s1">zone_type</span> <span class="pl-c1">==</span> <span class="pl-s">"C"</span>:
-                            <span class="pl-s1">self</span>.<span class="pl-c1">dwa_client</span>.<span class="pl-c1">update_configuration</span>({<span class="pl-s">'inflation_radius'</span>: <span class="pl-c1">0.7</span>})
-                        <span class="pl-k">elif</span> <span class="pl-s1">zone_type</span> <span class="pl-c1">==</span> <span class="pl-s">"D"</span>:
-                            <span class="pl-s1">self</span>.<span class="pl-c1">dwa_client</span>.<span class="pl-c1">update_configuration</span>({<span class="pl-s">'inflation_radius'</span>: <span class="pl-c1">0.8</span>})
-                        <span class="pl-s1">inflation_reduced</span> <span class="pl-c1">=</span> <span class="pl-c1">False</span>
-                        <span class="pl-s1">rospy</span>.<span class="pl-c1">loginfo</span>(<span class="pl-s">"恢复正常膨胀半径"</span>)
+                    # 如果之前减小了膨胀半径，现在恢复
+                    if inflation_reduced:
+                        if zone_type == "A":
+                            self.dwa_client.update_configuration({'inflation_radius': 0.3})
+                        elif zone_type == "B":
+                            self.dwa_client.update_configuration({'inflation_radius': 0.4})
+                        elif zone_type == "C":
+                            self.dwa_client.update_configuration({'inflation_radius': 0.7})
+                        elif zone_type == "D":
+                            self.dwa_client.update_configuration({'inflation_radius': 0.8})
+                        inflation_reduced = False
+                        rospy.loginfo("恢复正常膨胀半径")
                 
-                <span class="pl-c"># 更新上次检查时间和位置</span>
-                <span class="pl-s1">last_check_time</span> <span class="pl-c1">=</span> <span class="pl-s1">current_time</span>
-                <span class="pl-s1">last_position</span> <span class="pl-c1">=</span> <span class="pl-s1">current_position</span>
+                # 更新上次检查时间和位置
+                last_check_time = current_time
+                last_position = current_position
             
-            <span class="pl-c"># 导航超时处理（50秒）</span>
-            <span class="pl-k">if</span> <span class="pl-s1">current_time</span> <span class="pl-c1">-</span> <span class="pl-s1">start_time</span> <span class="pl-c1">&gt;</span> <span class="pl-c1">50.0</span>:
-                <span class="pl-s1">rospy</span>.<span class="pl-c1">logwarn</span>(<span class="pl-s">"导航超时，取消当前目标"</span>)
-                <span class="pl-s1">self</span>.<span class="pl-c1">nav_client</span>.<span class="pl-c1">cancel_goal</span>()
-                <span class="pl-k">return</span> <span class="pl-c1">False</span>
+            # 导航超时处理（50秒）
+            if current_time - start_time &gt; 50.0:
+                rospy.logwarn("导航超时，取消当前目标")
+                self.nav_client.cancel_goal()
+                return False
         
-        <span class="pl-c"># 检查导航结果</span>
-        <span class="pl-k">if</span> <span class="pl-s1">self</span>.<span class="pl-c1">nav_client</span>.<span class="pl-c1">get_state</span>() <span class="pl-c1">==</span> <span class="pl-v">GoalStatus</span>.<span class="pl-c1">SUCCEEDED</span>:
-            <span class="pl-s1">rospy</span>.<span class="pl-c1">loginfo</span>(<span class="pl-s">"成功到达目标点"</span>)
-        <span class="pl-k">else</span>:
-            <span class="pl-s1">rospy</span>.<span class="pl-c1">logwarn</span>(<span class="pl-s">f"导航失败，状态码: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">self</span>.<span class="pl-c1">nav_client</span>.<span class="pl-c1">get_state</span>()<span class="pl-kos">}</span></span>"</span>)
-            <span class="pl-k">return</span> <span class="pl-c1">False</span>
+        # 检查导航结果
+        if self.nav_client.get_state() == GoalStatus.SUCCEEDED:
+            rospy.loginfo("成功到达目标点")
+        else:
+            rospy.logwarn(f"导航失败，状态码: {self.nav_client.get_state()}")
+            return False
     
-    <span class="pl-k">return</span> <span class="pl-c1">True</span>
+    return True
 
-<span class="pl-k">def</span> <span class="pl-en">rotate_in_place</span>(<span class="pl-s1">self</span>, <span class="pl-s1">duration</span><span class="pl-c1">=</span><span class="pl-c1">3.0</span>, <span class="pl-s1">speed</span><span class="pl-c1">=</span><span class="pl-c1">0.5</span>):
-    <span class="pl-s">"""原地旋转，用于获取新的环境信息</span>
-<span class="pl-s">    </span>
-<span class="pl-s">    Args:</span>
-<span class="pl-s">        duration: 旋转持续时间（秒）</span>
-<span class="pl-s">        speed: 旋转速度（弧度/秒）</span>
-<span class="pl-s">    """</span>
-    <span class="pl-s1">cmd_vel_pub</span> <span class="pl-c1">=</span> <span class="pl-s1">rospy</span>.<span class="pl-c1">Publisher</span>(<span class="pl-s">'/cmd_vel'</span>, <span class="pl-v">Twist</span>, <span class="pl-s1">queue_size</span><span class="pl-c1">=</span><span class="pl-c1">1</span>)
-    <span class="pl-s1">twist</span> <span class="pl-c1">=</span> <span class="pl-en">Twist</span>()
-    <span class="pl-s1">twist</span>.<span class="pl-c1">angular</span>.<span class="pl-c1">z</span> <span class="pl-c1">=</span> <span class="pl-s1">speed</span>
+def rotate_in_place(self, duration=3.0, speed=0.5):
+    """原地旋转，用于获取新的环境信息
     
-    <span class="pl-s1">start_time</span> <span class="pl-c1">=</span> <span class="pl-s1">rospy</span>.<span class="pl-c1">Time</span>.<span class="pl-c1">now</span>()
-    <span class="pl-s1">rate</span> <span class="pl-c1">=</span> <span class="pl-s1">rospy</span>.<span class="pl-c1">Rate</span>(<span class="pl-c1">10</span>)  <span class="pl-c"># 10Hz</span>
+    Args:
+        duration: 旋转持续时间（秒）
+        speed: 旋转速度（弧度/秒）
+    """
+    cmd_vel_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
+    twist = Twist()
+    twist.angular.z = speed
     
-    <span class="pl-k">while</span> (<span class="pl-s1">rospy</span>.<span class="pl-c1">Time</span>.<span class="pl-c1">now</span>() <span class="pl-c1">-</span> <span class="pl-s1">start_time</span>).<span class="pl-c1">to_sec</span>() <span class="pl-c1">&lt;</span> <span class="pl-s1">duration</span> <span class="pl-c1">and</span> <span class="pl-c1">not</span> <span class="pl-s1">rospy</span>.<span class="pl-c1">is_shutdown</span>():
-        <span class="pl-s1">cmd_vel_pub</span>.<span class="pl-c1">publish</span>(<span class="pl-s1">twist</span>)
-        <span class="pl-s1">rate</span>.<span class="pl-c1">sleep</span>()
+    start_time = rospy.Time.now()
+    rate = rospy.Rate(10)  # 10Hz
     
-    <span class="pl-c"># 停止旋转</span>
-    <span class="pl-s1">twist</span>.<span class="pl-c1">angular</span>.<span class="pl-c1">z</span> <span class="pl-c1">=</span> <span class="pl-c1">0.0</span>
-    <span class="pl-s1">cmd_vel_pub</span>.<span class="pl-c1">publish</span>(<span class="pl-s1">twist</span>)
+    while (rospy.Time.now() - start_time).to_sec() &lt; duration and not rospy.is_shutdown():
+        cmd_vel_pub.publish(twist)
+        rate.sleep()
+    
+    # 停止旋转
+    twist.angular.z = 0.0
+    cmd_vel_pub.publish(twist)
 
-<span class="pl-k">def</span> <span class="pl-en">clear_costmaps</span>(<span class="pl-s1">self</span>):
-    <span class="pl-s">"""清理导航代价地图"""</span>
-    <span class="pl-k">try</span>:
-        <span class="pl-s1">rospy</span>.<span class="pl-c1">wait_for_service</span>(<span class="pl-s">'/move_base/clear_costmaps'</span>, <span class="pl-s1">timeout</span><span class="pl-c1">=</span><span class="pl-c1">2.0</span>)
-        <span class="pl-s1">clear_costmaps_srv</span> <span class="pl-c1">=</span> <span class="pl-s1">rospy</span>.<span class="pl-c1">ServiceProxy</span>(<span class="pl-s">'/move_base/clear_costmaps'</span>, <span class="pl-v">Empty</span>)
-        <span class="pl-en">clear_costmaps_srv</span>()
-        <span class="pl-s1">rospy</span>.<span class="pl-c1">loginfo</span>(<span class="pl-s">"代价地图已清理"</span>)
-    <span class="pl-k">except</span> (<span class="pl-s1">rospy</span>.<span class="pl-c1">ServiceException</span>, <span class="pl-s1">rospy</span>.<span class="pl-c1">ROSException</span>) <span class="pl-k">as</span> <span class="pl-s1">e</span>:
-        <span class="pl-s1">rospy</span>.<span class="pl-c1">logerr</span>(<span class="pl-s">f"清理代价地图失败: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">e</span><span class="pl-kos">}</span></span>"</span>)</pre></div>
+def clear_costmaps(self):
+    """清理导航代价地图"""
+    try:
+        rospy.wait_for_service('/move_base/clear_costmaps', timeout=2.0)
+        clear_costmaps_srv = rospy.ServiceProxy('/move_base/clear_costmaps', Empty)
+        clear_costmaps_srv()
+        rospy.loginfo("代价地图已清理")
+    except (rospy.ServiceException, rospy.ROSException) as e:
+        rospy.logerr(f"清理代价地图失败: {e}")
+</code></pre>
 <h3>（四）紧急终止与安全控制</h3>
 <p>以下代码展示了紧急终止和安全控制的实现，确保机器人在异常情况下能够安全停止：</p>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">def</span> <span class="pl-en">signal_handler</span>(<span class="pl-s1">self</span>, <span class="pl-s1">sig</span>, <span class="pl-s1">frame</span>):
-    <span class="pl-s">"""处理Ctrl+C信号，实现紧急停止"""</span>
-    <span class="pl-s1">rospy</span>.<span class="pl-c1">loginfo</span>(<span class="pl-s">"接收到终止信号，执行紧急停止..."</span>)
+<pre lang="python" class="notranslate"><code class="notranslate">def signal_handler(self, sig, frame):
+    """处理Ctrl+C信号，实现紧急停止"""
+    rospy.loginfo("接收到终止信号，执行紧急停止...")
     
-    <span class="pl-c"># 发布零速度指令停止机器人</span>
-    <span class="pl-s1">cmd_vel_pub</span> <span class="pl-c1">=</span> <span class="pl-s1">rospy</span>.<span class="pl-c1">Publisher</span>(<span class="pl-s">'/cmd_vel'</span>, <span class="pl-v">Twist</span>, <span class="pl-s1">queue_size</span><span class="pl-c1">=</span><span class="pl-c1">1</span>)
-    <span class="pl-s1">stop_cmd</span> <span class="pl-c1">=</span> <span class="pl-en">Twist</span>()
-    <span class="pl-s1">stop_cmd</span>.<span class="pl-c1">linear</span>.<span class="pl-c1">x</span> <span class="pl-c1">=</span> <span class="pl-c1">0.0</span>
-    <span class="pl-s1">stop_cmd</span>.<span class="pl-c1">linear</span>.<span class="pl-c1">y</span> <span class="pl-c1">=</span> <span class="pl-c1">0.0</span>
-    <span class="pl-s1">stop_cmd</span>.<span class="pl-c1">linear</span>.<span class="pl-c1">z</span> <span class="pl-c1">=</span> <span class="pl-c1">0.0</span>
-    <span class="pl-s1">stop_cmd</span>.<span class="pl-c1">angular</span>.<span class="pl-c1">x</span> <span class="pl-c1">=</span> <span class="pl-c1">0.0</span>
-    <span class="pl-s1">stop_cmd</span>.<span class="pl-c1">angular</span>.<span class="pl-c1">y</span> <span class="pl-c1">=</span> <span class="pl-c1">0.0</span>
-    <span class="pl-s1">stop_cmd</span>.<span class="pl-c1">angular</span>.<span class="pl-c1">z</span> <span class="pl-c1">=</span> <span class="pl-c1">0.0</span>
+    # 发布零速度指令停止机器人
+    cmd_vel_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
+    stop_cmd = Twist()
+    stop_cmd.linear.x = 0.0
+    stop_cmd.linear.y = 0.0
+    stop_cmd.linear.z = 0.0
+    stop_cmd.angular.x = 0.0
+    stop_cmd.angular.y = 0.0
+    stop_cmd.angular.z = 0.0
     
-    <span class="pl-c"># 连续发送5次停止指令，确保接收</span>
-    <span class="pl-k">for</span> <span class="pl-s1">_</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-c1">5</span>):
-        <span class="pl-s1">cmd_vel_pub</span>.<span class="pl-c1">publish</span>(<span class="pl-s1">stop_cmd</span>)
-        <span class="pl-s1">rospy</span>.<span class="pl-c1">sleep</span>(<span class="pl-c1">0.01</span>)  <span class="pl-c"># 10ms间隔</span>
+    # 连续发送5次停止指令，确保接收
+    for _ in range(5):
+        cmd_vel_pub.publish(stop_cmd)
+        rospy.sleep(0.01)  # 10ms间隔
     
-    <span class="pl-c"># 取消所有导航目标</span>
-    <span class="pl-k">if</span> <span class="pl-s1">self</span>.<span class="pl-c1">nav_client</span>:
-        <span class="pl-s1">self</span>.<span class="pl-c1">nav_client</span>.<span class="pl-c1">cancel_all_goals</span>()
+    # 取消所有导航目标
+    if self.nav_client:
+        self.nav_client.cancel_all_goals()
     
-    <span class="pl-c"># 标记系统为非活动状态</span>
-    <span class="pl-s1">self</span>.<span class="pl-c1">active</span> <span class="pl-c1">=</span> <span class="pl-c1">False</span>
+    # 标记系统为非活动状态
+    self.active = False
     
-    <span class="pl-s1">rospy</span>.<span class="pl-c1">loginfo</span>(<span class="pl-s">"机器人已安全停止，系统即将退出"</span>)
-    <span class="pl-s1">rospy</span>.<span class="pl-c1">signal_shutdown</span>(<span class="pl-s">"用户中断"</span>)</pre></div>
+    rospy.loginfo("机器人已安全停止，系统即将退出")
+    rospy.signal_shutdown("用户中断")
+</code></pre>
 <h3>（五）任务调度与服务接口</h3>
 <p>以下代码展示了任务调度和服务接口的实现，实现了模块化的任务执行：</p>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">def</span> <span class="pl-en">handle_request</span>(<span class="pl-s1">self</span>, <span class="pl-s1">req</span>):
-    <span class="pl-s">"""处理救援任务请求</span>
-<span class="pl-s">    </span>
-<span class="pl-s">    Args:</span>
-<span class="pl-s">        req: 包含任务区域的请求对象</span>
-<span class="pl-s">        </span>
-<span class="pl-s">    Returns:</span>
-<span class="pl-s">        任务执行结果</span>
-<span class="pl-s">    """</span>
-    <span class="pl-s1">rospy</span>.<span class="pl-c1">loginfo</span>(<span class="pl-s">f"收到救援任务请求: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">req</span>.<span class="pl-c1">data</span><span class="pl-kos">}</span></span>"</span>)
+<pre lang="python" class="notranslate"><code class="notranslate">def handle_request(self, req):
+    """处理救援任务请求
     
-    <span class="pl-c"># 取消当前任务（如果有）</span>
-    <span class="pl-k">if</span> <span class="pl-s1">self</span>.<span class="pl-c1">nav_client</span>.<span class="pl-c1">get_state</span>() <span class="pl-c1">in</span> [<span class="pl-v">GoalStatus</span>.<span class="pl-c1">ACTIVE</span>, <span class="pl-v">GoalStatus</span>.<span class="pl-c1">PENDING</span>]:
-        <span class="pl-s1">self</span>.<span class="pl-c1">nav_client</span>.<span class="pl-c1">cancel_all_goals</span>()
-        <span class="pl-s1">rospy</span>.<span class="pl-c1">loginfo</span>(<span class="pl-s">"已取消当前任务"</span>)
-    
-    <span class="pl-c"># 根据请求区域执行对应任务</span>
-    <span class="pl-k">if</span> <span class="pl-s1">req</span>.<span class="pl-c1">data</span> <span class="pl-c1">==</span> <span class="pl-s">"A"</span>:
-        <span class="pl-s1">self</span>.<span class="pl-c1">processA</span>()
-        <span class="pl-k">return</span> <span class="pl-en">String</span>(<span class="pl-s">"A区任务执行完毕"</span>)
-    <span class="pl-k">elif</span> <span class="pl-s1">req</span>.<span class="pl-c1">data</span> <span class="pl-c1">==</span> <span class="pl-s">"B"</span>:
-        <span class="pl-s1">self</span>.<span class="pl-c1">processB</span>()
-        <span class="pl-k">return</span> <span class="pl-en">String</span>(<span class="pl-s">"B区任务执行完毕"</span>)
-    <span class="pl-k">elif</span> <span class="pl-s1">req</span>.<span class="pl-c1">data</span> <span class="pl-c1">==</span> <span class="pl-s">"C"</span>:
-        <span class="pl-s1">self</span>.<span class="pl-c1">processC</span>()
-        <span class="pl-k">return</span> <span class="pl-en">String</span>(<span class="pl-s">"C区任务执行完毕"</span>)
-    <span class="pl-k">elif</span> <span class="pl-s1">req</span>.<span class="pl-c1">data</span> <span class="pl-c1">==</span> <span class="pl-s">"D"</span>:
-        <span class="pl-s1">self</span>.<span class="pl-c1">processD</span>()
-        <span class="pl-k">return</span> <span class="pl-en">String</span>(<span class="pl-s">"D区任务执行完毕"</span>)
-    <span class="pl-k">else</span>:
-        <span class="pl-k">return</span> <span class="pl-en">String</span>(<span class="pl-s">f"未知区域: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">req</span>.<span class="pl-c1">data</span><span class="pl-kos">}</span></span>"</span>)
-
-<span class="pl-k">def</span> <span class="pl-en">processA</span>(<span class="pl-s1">self</span>):
-    <span class="pl-s">"""A区救援任务"""</span>
-    <span class="pl-s1">rospy</span>.<span class="pl-c1">loginfo</span>(<span class="pl-s">"开始执行A区救援任务"</span>)
-    <span class="pl-s1">goals</span> <span class="pl-c1">=</span> [
-        <span class="pl-s1">self</span>.<span class="pl-c1">create_goal</span>(<span class="pl-c1">1.5</span>, <span class="pl-c1">2.1</span>, <span class="pl-c1">0</span>, <span class="pl-c1">1</span>),  <span class="pl-c"># 到达A点</span>
-    ]
-    <span class="pl-k">if</span> <span class="pl-s1">self</span>.<span class="pl-c1">execute_mission</span>(<span class="pl-s1">goals</span>, <span class="pl-s">"A"</span>):
-        <span class="pl-s1">rospy</span>.<span class="pl-c1">loginfo</span>(<span class="pl-s">"到达A区，正在接收伤员..."</span>)
-        <span class="pl-s1">self</span>.<span class="pl-c1">detect</span>(<span class="pl-s">"test1.jpg"</span>, <span class="pl-c1">0.5</span>)
-        <span class="pl-s1">time</span>.<span class="pl-c1">sleep</span>(<span class="pl-c1">3</span>)
+    Args:
+        req: 包含任务区域的请求对象
         
-        <span class="pl-c"># 返回营地</span>
-        <span class="pl-s1">rospy</span>.<span class="pl-c1">loginfo</span>(<span class="pl-s">"A区任务完成，返回营地"</span>)
-        <span class="pl-s1">return_goals</span> <span class="pl-c1">=</span> [
-            <span class="pl-s1">self</span>.<span class="pl-c1">create_goal</span>(<span class="pl-c1">0</span>, <span class="pl-c1">0</span>, <span class="pl-c1">0</span>, <span class="pl-c1">1</span>),  <span class="pl-c"># 返回营地</span>
+    Returns:
+        任务执行结果
+    """
+    rospy.loginfo(f"收到救援任务请求: {req.data}")
+    
+    # 取消当前任务（如果有）
+    if self.nav_client.get_state() in [GoalStatus.ACTIVE, GoalStatus.PENDING]:
+        self.nav_client.cancel_all_goals()
+        rospy.loginfo("已取消当前任务")
+    
+    # 根据请求区域执行对应任务
+    if req.data == "A":
+        self.processA()
+        return String("A区任务执行完毕")
+    elif req.data == "B":
+        self.processB()
+        return String("B区任务执行完毕")
+    elif req.data == "C":
+        self.processC()
+        return String("C区任务执行完毕")
+    elif req.data == "D":
+        self.processD()
+        return String("D区任务执行完毕")
+    else:
+        return String(f"未知区域: {req.data}")
+
+def processA(self):
+    """A区救援任务"""
+    rospy.loginfo("开始执行A区救援任务")
+    goals = [
+        self.create_goal(1.5, 2.1, 0, 1),  # 到达A点
+    ]
+    if self.execute_mission(goals, "A"):
+        rospy.loginfo("到达A区，正在接收伤员...")
+        self.detect("test1.jpg", 0.5)
+        time.sleep(3)
+        
+        # 返回营地
+        rospy.loginfo("A区任务完成，返回营地")
+        return_goals = [
+            self.create_goal(0, 0, 0, 1),  # 返回营地
         ]
-        <span class="pl-s1">self</span>.<span class="pl-c1">execute_mission</span>(<span class="pl-s1">return_goals</span>, <span class="pl-s">"A"</span>)
-    <span class="pl-k">else</span>:
-        <span class="pl-s1">rospy</span>.<span class="pl-c1">logerr</span>(<span class="pl-s">"A区任务失败"</span>)</pre></div>
+        self.execute_mission(return_goals, "A")
+    else:
+        rospy.logerr("A区任务失败")
+</code></pre>
 <p>以上代码片段展示了项目的核心技术实现，包括多地形自适应导航、目标识别、徘徊脱困、紧急终止和任务调度等关键功能。这些代码共同构成了一个完整的智能侦察机器人系统，能够在复杂环境中高效完成任务。</p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
@@ -1236,7 +1236,7 @@ if("05/29/2025"!=""){
 </script></div>
 </body>
 <script>
-var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z', 'copy': 'M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z', 'check': 'M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z'};
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
 var utterancesLoad=0;
 
 let themeSettings={
@@ -1309,70 +1309,7 @@ function iFrameLoading(){
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    const createClipboardHTML = (codeContent, additionalClasses = '') => `
-        <pre class="notranslate"><code class="notranslate">${codeContent}</code></pre>
-        <div class="clipboard-container position-absolute right-0 top-0 ${additionalClasses}">
-            <clipboard-copy class="ClipboardButton btn m-2 p-0" role="button" style="display: inherit;">
-                <svg height="16" width="16" class="octicon octicon-copy m-2"><path d="${IconList["copy"]}"></path></svg>
-                <svg height="16" width="16" class="octicon octicon-check color-fg-success m-2 d-none"><path d="${IconList["check"]}"></path></svg>
-            </clipboard-copy>
-            <div class="copy-feedback">Copied!</div>
-        </div>
-    `;
 
-    const handleCodeElements = (selector = '') => {
-        document.querySelectorAll(selector).forEach(codeElement => {
-            const codeContent = codeElement.innerHTML;
-            const newStructure = document.createElement('div');
-            newStructure.className = 'snippet-clipboard-content position-relative overflow-auto';
-            newStructure.innerHTML = createClipboardHTML(codeContent);
-
-            const parentElement = codeElement.parentElement;
-            if (selector.includes('highlight')) {
-                parentElement.insertBefore(newStructure, codeElement.nextSibling);
-                parentElement.removeChild(codeElement);
-            } else {
-                parentElement.parentElement.replaceChild(newStructure, parentElement);
-            }
-        });
-    };
-
-    handleCodeElements('pre.notranslate > code.notranslate');
-    handleCodeElements('div.highlight > pre.notranslate');
-
-    let currentFeedback = null;
-    document.querySelectorAll('clipboard-copy').forEach(copyButton => {
-        copyButton.addEventListener('click', () => {
-            const codeContent = copyButton.closest('.snippet-clipboard-content').innerText;
-            const tempTextArea = document.createElement('textarea');
-            tempTextArea.value = codeContent;
-            document.body.appendChild(tempTextArea);
-            tempTextArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempTextArea);
-
-            const copyIcon = copyButton.querySelector('.octicon-copy');
-            const checkIcon = copyButton.querySelector('.octicon-check');
-            const copyFeedback = copyButton.nextElementSibling;
-
-            if (currentFeedback && currentFeedback !== copyFeedback) {currentFeedback.style.display = 'none';}
-            currentFeedback = copyFeedback;
-
-            copyIcon.classList.add('d-none');
-            checkIcon.classList.remove('d-none');
-            copyFeedback.style.display = 'block';
-            copyButton.style.borderColor = 'var(--color-success-fg)';
-
-            setTimeout(() => {
-                copyIcon.classList.remove('d-none');
-                checkIcon.classList.add('d-none');
-                copyFeedback.style.display = 'none';
-                copyButton.style.borderColor = '';
-            }, 2000);
-        });
-    });
-});
 
 </script>
 <script src='https://blog.meekdai.com/Gmeek/plugins/GmeekTOC.js'></script><script src='https://blog.meekdai.com/Gmeek/plugins/lightbox.js'></script>
