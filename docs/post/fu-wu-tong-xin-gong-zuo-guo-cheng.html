@@ -25,7 +25,7 @@ https://blog.csdn.net/weixin_42237429/article/details/90238000#:~:text=catkin_in
 <meta property="og:url" content="https://wzh922.github.io/blog/post/fu-wu-tong-xin-gong-zuo-guo-cheng.html">
 <meta property="og:image" content="https://avatars.githubusercontent.com/u/210956220?s=400&u=c0d549ac9c109d6ad35fde23e0aff5b3213fc57e&v=4">
 <title>服务通信工作过程</title>
-<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
+
 
 
 </head>
@@ -49,17 +49,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
     body {padding: 8px;}
     .postTitle{font-size:24px;}
 }
-.copy-feedback {
-    display: none;
-    position: absolute;
-    top: 10px;
-    right: 50px;
-    color: var(--color-fg-on-emphasis);
-    background-color: var(--color-fg-muted);
-    border-radius: 3px;
-    padding: 5px 8px;
-    font-size: 12px;
-}
+
 </style>
 
 
@@ -108,11 +98,11 @@ string message
 <h3>2. 修改 <code class="notranslate">CMakeLists.txt</code></h3>
 <p>在 <code class="notranslate">CMakeLists.txt</code> 文件中，需要添加服务文件的路径，并指定服务文件的生成依赖。同时，还需要添加服务文件的编译指令。</p>
 <p><strong><code class="notranslate">send_goals/CMakeLists.txt</code></strong></p>
-<div class="highlight highlight-source-cmake"><pre class="notranslate"><span class="pl-k">cmake_minimum_required</span>(<span class="pl-e">VERSION</span> 3.0.2)
-<span class="pl-k">project</span>(my_robot_navigation)
+<pre lang="cmake" class="notranslate"><code class="notranslate">cmake_minimum_required(VERSION 3.0.2)
+project(my_robot_navigation)
 
-<span class="pl-c"># 找到必要的依赖</span>
-<span class="pl-k">find_package</span>(catkin REQUIRED COMPONENTS
+# 找到必要的依赖
+find_package(catkin REQUIRED COMPONENTS
   rospy
   roscpp
   move_base_msgs
@@ -120,208 +110,220 @@ string message
   actionlib_msgs
 )
 
-<span class="pl-c"># 添加服务文件</span>
+# 添加服务文件
 add_service_files(
-  <span class="pl-e">FILES</span>
+  FILES
   SendTask.srv
 )
 
-<span class="pl-c"># 生成消息和服务</span>
+# 生成消息和服务
 generate_messages(
   DEPENDENCIES
   std_msgs
 )
 
-<span class="pl-c"># 包含目录</span>
-<span class="pl-k">include_directories</span>(
-  <span class="pl-k">${catkin_INCLUDE_DIRS}</span>
+# 包含目录
+include_directories(
+  ${catkin_INCLUDE_DIRS}
 )
 
 
-<span class="pl-c"># 添加依赖</span>
-catkin_package()</pre></div>
+# 添加依赖
+catkin_package()
+</code></pre>
 <h3>3. 修改 <code class="notranslate">package.xml</code></h3>
 <p>在 <code class="notranslate">package.xml</code> 文件中，需要添加对 <code class="notranslate">message_generation</code> 和 <code class="notranslate">message_runtime</code> 的依赖。</p>
 <p><strong><code class="notranslate">send_goals/package.xml</code></strong></p>
-<div class="highlight highlight-text-xml"><pre class="notranslate">&lt;<span class="pl-ent">build_depend</span>&gt;message_generation&lt;/<span class="pl-ent">build_depend</span>&gt;
-&lt;<span class="pl-ent">exec_depend</span>&gt;message_runtime&lt;/<span class="pl-ent">exec_depend</span>&gt;</pre></div>
+<pre lang="xml" class="notranslate"><code class="notranslate">&lt;build_depend&gt;message_generation&lt;/build_depend&gt;
+&lt;exec_depend&gt;message_runtime&lt;/exec_depend&gt;
+</code></pre>
 <h3>4. 创建源代码文件</h3>
 <p>将服务端代码和客户端代码分别保存到 <code class="notranslate">src</code> 文件夹中。例如：</p>
 <p><strong><code class="notranslate">send_goals/src/send_tasks_server.py</code></strong></p>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 服务端代码（之前提供的代码）</span></pre></div>
+<pre lang="python" class="notranslate"><code class="notranslate"># 服务端代码（之前提供的代码）
+</code></pre>
 <p><strong><code class="notranslate">send_goals/src/send_tasks_client.py</code></strong></p>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 客户端代码（之前提供的代码）</span></pre></div>
+<pre lang="python" class="notranslate"><code class="notranslate"># 客户端代码（之前提供的代码）
+</code></pre>
 <h3>5. 编译过程</h3>
 <p>在终端中，进入你的工作空间目录（例如 <code class="notranslate">catkin_ws</code>），然后运行以下命令进行编译：</p>
-<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c1">cd</span> <span class="pl-k">~</span>/catkin_ws
+<pre lang="bash" class="notranslate"><code class="notranslate">cd ~/catkin_ws
 catkin_make
-<span class="pl-c1">source</span> devel/setup.bash</pre></div>
+source devel/setup.bash
+</code></pre>
 <h3>6. 运行代码</h3>
 <p>编译完成后，可以运行服务端和客户端代码：</p>
 <h4>启动服务端</h4>
-<div class="highlight highlight-source-shell"><pre class="notranslate">rosrun send_goals send_tasks_server.py</pre></div>
+<pre lang="bash" class="notranslate"><code class="notranslate">rosrun send_goals send_tasks_server.py
+</code></pre>
 <h4>启动客户端</h4>
-<div class="highlight highlight-source-shell"><pre class="notranslate">rosrun send_goals send_tasks_client.py</pre></div>
+<pre lang="bash" class="notranslate"><code class="notranslate">rosrun send_goals send_tasks_client.py
+</code></pre>
 <p>在客户端程序中，输入任务名称（如 <code class="notranslate">A</code>、<code class="notranslate">B</code>、<code class="notranslate">C</code>、<code class="notranslate">D</code> 或小写形式），服务端会根据输入的任务名称执行对应的导航任务。</p>
 <h3>总结</h3>
 <p>通过以上步骤，你可以完成服务的定义、编译和运行。服务端会根据客户端发送的任务名称执行对应的导航任务，整个过程通过ROS服务进行通信。</p>
 <h1>三. Python换源</h1>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">wget</span> <span class="pl-s1">http</span>:<span class="pl-c1">//</span><span class="pl-s1">fishros</span>.<span class="pl-c1">com</span><span class="pl-c1">/</span><span class="pl-s1">install</span> <span class="pl-c1">-</span><span class="pl-c1">O</span> <span class="pl-s1">fishros</span> <span class="pl-c1">&amp;</span><span class="pl-c1">&amp;</span> . <span class="pl-c1">fishros</span></pre></div>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">python3</span> <span class="pl-c1">-</span><span class="pl-s1">m</span> <span class="pl-s1">pip</span> <span class="pl-s1">install</span> <span class="pl-s1">rospkg</span></pre></div>
+<pre lang="python" class="notranslate"><code class="notranslate">wget http://fishros.com/install -O fishros &amp;&amp; . fishros
+</code></pre>
+<pre lang="python" class="notranslate"><code class="notranslate">python3 -m pip install rospkg
+</code></pre>
 <p>打开.bashrc并修改，写入：</p>
-<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c1">source</span> <span class="pl-k">~</span>/catkin_ws/devel/setup.bash</pre></div>
+<pre lang="bash" class="notranslate"><code class="notranslate">source ~/catkin_ws/devel/setup.bash
+</code></pre>
 <h1>四. 安装miniconda</h1>
 <p><a href="https://blog.csdn.net/2301_76831056/article/details/143165738" rel="nofollow">https://blog.csdn.net/2301_76831056/article/details/143165738</a></p>
 <h1>五. python代码</h1>
 <h2>client.py</h2>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c">#!/usr/bin/python3</span>
-<span class="pl-c"># -*- coding: UTF-8 -*-</span>
-<span class="pl-k">import</span> <span class="pl-s1">rospy</span>
-<span class="pl-k">from</span> <span class="pl-s1">send_goals</span>.<span class="pl-s1">srv</span> <span class="pl-k">import</span> <span class="pl-v">SendTask</span>, <span class="pl-v">SendTaskRequest</span>
+<pre lang="python" class="notranslate"><code class="notranslate">#!/usr/bin/python3
+# -*- coding: UTF-8 -*-
+import rospy
+from send_goals.srv import SendTask, SendTaskRequest
 
 
-<span class="pl-k">def</span> <span class="pl-en">send_task_client</span>(<span class="pl-s1">task</span>):
-    <span class="pl-s1">rospy</span>.<span class="pl-c1">wait_for_service</span>(<span class="pl-s">"send_task_service"</span>)
-    <span class="pl-k">try</span>:
-        <span class="pl-s1">send_task</span> <span class="pl-c1">=</span> <span class="pl-s1">rospy</span>.<span class="pl-c1">ServiceProxy</span>(<span class="pl-s">"send_task_service"</span>, <span class="pl-v">SendTask</span>)
-        <span class="pl-s1">request</span> <span class="pl-c1">=</span> <span class="pl-en">SendTaskRequest</span>()
-        <span class="pl-s1">request</span>.<span class="pl-c1">task</span> <span class="pl-c1">=</span> <span class="pl-s1">task</span>
-        <span class="pl-s1">response</span> <span class="pl-c1">=</span> <span class="pl-en">send_task</span>(<span class="pl-s1">request</span>)
-        <span class="pl-k">if</span> <span class="pl-s1">response</span>.<span class="pl-c1">success</span>:
-            <span class="pl-s1">rospy</span>.<span class="pl-c1">loginfo</span>(<span class="pl-s">f"任务 <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">task</span><span class="pl-kos">}</span></span> 执行成功: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">response</span>.<span class="pl-c1">message</span><span class="pl-kos">}</span></span>"</span>)
-        <span class="pl-k">else</span>:
-            <span class="pl-s1">rospy</span>.<span class="pl-c1">logwarn</span>(<span class="pl-s">f"任务 <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">task</span><span class="pl-kos">}</span></span> 执行失败: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">response</span>.<span class="pl-c1">message</span><span class="pl-kos">}</span></span>"</span>)
-    <span class="pl-k">except</span> <span class="pl-s1">rospy</span>.<span class="pl-c1">ServiceException</span> <span class="pl-k">as</span> <span class="pl-s1">e</span>:
-        <span class="pl-s1">rospy</span>.<span class="pl-c1">logerr</span>(<span class="pl-s">f"服务调用失败: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">e</span><span class="pl-kos">}</span></span>"</span>)
+def send_task_client(task):
+    rospy.wait_for_service("send_task_service")
+    try:
+        send_task = rospy.ServiceProxy("send_task_service", SendTask)
+        request = SendTaskRequest()
+        request.task = task
+        response = send_task(request)
+        if response.success:
+            rospy.loginfo(f"任务 {task} 执行成功: {response.message}")
+        else:
+            rospy.logwarn(f"任务 {task} 执行失败: {response.message}")
+    except rospy.ServiceException as e:
+        rospy.logerr(f"服务调用失败: {e}")
 
 
-<span class="pl-k">if</span> <span class="pl-s1">__name__</span> <span class="pl-c1">==</span> <span class="pl-s">"__main__"</span>:
-    <span class="pl-k">try</span>:
-        <span class="pl-s1">rospy</span>.<span class="pl-c1">init_node</span>(<span class="pl-s">"send_tasks_client"</span>, <span class="pl-s1">anonymous</span><span class="pl-c1">=</span><span class="pl-c1">True</span>)
-        <span class="pl-s1">rospy</span>.<span class="pl-c1">loginfo</span>(<span class="pl-s">"启动任务客户端..."</span>)
+if __name__ == "__main__":
+    try:
+        rospy.init_node("send_tasks_client", anonymous=True)
+        rospy.loginfo("启动任务客户端...")
 
-        <span class="pl-c"># 获取用户输入的任务名称</span>
-        <span class="pl-s1">task</span> <span class="pl-c1">=</span> <span class="pl-en">input</span>(<span class="pl-s">"请输入任务名称（A/B/C/D 或小写）: "</span>)
-        <span class="pl-en">send_task_client</span>(<span class="pl-s1">task</span>)
-    <span class="pl-k">except</span> <span class="pl-s1">rospy</span>.<span class="pl-c1">ROSInterruptException</span>:
-        <span class="pl-s1">rospy</span>.<span class="pl-c1">loginfo</span>(<span class="pl-s">"程序被中断"</span>)</pre></div>
+        # 获取用户输入的任务名称
+        task = input("请输入任务名称（A/B/C/D 或小写）: ")
+        send_task_client(task)
+    except rospy.ROSInterruptException:
+        rospy.loginfo("程序被中断")
+</code></pre>
 <h2>server.py</h2>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c">#!/usr/bin/python3</span>
-<span class="pl-c"># -*- coding: UTF-8 -*-</span>
-<span class="pl-k">import</span> <span class="pl-s1">rospy</span>
-<span class="pl-k">from</span> <span class="pl-s1">send_goals</span>.<span class="pl-s1">srv</span> <span class="pl-k">import</span> <span class="pl-v">SendTask</span>, <span class="pl-v">SendTaskResponse</span>
-<span class="pl-k">from</span> <span class="pl-s1">move_base_msgs</span>.<span class="pl-s1">msg</span> <span class="pl-k">import</span> <span class="pl-v">MoveBaseAction</span>, <span class="pl-v">MoveBaseGoal</span>
-<span class="pl-k">import</span> <span class="pl-s1">actionlib</span>
+<pre lang="python" class="notranslate"><code class="notranslate">#!/usr/bin/python3
+# -*- coding: UTF-8 -*-
+import rospy
+from send_goals.srv import SendTask, SendTaskResponse
+from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
+import actionlib
 
-<span class="pl-c"># 初始化导航客户端</span>
-<span class="pl-s1">nav_client</span> <span class="pl-c1">=</span> <span class="pl-c1">None</span>
-
-
-<span class="pl-k">def</span> <span class="pl-en">create_goal</span>(<span class="pl-s1">x</span>, <span class="pl-s1">y</span>, <span class="pl-s1">z</span>, <span class="pl-s1">w</span>):
-    <span class="pl-s">"""创建导航目标点"""</span>
-    <span class="pl-s1">goal</span> <span class="pl-c1">=</span> <span class="pl-en">MoveBaseGoal</span>()
-    <span class="pl-s1">goal</span>.<span class="pl-c1">target_pose</span>.<span class="pl-c1">header</span>.<span class="pl-c1">frame_id</span> <span class="pl-c1">=</span> <span class="pl-s">"map"</span>
-    <span class="pl-s1">goal</span>.<span class="pl-c1">target_pose</span>.<span class="pl-c1">header</span>.<span class="pl-c1">stamp</span> <span class="pl-c1">=</span> <span class="pl-s1">rospy</span>.<span class="pl-c1">Time</span>.<span class="pl-c1">now</span>()
-    <span class="pl-s1">goal</span>.<span class="pl-c1">target_pose</span>.<span class="pl-c1">pose</span>.<span class="pl-c1">position</span>.<span class="pl-c1">x</span> <span class="pl-c1">=</span> <span class="pl-s1">x</span>
-    <span class="pl-s1">goal</span>.<span class="pl-c1">target_pose</span>.<span class="pl-c1">pose</span>.<span class="pl-c1">position</span>.<span class="pl-c1">y</span> <span class="pl-c1">=</span> <span class="pl-s1">y</span>
-    <span class="pl-s1">goal</span>.<span class="pl-c1">target_pose</span>.<span class="pl-c1">pose</span>.<span class="pl-c1">orientation</span>.<span class="pl-c1">z</span> <span class="pl-c1">=</span> <span class="pl-s1">z</span>
-    <span class="pl-s1">goal</span>.<span class="pl-c1">target_pose</span>.<span class="pl-c1">pose</span>.<span class="pl-c1">orientation</span>.<span class="pl-c1">w</span> <span class="pl-c1">=</span> <span class="pl-s1">w</span>
-    <span class="pl-k">return</span> <span class="pl-s1">goal</span>
+# 初始化导航客户端
+nav_client = None
 
 
-<span class="pl-k">def</span> <span class="pl-en">execute_mission</span>(<span class="pl-s1">goals</span>):
-    <span class="pl-s">"""执行任务序列"""</span>
-    <span class="pl-k">global</span> <span class="pl-s1">nav_client</span>
-    <span class="pl-k">if</span> <span class="pl-s1">nav_client</span> <span class="pl-c1">is</span> <span class="pl-c1">None</span>:
-        <span class="pl-s1">rospy</span>.<span class="pl-c1">loginfo</span>(<span class="pl-s">"初始化 move_base action 客户端..."</span>)
-        <span class="pl-s1">nav_client</span> <span class="pl-c1">=</span> <span class="pl-s1">actionlib</span>.<span class="pl-c1">SimpleActionClient</span>(<span class="pl-s">"move_base"</span>, <span class="pl-v">MoveBaseAction</span>)
-        <span class="pl-s1">nav_client</span>.<span class="pl-c1">wait_for_server</span>()
-        <span class="pl-s1">rospy</span>.<span class="pl-c1">loginfo</span>(<span class="pl-s">"move_base action server 已连接"</span>)
+def create_goal(x, y, z, w):
+    """创建导航目标点"""
+    goal = MoveBaseGoal()
+    goal.target_pose.header.frame_id = "map"
+    goal.target_pose.header.stamp = rospy.Time.now()
+    goal.target_pose.pose.position.x = x
+    goal.target_pose.pose.position.y = y
+    goal.target_pose.pose.orientation.z = z
+    goal.target_pose.pose.orientation.w = w
+    return goal
 
-    <span class="pl-k">for</span> <span class="pl-s1">goal</span> <span class="pl-c1">in</span> <span class="pl-s1">goals</span>:
-        <span class="pl-s1">rospy</span>.<span class="pl-c1">loginfo</span>(
-            <span class="pl-s">"前往目标点: (%.2f, %.2f)"</span>
-            <span class="pl-c1">%</span> (<span class="pl-s1">goal</span>.<span class="pl-c1">target_pose</span>.<span class="pl-c1">pose</span>.<span class="pl-c1">position</span>.<span class="pl-c1">x</span>, <span class="pl-s1">goal</span>.<span class="pl-c1">target_pose</span>.<span class="pl-c1">pose</span>.<span class="pl-c1">position</span>.<span class="pl-c1">y</span>)
+
+def execute_mission(goals):
+    """执行任务序列"""
+    global nav_client
+    if nav_client is None:
+        rospy.loginfo("初始化 move_base action 客户端...")
+        nav_client = actionlib.SimpleActionClient("move_base", MoveBaseAction)
+        nav_client.wait_for_server()
+        rospy.loginfo("move_base action server 已连接")
+
+    for goal in goals:
+        rospy.loginfo(
+            "前往目标点: (%.2f, %.2f)"
+            % (goal.target_pose.pose.position.x, goal.target_pose.pose.position.y)
         )
-        <span class="pl-s1">nav_client</span>.<span class="pl-c1">send_goal</span>(<span class="pl-s1">goal</span>)
-        <span class="pl-s1">nav_client</span>.<span class="pl-c1">wait_for_result</span>(<span class="pl-s1">rospy</span>.<span class="pl-c1">Duration</span>(<span class="pl-c1">60</span>))  <span class="pl-c"># 等待最长60秒</span>
-        <span class="pl-k">if</span> <span class="pl-s1">nav_client</span>.<span class="pl-c1">get_state</span>() <span class="pl-c1">==</span> <span class="pl-s1">actionlib</span>.<span class="pl-c1">GoalStatus</span>.<span class="pl-c1">SUCCEEDED</span>:
-            <span class="pl-s1">rospy</span>.<span class="pl-c1">loginfo</span>(<span class="pl-s">"到达目标点"</span>)
-        <span class="pl-k">else</span>:
-            <span class="pl-s1">rospy</span>.<span class="pl-c1">logwarn</span>(<span class="pl-s">"导航失败，状态: %s"</span> <span class="pl-c1">%</span> <span class="pl-s1">nav_client</span>.<span class="pl-c1">get_goal_status_text</span>())
-            <span class="pl-s1">nav_client</span>.<span class="pl-c1">cancel_all_goals</span>()  <span class="pl-c"># 取消所有未完成的目标</span>
-            <span class="pl-s1">rospy</span>.<span class="pl-c1">sleep</span>(<span class="pl-c1">1</span>)  <span class="pl-c"># 等待1秒，确保取消操作完成</span>
+        nav_client.send_goal(goal)
+        nav_client.wait_for_result(rospy.Duration(60))  # 等待最长60秒
+        if nav_client.get_state() == actionlib.GoalStatus.SUCCEEDED:
+            rospy.loginfo("到达目标点")
+        else:
+            rospy.logwarn("导航失败，状态: %s" % nav_client.get_goal_status_text())
+            nav_client.cancel_all_goals()  # 取消所有未完成的目标
+            rospy.sleep(1)  # 等待1秒，确保取消操作完成
 
 
-<span class="pl-k">def</span> <span class="pl-en">task_a</span>():
-    <span class="pl-s">"""任务A：前往A区"""</span>
-    <span class="pl-s1">goals</span> <span class="pl-c1">=</span> [
-        <span class="pl-en">create_goal</span>(<span class="pl-c1">4.29</span>, <span class="pl-c1">1.33</span>, <span class="pl-c1">0</span>, <span class="pl-c1">1</span>),
-        <span class="pl-en">create_goal</span>(<span class="pl-c1">2.43</span>, <span class="pl-c1">0.05</span>, <span class="pl-c1">0.707</span>, <span class="pl-c1">0.707</span>),
-        <span class="pl-en">create_goal</span>(<span class="pl-c1">0</span>, <span class="pl-c1">0</span>, <span class="pl-c1">0</span>, <span class="pl-c1">1</span>),
+def task_a():
+    """任务A：前往A区"""
+    goals = [
+        create_goal(4.29, 1.33, 0, 1),
+        create_goal(2.43, 0.05, 0.707, 0.707),
+        create_goal(0, 0, 0, 1),
     ]
-    <span class="pl-en">execute_mission</span>(<span class="pl-s1">goals</span>)
+    execute_mission(goals)
 
 
-<span class="pl-k">def</span> <span class="pl-en">task_b</span>():
-    <span class="pl-s">"""任务B：前往B区"""</span>
-    <span class="pl-s1">goals</span> <span class="pl-c1">=</span> [
-        <span class="pl-en">create_goal</span>(<span class="pl-c1">4</span>, <span class="pl-c1">0</span>, <span class="pl-c1">1</span>, <span class="pl-c1">0</span>),
-        <span class="pl-en">create_goal</span>(<span class="pl-c1">4</span>, <span class="pl-c1">2.5</span>, <span class="pl-c1">1</span>, <span class="pl-c1">0</span>),
-        <span class="pl-en">create_goal</span>(<span class="pl-c1">2.43</span>, <span class="pl-c1">0.05</span>, <span class="pl-c1">0.707</span>, <span class="pl-c1">0.707</span>),
-        <span class="pl-en">create_goal</span>(<span class="pl-c1">0</span>, <span class="pl-c1">0</span>, <span class="pl-c1">0</span>, <span class="pl-c1">1</span>),
+def task_b():
+    """任务B：前往B区"""
+    goals = [
+        create_goal(4, 0, 1, 0),
+        create_goal(4, 2.5, 1, 0),
+        create_goal(2.43, 0.05, 0.707, 0.707),
+        create_goal(0, 0, 0, 1),
     ]
-    <span class="pl-en">execute_mission</span>(<span class="pl-s1">goals</span>)
+    execute_mission(goals)
 
 
-<span class="pl-k">def</span> <span class="pl-en">task_c</span>():
-    <span class="pl-s">"""任务C：前往C区"""</span>
-    <span class="pl-s1">goals</span> <span class="pl-c1">=</span> [
-        <span class="pl-en">create_goal</span>(<span class="pl-c1">-</span><span class="pl-c1">0.02</span>, <span class="pl-c1">1.37</span>, <span class="pl-c1">0</span>, <span class="pl-c1">1</span>),
-        <span class="pl-en">create_goal</span>(<span class="pl-c1">2.43</span>, <span class="pl-c1">0.05</span>, <span class="pl-c1">0.707</span>, <span class="pl-c1">0.707</span>),
-        <span class="pl-en">create_goal</span>(<span class="pl-c1">0</span>, <span class="pl-c1">0</span>, <span class="pl-c1">0</span>, <span class="pl-c1">1</span>),
+def task_c():
+    """任务C：前往C区"""
+    goals = [
+        create_goal(-0.02, 1.37, 0, 1),
+        create_goal(2.43, 0.05, 0.707, 0.707),
+        create_goal(0, 0, 0, 1),
     ]
-    <span class="pl-en">execute_mission</span>(<span class="pl-s1">goals</span>)
+    execute_mission(goals)
 
 
-<span class="pl-k">def</span> <span class="pl-en">task_d</span>():
-    <span class="pl-s">"""任务D：前往D区"""</span>
-    <span class="pl-s1">goals</span> <span class="pl-c1">=</span> [
-        <span class="pl-en">create_goal</span>(<span class="pl-c1">0.08</span>, <span class="pl-c1">2.7</span>, <span class="pl-c1">1</span>, <span class="pl-c1">0</span>),
-        <span class="pl-en">create_goal</span>(<span class="pl-c1">2.43</span>, <span class="pl-c1">0.05</span>, <span class="pl-c1">0.707</span>, <span class="pl-c1">0.707</span>),
-        <span class="pl-en">create_goal</span>(<span class="pl-c1">0</span>, <span class="pl-c1">0</span>, <span class="pl-c1">0</span>, <span class="pl-c1">1</span>),
+def task_d():
+    """任务D：前往D区"""
+    goals = [
+        create_goal(0.08, 2.7, 1, 0),
+        create_goal(2.43, 0.05, 0.707, 0.707),
+        create_goal(0, 0, 0, 1),
     ]
-    <span class="pl-en">execute_mission</span>(<span class="pl-s1">goals</span>)
+    execute_mission(goals)
 
 
-<span class="pl-k">def</span> <span class="pl-en">send_task_callback</span>(<span class="pl-s1">req</span>):
-    <span class="pl-s">"""服务回调函数"""</span>
-    <span class="pl-s1">task</span> <span class="pl-c1">=</span> <span class="pl-s1">req</span>.<span class="pl-c1">task</span>.<span class="pl-c1">lower</span>()  <span class="pl-c"># 将输入转换为小写</span>
-    <span class="pl-s1">rospy</span>.<span class="pl-c1">loginfo</span>(<span class="pl-s">f"收到任务请求: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">task</span><span class="pl-kos">}</span></span>"</span>)
+def send_task_callback(req):
+    """服务回调函数"""
+    task = req.task.lower()  # 将输入转换为小写
+    rospy.loginfo(f"收到任务请求: {task}")
 
-    <span class="pl-k">if</span> <span class="pl-s1">task</span> <span class="pl-c1">==</span> <span class="pl-s">"a"</span>:
-        <span class="pl-en">task_a</span>()
-    <span class="pl-k">elif</span> <span class="pl-s1">task</span> <span class="pl-c1">==</span> <span class="pl-s">"b"</span>:
-        <span class="pl-en">task_b</span>()
-    <span class="pl-k">elif</span> <span class="pl-s1">task</span> <span class="pl-c1">==</span> <span class="pl-s">"c"</span>:
-        <span class="pl-en">task_c</span>()
-    <span class="pl-k">elif</span> <span class="pl-s1">task</span> <span class="pl-c1">==</span> <span class="pl-s">"d"</span>:
-        <span class="pl-en">task_d</span>()
-    <span class="pl-k">else</span>:
-        <span class="pl-k">return</span> <span class="pl-en">SendTaskResponse</span>(<span class="pl-c1">False</span>, <span class="pl-s">"无效的任务名称"</span>)
+    if task == "a":
+        task_a()
+    elif task == "b":
+        task_b()
+    elif task == "c":
+        task_c()
+    elif task == "d":
+        task_d()
+    else:
+        return SendTaskResponse(False, "无效的任务名称")
 
-    <span class="pl-k">return</span> <span class="pl-en">SendTaskResponse</span>(<span class="pl-c1">True</span>, <span class="pl-s">f"任务 <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">task</span><span class="pl-kos">}</span></span> 执行完成"</span>)
+    return SendTaskResponse(True, f"任务 {task} 执行完成")
 
 
-<span class="pl-k">if</span> <span class="pl-s1">__name__</span> <span class="pl-c1">==</span> <span class="pl-s">"__main__"</span>:
-    <span class="pl-k">try</span>:
-        <span class="pl-s1">rospy</span>.<span class="pl-c1">init_node</span>(<span class="pl-s">"send_tasks_server"</span>, <span class="pl-s1">anonymous</span><span class="pl-c1">=</span><span class="pl-c1">True</span>)
-        <span class="pl-s1">rospy</span>.<span class="pl-c1">loginfo</span>(<span class="pl-s">"启动任务服务..."</span>)
-        <span class="pl-s1">service</span> <span class="pl-c1">=</span> <span class="pl-s1">rospy</span>.<span class="pl-c1">Service</span>(<span class="pl-s">"send_task_service"</span>, <span class="pl-v">SendTask</span>, <span class="pl-s1">send_task_callback</span>)
-        <span class="pl-s1">rospy</span>.<span class="pl-c1">loginfo</span>(<span class="pl-s">"服务已启动，等待任务请求..."</span>)
-        <span class="pl-s1">rospy</span>.<span class="pl-c1">spin</span>()
-    <span class="pl-k">except</span> <span class="pl-s1">rospy</span>.<span class="pl-c1">ROSInterruptException</span>:
-        <span class="pl-s1">rospy</span>.<span class="pl-c1">loginfo</span>(<span class="pl-s">"程序被中断"</span>)</pre></div></div>
+if __name__ == "__main__":
+    try:
+        rospy.init_node("send_tasks_server", anonymous=True)
+        rospy.loginfo("启动任务服务...")
+        service = rospy.Service("send_task_service", SendTask, send_task_callback)
+        rospy.loginfo("服务已启动，等待任务请求...")
+        rospy.spin()
+    except rospy.ROSInterruptException:
+        rospy.loginfo("程序被中断")
+</code></pre></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
@@ -346,7 +348,7 @@ if("05/29/2025"!=""){
 </script></div>
 </body>
 <script>
-var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z', 'copy': 'M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z', 'check': 'M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z'};
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
 var utterancesLoad=0;
 
 let themeSettings={
@@ -419,70 +421,7 @@ function iFrameLoading(){
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    const createClipboardHTML = (codeContent, additionalClasses = '') => `
-        <pre class="notranslate"><code class="notranslate">${codeContent}</code></pre>
-        <div class="clipboard-container position-absolute right-0 top-0 ${additionalClasses}">
-            <clipboard-copy class="ClipboardButton btn m-2 p-0" role="button" style="display: inherit;">
-                <svg height="16" width="16" class="octicon octicon-copy m-2"><path d="${IconList["copy"]}"></path></svg>
-                <svg height="16" width="16" class="octicon octicon-check color-fg-success m-2 d-none"><path d="${IconList["check"]}"></path></svg>
-            </clipboard-copy>
-            <div class="copy-feedback">Copied!</div>
-        </div>
-    `;
 
-    const handleCodeElements = (selector = '') => {
-        document.querySelectorAll(selector).forEach(codeElement => {
-            const codeContent = codeElement.innerHTML;
-            const newStructure = document.createElement('div');
-            newStructure.className = 'snippet-clipboard-content position-relative overflow-auto';
-            newStructure.innerHTML = createClipboardHTML(codeContent);
-
-            const parentElement = codeElement.parentElement;
-            if (selector.includes('highlight')) {
-                parentElement.insertBefore(newStructure, codeElement.nextSibling);
-                parentElement.removeChild(codeElement);
-            } else {
-                parentElement.parentElement.replaceChild(newStructure, parentElement);
-            }
-        });
-    };
-
-    handleCodeElements('pre.notranslate > code.notranslate');
-    handleCodeElements('div.highlight > pre.notranslate');
-
-    let currentFeedback = null;
-    document.querySelectorAll('clipboard-copy').forEach(copyButton => {
-        copyButton.addEventListener('click', () => {
-            const codeContent = copyButton.closest('.snippet-clipboard-content').innerText;
-            const tempTextArea = document.createElement('textarea');
-            tempTextArea.value = codeContent;
-            document.body.appendChild(tempTextArea);
-            tempTextArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempTextArea);
-
-            const copyIcon = copyButton.querySelector('.octicon-copy');
-            const checkIcon = copyButton.querySelector('.octicon-check');
-            const copyFeedback = copyButton.nextElementSibling;
-
-            if (currentFeedback && currentFeedback !== copyFeedback) {currentFeedback.style.display = 'none';}
-            currentFeedback = copyFeedback;
-
-            copyIcon.classList.add('d-none');
-            checkIcon.classList.remove('d-none');
-            copyFeedback.style.display = 'block';
-            copyButton.style.borderColor = 'var(--color-success-fg)';
-
-            setTimeout(() => {
-                copyIcon.classList.remove('d-none');
-                checkIcon.classList.add('d-none');
-                copyFeedback.style.display = 'none';
-                copyButton.style.borderColor = '';
-            }, 2000);
-        });
-    });
-});
 
 </script>
 <script src='https://blog.meekdai.com/Gmeek/plugins/GmeekTOC.js'></script><script src='https://blog.meekdai.com/Gmeek/plugins/lightbox.js'></script>
